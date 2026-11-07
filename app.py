@@ -33,7 +33,6 @@ def ensure_albers_logo():
         ax.set_facecolor('#0B1120')
         ax.set_xlim(-1.3, 1.3); ax.set_ylim(-1.3, 1.3); ax.axis('off')
 
-        # Tactical Outer Ring & Perimeter Dials
         theta = np.linspace(0, 2*np.pi, 300)
         ax.plot(np.cos(theta)*1.18, np.sin(theta)*1.18, color='#1E293B', linewidth=5)
         ax.plot(np.cos(theta)*1.12, np.sin(theta)*1.12, color='#38BDF8', linewidth=1.5, alpha=0.8)
@@ -45,7 +44,6 @@ def ensure_albers_logo():
             col = '#FBBF24' if deg % 90 == 0 else ('#38BDF8' if deg % 30 == 0 else '#475569')
             ax.plot([np.cos(rad)*r1, np.cos(rad)*1.16], [np.sin(rad)*r1, np.sin(rad)*1.16], color=col, linewidth=lw)
 
-        # Armored Football Shield
         shield_x = [0, 0.82, 0.82, 0, -0.82, -0.82, 0]
         shield_y = [1.02, 0.68, -0.42, -1.02, -0.42, 0.68, 1.02]
         shield_poly = patches.Polygon(xy=list(zip(shield_x, shield_y)), closed=True, 
@@ -60,7 +58,6 @@ def ensure_albers_logo():
         for y_pos in np.linspace(-0.6, 0.6, 9):
             ax.plot([-0.6, 0.6], [y_pos, y_pos], color='#1E293B', linewidth=1, alpha=0.6, zorder=3)
 
-        # Monogram "A" with Gold Border & Black Football Laces
         a_outer_x = [0, 0.52, 0.32, 0, -0.32, -0.52, 0]
         a_outer_y = [0.72, -0.38, -0.38, 0.35, -0.38, -0.38, 0.72]
         a_poly = patches.Polygon(xy=list(zip(a_outer_x, a_outer_y)), closed=True, 
@@ -147,7 +144,6 @@ st.markdown("""
         letter-spacing: 0.5px;
     }
 
-    /* High-Contrast Interactive Coaching Buttons */
     div.stButton > button {
         background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%) !important;
         border: 2px solid #38BDF8 !important;
@@ -200,11 +196,7 @@ st.markdown("""
         border: 1.5px solid #38BDF8 !important;
         border-radius: 6px !important;
     }
-    div[data-baseweb="tag"] span {
-        color: #FFFFFF !important;
-        font-weight: 700 !important;
-        font-size: 13.5px !important;
-    }
+    div[data-baseweb="tag"] span { color: #FFFFFF !important; font-weight: 700 !important; font-size: 13.5px !important; }
     div[data-baseweb="tag"] svg { fill: #38BDF8 !important; }
 
     div[data-baseweb="select"] > div {
@@ -363,8 +355,8 @@ def get_field_x(yl):
     elif yl == 50: return 50
     else: return 100 - yl
 
-# --- DATA INTAKE & PROCESSOR ---
-def process_dataframe(raw_df, default_source_name="Unknown Opponent"):
+# --- DATA PROCESSOR ---
+def process_dataframe(raw_df, default_source_name="Game Data"):
     df_clean = raw_df.copy()
 
     opp_col = next((c for c in df_clean.columns if any(k in c.lower() for k in ['opp', 'game', 'team'])), None)
@@ -404,7 +396,7 @@ def process_dataframe(raw_df, default_source_name="Unknown Opponent"):
     df_clean['BLITZ_CLEAN'] = df_clean['BLITZ'].fillna('BASE (NO BLITZ)')
     return df_clean
 
-# --- SIDEBAR WITH DRAG-AND-DROP FILE UPLOADER ---
+# --- SIDEBAR BRANDING & COORDINATOR MODE ---
 if os.path.exists(LOGO_FILE):
     st.sidebar.image(LOGO_FILE, width=170)
 
@@ -412,56 +404,151 @@ st.sidebar.markdown("### **ALBERS QC**")
 st.sidebar.markdown("<span style='color: #FDE047; font-weight:700;'>Your Personalized QC Coach</span>", unsafe_allow_html=True)
 st.sidebar.markdown("---")
 
-st.sidebar.markdown("##### 📥 Data Intake (Drag & Drop)")
-uploaded_files = st.sidebar.file_uploader(
-    "Drop Game CSVs Here:",
-    type=["csv"],
-    accept_multiple_files=True,
-    help="Drag and drop one or multiple game exports from Hudl, Catapult, or Excel."
+# 🏈 COORDINATOR UNIT TOGGLE
+st.sidebar.markdown("##### 🏈 Coordinator Mode")
+coordinator_mode = st.sidebar.radio(
+    "Active Play-Caller Suite:",
+    ["🛡️ DEFENSE (DC Mode)", "⚔️ OFFENSE (OC Mode)"],
+    index=0
 )
 
-all_dfs = []
-if uploaded_files:
-    for uploaded_file in uploaded_files:
-        file_base_name = os.path.splitext(uploaded_file.name)[0].replace('_', ' ').replace('-', ' ').title()
-        try:
-            temp_df = pd.read_csv(uploaded_file)
-            processed_temp = process_dataframe(temp_df, default_source_name=file_base_name)
-            all_dfs.append(processed_temp)
-        except Exception as e:
-            st.sidebar.error(f"Error loading {uploaded_file.name}: {e}")
+st.sidebar.markdown("---")
 
-if all_dfs:
-    df = pd.concat(all_dfs, ignore_index=True)
-    status_msg = f"● LIVE UPLOAD: {len(uploaded_files)} GAME(S) | {len(df)} SNAPS"
-else:
-    csv_file = 'input_file_1.csv'
-    if not os.path.exists(csv_file):
-        all_csvs = [f for f in os.listdir('.') if f.endswith('.csv')]
-        if all_csvs:
-            csv_file = all_csvs[0]
-        else:
-            csv_file = None
+# --- SEPARATE DATA INTAKE PIPELINES ---
+if "DEFENSE" in coordinator_mode:
+    st.sidebar.markdown("##### 📥 Defensive Data Intake")
+    uploaded_def_files = st.sidebar.file_uploader(
+        "Drop Defensive Game CSVs Here:",
+        type=["csv"],
+        accept_multiple_files=True,
+        key="def_uploader",
+        help="Upload game cutups charting our defense (ODK = 'D')."
+    )
 
-    if csv_file and os.path.exists(csv_file):
-        fallback_raw = pd.read_csv(csv_file)
-        df = process_dataframe(fallback_raw, default_source_name="Opponent")
-        status_msg = f"● QC ENGINE ACTIVE | {len(df)} SNAPS INDEXED"
+    all_def_dfs = []
+    if uploaded_def_files:
+        for uf in uploaded_def_files:
+            bname = os.path.splitext(uf.name)[0].replace('_', ' ').title()
+            try:
+                tdf = pd.read_csv(uf)
+                all_def_dfs.append(process_dataframe(tdf, default_source_name=bname))
+            except Exception as e:
+                st.sidebar.error(f"Error: {e}")
+
+    if all_def_dfs:
+        df = pd.concat(all_def_dfs, ignore_index=True)
+        status_msg = f"● DEFENSE UPLOAD: {len(uploaded_def_files)} GAME(S) | {len(df)} SNAPS"
     else:
-        st.markdown(f"""
-        <div class="albers-header-card">
-            <div>
-                <div class="albers-brand-title">ALBERS QC</div>
-                <div class="albers-brand-tagline">YOUR PERSONALIZED QUALITY CONTROL COACH</div>
-            </div>
-            <div>
-                <span class="albers-status-badge">● STANDBY: AWAITING CSV</span>
-            </div>
+        csv_file = 'input_file_1.csv'
+        if not os.path.exists(csv_file):
+            all_csvs = [f for f in os.listdir('.') if f.endswith('.csv') and 'off' not in f.lower()]
+            if all_csvs: csv_file = all_csvs[0]
+            else: csv_file = None
+
+        if csv_file and os.path.exists(csv_file):
+            raw = pd.read_csv(csv_file)
+            df = process_dataframe(raw, default_source_name="Opponent")
+            status_msg = f"● DEFENSE ACTIVE | {len(df)} SNAPS INDEXED"
+        else:
+            df = None
+            status_msg = "● AWAITING DEFENSIVE DATA"
+
+else:
+    # ⚔️ OFFENSE MODE PIPELINE (EXCLUSIVELY OFFENSIVE DATA)
+    st.sidebar.markdown("##### 📥 Offensive Data Intake")
+    uploaded_off_files = st.sidebar.file_uploader(
+        "Drop Our Offensive CSVs Here:",
+        type=["csv"],
+        accept_multiple_files=True,
+        key="off_uploader",
+        help="Upload game cutups charting OUR offense (ODK = 'O')."
+    )
+
+    all_off_dfs = []
+    if uploaded_off_files:
+        for uf in uploaded_off_files:
+            bname = os.path.splitext(uf.name)[0].replace('_', ' ').title()
+            try:
+                tdf = pd.read_csv(uf)
+                all_off_dfs.append(process_dataframe(tdf, default_source_name=bname))
+            except Exception as e:
+                st.sidebar.error(f"Error: {e}")
+
+    if all_off_dfs:
+        df = pd.concat(all_off_dfs, ignore_index=True)
+        status_msg = f"● OFFENSE UPLOAD: {len(uploaded_off_files)} GAME(S) | {len(df)} SNAPS"
+    else:
+        off_file = 'offense_input.csv'
+        if not os.path.exists(off_file):
+            all_off_csvs = [f for f in os.listdir('.') if f.endswith('.csv') and 'off' in f.lower()]
+            if all_off_csvs: off_file = all_off_csvs[0]
+            else: off_file = None
+
+        if off_file and os.path.exists(off_file):
+            raw = pd.read_csv(off_file)
+            df = process_dataframe(raw, default_source_name="Our Offense")
+            status_msg = f"● OFFENSE ACTIVE | {len(df)} SNAPS INDEXED"
+        else:
+            df = None
+            status_msg = "● AWAITING OFFENSIVE DATA"
+
+# --- TOP HUD BANNER ---
+col_logo, col_banner = st.columns([1, 7])
+with col_logo:
+    if os.path.exists(LOGO_FILE):
+        st.image(LOGO_FILE, width=125)
+
+unit_label = "DEFENSIVE QC" if "DEFENSE" in coordinator_mode else "OFFENSIVE QC"
+with col_banner:
+    st.markdown(f"""
+    <div class="albers-header-card">
+        <div>
+            <div class="albers-brand-title">ALBERS QC // {unit_label}</div>
+            <div class="albers-brand-tagline">YOUR PERSONALIZED QUALITY CONTROL COACH</div>
+        </div>
+        <div>
+            <span class="albers-status-badge">{status_msg}</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+# --- ONBOARDING NOTICE IF DATA IS AWAITING ---
+if df is None:
+    if "OFFENSE" in coordinator_mode:
+        st.markdown("""
+        <div class="dossier-box">
+            <div class="dossier-title">⚔️ ALBERS QC // OFFENSIVE DATA ONBOARDING</div>
+            <p style="font-size: 16px; color: #FFFFFF;">
+                You are currently in <strong>Offensive Coordinator Mode</strong>. To ensure accurate offensive self-scout and prevent opponent tendencies from corrupting your scheme, 
+                <strong>Albers QC runs exclusively on your team's real offensive cutup files.</strong>
+            </p>
         </div>
         """, unsafe_allow_html=True)
-        st.info("👋 **Welcome to Albers QC!**\n\nTo begin analyzing, please **drag and drop your game CSV file** into the box on the left sidebar.")
-        st.stop()
 
+        col_left, col_right = st.columns(2)
+        with col_left:
+            st.info("""
+            **📋 Expected Offensive Columns:**
+            * **`ODK`**: Logged as `'O'` (Our Offense)
+            * **`OFF FORM`**: Your team's offensive formation names
+            * **`OFF PLAY`**: Your specific play concepts (*Inside Zone, Power, Mesh, Post-Dig*)
+            * **`GN/LS`**: Yards gained on each snap
+            * **`PASS ZONE`**: Where your QB threw (1–9)
+            * **`DEF FRONT` & `COVERAGE`**: Opponent defensive look faced
+            """)
+        with col_right:
+            st.success("""
+            **🚀 How to Load Your Offensive Data:**
+            1. Drag and drop your **Offensive Season Cutup CSV** into the **sidebar box** on the left.
+            2. *(Or save your offensive file as `offense_input.csv` inside your `Analytics QC` folder).*
+            
+            *The moment your offensive CSV is loaded, the full Offensive Self-Scout, QB Spray Chart, and Play-Calling Assistant will unlock!*
+            """)
+    else:
+        st.info("👋 **Welcome to Albers QC!**\n\nPlease drag and drop your defensive game CSV into the sidebar to begin.")
+    st.stop()
+
+# --- DATABASE ENGINE ---
 conn = sqlite3.connect(':memory:', check_same_thread=False)
 df.to_sql('snaps', conn, index=False, if_exists='replace')
 
@@ -471,8 +558,8 @@ def get_top_concept(sub_df, play_type):
     top = p_df['OFF PLAY'].value_counts().head(1)
     return f"{top.index[0]} ({top.values[0]})" if len(top) > 0 else "-"
 
+# --- SITUATIONAL SIDEBAR CONTROLS ---
 st.sidebar.markdown("---")
-
 all_opponents = sorted(df['OPPONENT_CLEAN'].unique().tolist())
 opponent_choices = ["ALL OPPONENTS (Full Season)"] + all_opponents
 selected_opp = st.sidebar.selectbox("🎯 Opponent Scope", opponent_choices)
@@ -487,13 +574,11 @@ st.sidebar.subheader("Situational Filters")
 selected_zones = st.sidebar.multiselect("Field Zone", options=ZONE_ORDER, default=ZONE_ORDER)
 selected_dn = st.sidebar.multiselect("Down", options=[1, 2, 3, 4], default=[1, 2, 3, 4])
 front_options = sorted([x for x in df['DEF FRONT'].dropna().unique()])
-selected_front = st.sidebar.multiselect("Def Front", options=front_options, default=front_options)
+selected_front = st.sidebar.multiselect("Def Front Faced", options=front_options, default=front_options)
 cov_options = sorted([x for x in df['COVERAGE'].dropna().unique()])
-selected_cov = st.sidebar.multiselect("Coverage", options=cov_options, default=cov_options)
-
-# Blitz / Pressure filter
+selected_cov = st.sidebar.multiselect("Coverage Faced", options=cov_options, default=cov_options)
 blitz_options = sorted([x for x in df['BLITZ_CLEAN'].unique()])
-selected_blitz = st.sidebar.multiselect("Blitz / Pressure Call", options=blitz_options, default=blitz_options)
+selected_blitz = st.sidebar.multiselect("Pressure / Blitz Faced", options=blitz_options, default=blitz_options)
 
 filtered_df = scoped_df[
     (scoped_df['FIELD_ZONE'].isin(selected_zones)) &
@@ -538,800 +623,768 @@ def render_8_zone_field(ax, title_str, highlight_zone=None):
     ax.set_yticks([])
     ax.set_title(title_str, color='#FFFFFF', fontsize=13, fontweight='heavy', pad=12)
 
-# --- TOP HUD BANNER ---
-col_logo, col_banner = st.columns([1, 7])
-with col_logo:
-    if os.path.exists(LOGO_FILE):
-        st.image(LOGO_FILE, width=125)
-
-with col_banner:
-    st.markdown(f"""
-    <div class="albers-header-card">
-        <div>
-            <div class="albers-brand-title">ALBERS QC</div>
-            <div class="albers-brand-tagline">YOUR PERSONALIZED QUALITY CONTROL COACH</div>
-        </div>
-        <div>
-            <span class="albers-status-badge">{status_msg}</span>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-# --- TOP NAVIGATION TABS ---
-tab_self, tab_opp, tab_qc = st.tabs([
-    "🛡️ Self-Scout (Our Defense Audit)", 
-    "🎯 Opponent Advance Reconnaissance", 
-    "💬 Ask Coach Albers (Your Personal QC)"
-])
+# --- DYNAMIC NAVIGATION TABS ---
+if "OFFENSE" in coordinator_mode:
+    tab_1, tab_2, tab_3 = st.tabs([
+        "⚔️ Offensive Self-Scout (Our Offense Audit)", 
+        "🛡️ Opponent Defense Reconnaissance", 
+        "💬 Ask Coach Albers (Offensive QC)"
+    ])
+else:
+    tab_1, tab_2, tab_3 = st.tabs([
+        "🛡️ Defensive Self-Scout (Our Defense Audit)", 
+        "🎯 Opponent Advance Reconnaissance", 
+        "💬 Ask Coach Albers (Defensive QC)"
+    ])
 
 # =========================================================================
-# TAB 1: SELF-SCOUT (OUR DEFENSE)
+# UNIT 1: OFFENSIVE SUITE (EXCLUSIVELY RUNS ON OFFENSIVE DATA)
 # =========================================================================
-with tab_self:
-    st.subheader(f"🛡️ Albers QC // Defensive Self-Scout Audit: {selected_opp}")
+if "OFFENSE" in coordinator_mode:
+    with tab_1:
+        st.subheader(f"⚔️ Albers QC // Offensive Self-Scout: {selected_opp}")
+        
+        if 'off_pass_zone' not in st.session_state: st.session_state['off_pass_zone'] = None
+        if 'off_field_zone' not in st.session_state: st.session_state['off_field_zone'] = None
 
-    if 'self_pass_zone' not in st.session_state: st.session_state['self_pass_zone'] = None
-    if 'self_field_zone' not in st.session_state: st.session_state['self_field_zone'] = None
+        snaps_off = len(filtered_df)
+        if snaps_off > 0:
+            c1, c2, c3, c4 = st.columns(4)
+            c1.metric("Offensive Snaps", snaps_off)
+            c2.metric("Stay-On-Schedule %", f"{filtered_df['OFF_SUCCESS'].mean():.1%}")
+            c3.metric("Yards Per Play", f"{filtered_df['GN/LS'].mean():.2f} yds")
+            exp_off = ((filtered_df['GN/LS'] >= 15) & (filtered_df['PLAY_TYPE_CLEAN'] == 'Pass')).sum() + \
+                      ((filtered_df['GN/LS'] >= 10) & (filtered_df['PLAY_TYPE_CLEAN'] == 'Run')).sum()
+            c4.metric("Explosives (10r/15p)", f"{exp_off} ({(exp_off/snaps_off)*100:.1f}%)")
 
-    snaps_self = len(filtered_df)
-    if snaps_self > 0:
-        c1, c2, c3, c4 = st.columns(4)
-        c1.metric("Snaps Evaluated", snaps_self)
-        c2.metric("Defensive Win Rate", f"{filtered_df['DEF_SUCCESS'].mean():.1%}")
-        c3.metric("Avg Yards Allowed", f"{filtered_df['GN/LS'].mean():.2f} yds")
-        exp_count = ((filtered_df['GN/LS'] >= 15) & (filtered_df['PLAY_TYPE_CLEAN'] == 'Pass')).sum() + \
-                    ((filtered_df['GN/LS'] >= 10) & (filtered_df['PLAY_TYPE_CLEAN'] == 'Run')).sum()
-        c4.metric("Explosives Allowed", f"{exp_count} ({(exp_count/snaps_self)*100:.1f}%)")
+            st.markdown("---")
+            st.subheader("📍 Albers QC // QB Passing Spray Chart & Sector Production")
 
-        st.markdown("---")
-        st.subheader("📍 Albers QC // Spatial & Tactical Battle Boards")
+            col_radar_chart, col_radar_click = st.columns([3, 1])
 
-        col_radar_chart, col_radar_click = st.columns([3, 1])
+            with col_radar_chart:
+                fig_off = plt.figure(figsize=(10, 8), dpi=150, facecolor='#0B1120')
+                ax_pass = fig_off.add_axes([0.05, 0.05, 0.90, 0.88], facecolor='#111827')
+                ax_pass.set_xlim(0, 3); ax_pass.set_ylim(0, 3)
+                ax_pass.set_xticks([0.5, 1.5, 2.5]); ax_pass.set_xticklabels(['LEFT', 'MIDDLE', 'RIGHT'], color='#FFFFFF', fontsize=11, fontweight='heavy')
+                ax_pass.set_yticks([0.5, 1.5, 2.5]); ax_pass.set_yticklabels(['SHORT (0-9y)', 'INTERMEDIATE (10-19y)', 'DEEP (20y+)'], color='#FFFFFF', fontsize=11, fontweight='heavy')
+                ax_pass.grid(False); ax_pass.tick_params(length=0)
 
-        with col_radar_chart:
-            fig_self = plt.figure(figsize=(10, 8), dpi=150, facecolor='#0B1120')
-            ax_pass = fig_self.add_axes([0.05, 0.05, 0.90, 0.88], facecolor='#111827')
-            ax_pass.set_xlim(0, 3); ax_pass.set_ylim(0, 3)
-            ax_pass.set_xticks([0.5, 1.5, 2.5]); ax_pass.set_xticklabels(['LEFT', 'MIDDLE', 'RIGHT'], color='#FFFFFF', fontsize=11, fontweight='heavy')
-            ax_pass.set_yticks([0.5, 1.5, 2.5]); ax_pass.set_yticklabels(['SHORT (0-9y)', 'INTERMEDIATE (10-19y)', 'DEEP (20y+)'], color='#FFFFFF', fontsize=11, fontweight='heavy')
-            ax_pass.grid(False)
-            ax_pass.tick_params(length=0)
+                zone_coords = {7: (0, 2), 8: (1, 2), 9: (2, 2), 4: (0, 1), 5: (1, 1), 6: (2, 1), 1: (0, 0), 2: (1, 0), 3: (2, 0)}
+                for z, (gx, gy) in zone_coords.items():
+                    z_df = filtered_df[filtered_df['PASS ZONE'] == z]
+                    total = len(z_df)
+                    comp = z_df['RESULT'].str.contains('Complete', case=False, na=False).sum()
+                    comp_pct = (comp / total * 100) if total > 0 else 0
+                    avg_gn = z_df['GN/LS'].mean() if total > 0 else 0
+                    exp = (z_df['GN/LS'] >= 15).sum()
+                    
+                    is_selected = (st.session_state['off_pass_zone'] == z)
+                    if is_selected:
+                        box_col = '#0284C7'; badge = '👉 INSPECTING'; edge_c = '#FDE047'; lw = 3.5
+                    else:
+                        box_col = '#064E3B' if (avg_gn >= 10 or comp_pct >= 65) else ('#78350F' if (avg_gn >= 6 or comp_pct >= 50) else '#7F1D1D')
+                        badge = '🔥 HIGH PRODUCTION' if (avg_gn >= 10 or comp_pct >= 65) else ('⚖️ CONTESTED' if (avg_gn >= 6 or comp_pct >= 50) else '❄️ LOW OUTPUT')
+                        edge_c = '#38BDF8'; lw = 1.5
 
-            zone_coords = {7: (0, 2), 8: (1, 2), 9: (2, 2), 4: (0, 1), 5: (1, 1), 6: (2, 1), 1: (0, 0), 2: (1, 0), 3: (2, 0)}
-            for z, (gx, gy) in zone_coords.items():
-                z_df = filtered_df[filtered_df['PASS ZONE'] == z]
-                total = len(z_df)
-                comp = z_df['RESULT'].str.contains('Complete', case=False, na=False).sum()
-                comp_pct = (comp / total * 100) if total > 0 else 0
-                succ_pct = (z_df['DEF_SUCCESS'].mean() * 100) if total > 0 else 0
-                avg_gn = z_df['GN/LS'].mean() if total > 0 else 0
-                exp = (z_df['GN/LS'] >= 15).sum()
+                    rect = patches.Rectangle((gx, gy), 1, 1, facecolor=box_col, edgecolor=edge_c, linewidth=lw, alpha=0.85)
+                    ax_pass.add_patch(rect)
+                    ax_pass.text(gx + 0.5, gy + 0.80, f"ZONE {z}", ha='center', color='#FFFFFF', fontsize=12, fontweight='heavy')
+                    ax_pass.text(gx + 0.5, gy + 0.60, f"{total} Tgts ({comp_pct:.0f}% Comp)", ha='center', color='#E2E8F0', fontsize=10, fontweight='bold')
+                    ax_pass.text(gx + 0.5, gy + 0.40, f"YPA: {avg_gn:.1f} yds", ha='center', color='#FFFFFF', fontsize=10.5, fontweight='heavy')
+                    ax_pass.text(gx + 0.5, gy + 0.22, f"Explosive Passes: {exp}", ha='center', color='#FDE047' if exp > 1 else '#94A3B8', fontsize=9.5, fontweight='bold')
+                    ax_pass.text(gx + 0.5, gy + 0.08, badge, ha='center', color='#FDE047', fontsize=8.5, fontweight='heavy')
+
+                ax_pass.set_title(f"ALBERS QC // Our QB Passing Sector Spray Chart", color='#FFFFFF', fontsize=13, fontweight='heavy', pad=12)
+                st.pyplot(fig_off)
+
+            with col_radar_click:
+                st.markdown("##### 🎯 Click to Inspect Sector:")
+                k_c1, k_c2, k_c3 = st.columns(3)
+                if k_c1.button("Zone 7", key="btn_off7"): st.session_state['off_pass_zone'] = 7
+                if k_c2.button("Zone 8", key="btn_off8"): st.session_state['off_pass_zone'] = 8
+                if k_c3.button("Zone 9", key="btn_off9"): st.session_state['off_pass_zone'] = 9
+
+                if k_c1.button("Zone 4", key="btn_off4"): st.session_state['off_pass_zone'] = 4
+                if k_c2.button("Zone 5", key="btn_off5"): st.session_state['off_pass_zone'] = 5
+                if k_c3.button("Zone 6", key="btn_off6"): st.session_state['off_pass_zone'] = 6
+
+                if k_c1.button("Zone 1", key="btn_off1"): st.session_state['off_pass_zone'] = 1
+                if k_c2.button("Zone 2", key="btn_off2"): st.session_state['off_pass_zone'] = 2
+                if k_c3.button("Zone 3", key="btn_off3"): st.session_state['off_pass_zone'] = 3
+
+                if st.button("🔄 Clear Sector Selection", key="btn_clear_offpass"):
+                    st.session_state['off_pass_zone'] = None
+                    st.rerun()
+
+            if st.session_state['off_pass_zone']:
+                pz = st.session_state['off_pass_zone']
+                pz_df = filtered_df[filtered_df['PASS ZONE'] == pz]
                 
-                is_selected = (st.session_state['self_pass_zone'] == z)
-                if is_selected:
-                    box_col = '#0284C7'; badge = '👉 INSPECTING'; edge_c = '#FDE047'; lw = 3.5
-                else:
-                    box_col = '#7F1D1D' if (avg_gn >= 15 or succ_pct < 45) else ('#78350F' if (avg_gn >= 8 or succ_pct < 55) else '#064E3B')
-                    badge = '⚠️ VULNERABLE' if (avg_gn >= 15 or succ_pct < 45) else ('⚡ CONTESTED' if (avg_gn >= 8 or succ_pct < 55) else '🛡️ LOCKDOWN')
-                    edge_c = '#38BDF8'; lw = 1.5
+                st.markdown(f"""
+                <div class="dossier-box">
+                    <div class="dossier-title">🎯 QB TARGET DOSSIER: ZONE {pz} PRODUCTION</div>
+                """, unsafe_allow_html=True)
+                
+                if len(pz_df) > 0:
+                    p_c1, p_c2, p_c3, p_c4 = st.columns(4)
+                    p_c1.metric(f"Zone {pz} Passes", len(pz_df))
+                    p_c2.metric("Completion %", f"{(pz_df['RESULT'].str.contains('Complete', case=False, na=False).mean())*100:.1f}%")
+                    p_c3.metric("Yards Per Attempt", f"{pz_df['GN/LS'].mean():.1f} YPA")
+                    p_c4.metric("Explosives (>=15y)", (pz_df['GN/LS'] >= 15).sum())
 
-                rect = patches.Rectangle((gx, gy), 1, 1, facecolor=box_col, edgecolor=edge_c, linewidth=lw, alpha=0.85)
-                ax_pass.add_patch(rect)
-                ax_pass.text(gx + 0.5, gy + 0.80, f"ZONE {z}", ha='center', color='#FFFFFF', fontsize=12, fontweight='heavy')
-                ax_pass.text(gx + 0.5, gy + 0.60, f"{total} Tgts ({comp_pct:.0f}% Comp)", ha='center', color='#E2E8F0', fontsize=10, fontweight='bold')
-                ax_pass.text(gx + 0.5, gy + 0.40, f"Win: {succ_pct:.0f}% | Avg: {avg_gn:.1f}y", ha='center', color='#FFFFFF', fontsize=10.5, fontweight='heavy')
-                ax_pass.text(gx + 0.5, gy + 0.22, f"Explosives: {exp}", ha='center', color='#FCA5A5' if exp > 1 else '#94A3B8', fontsize=9.5, fontweight='bold')
-                ax_pass.text(gx + 0.5, gy + 0.08, badge, ha='center', color='#FDE047', fontsize=8.5, fontweight='heavy')
+                    st.markdown(f"**Our Pass Concepts Executed in Zone {pz}:**")
+                    st.dataframe(pz_df[['PLAY #', 'DN', 'DIST', 'OFF FORM', 'OFF PLAY', 'DEF FRONT', 'COVERAGE', 'GN/LS', 'RESULT', 'OFF_SUCCESS']], use_container_width=True)
+                    pz_playlist = pz_df['PLAY #'].astype(str).tolist()
+                    st.text_area(f"Zone {pz} Film Playlist ({len(pz_playlist)} plays):", ", ".join(pz_playlist), height=70)
+                st.markdown("</div>", unsafe_allow_html=True)
 
-            ax_pass.set_title(f"ALBERS QC // Passing Radar vs {selected_opp}", color='#FFFFFF', fontsize=13, fontweight='heavy', pad=12)
-            st.pyplot(fig_self)
+            st.markdown("---")
 
-        with col_radar_click:
-            st.markdown("##### 🎯 Click to Inspect Zone:")
-            k_c1, k_c2, k_c3 = st.columns(3)
-            if k_c1.button("Zone 7", key="btn_s7"): st.session_state['self_pass_zone'] = 7
-            if k_c2.button("Zone 8", key="btn_s8"): st.session_state['self_pass_zone'] = 8
-            if k_c3.button("Zone 9", key="btn_s9"): st.session_state['self_pass_zone'] = 9
-
-            if k_c1.button("Zone 4", key="btn_s4"): st.session_state['self_pass_zone'] = 4
-            if k_c2.button("Zone 5", key="btn_s5"): st.session_state['self_pass_zone'] = 5
-            if k_c3.button("Zone 6", key="btn_s6"): st.session_state['self_pass_zone'] = 6
-
-            if k_c1.button("Zone 1", key="btn_s1"): st.session_state['self_pass_zone'] = 1
-            if k_c2.button("Zone 2", key="btn_s2"): st.session_state['self_pass_zone'] = 2
-            if k_c3.button("Zone 3", key="btn_s3"): st.session_state['self_pass_zone'] = 3
-
-            if st.button("🔄 Clear Zone Selection", key="btn_clear_spass"):
-                st.session_state['self_pass_zone'] = None
+            # 100-Yard Field: Offensive Production
+            st.subheader("📍 100-Yard Field: Offensive Execution & Big Strikes")
+            f_cols = st.columns(9)
+            if f_cols[0].button("1. Coming Out", key="off_f1"): st.session_state['off_field_zone'] = "1. Coming Out (-1 to -10)"
+            if f_cols[1].button("2. Backed Up", key="off_f2"): st.session_state['off_field_zone'] = "2. Backed Up (-11 to -20)"
+            if f_cols[2].button("3. Open Field", key="off_f3"): st.session_state['off_field_zone'] = "3. Open Field (Own 21 - Opp 41)"
+            if f_cols[3].button("4. Fringe Zone", key="off_f4"): st.session_state['off_field_zone'] = "4. Fringe Zone (Opp 40-30)"
+            if f_cols[5].button("5. Scoring Zone", key="off_f5"): st.session_state['off_field_zone'] = "5. Scoring Zone (Opp 29-21)"
+            if f_cols[5].button("6. High Red", key="off_f6"): st.session_state['off_field_zone'] = "6. High Red Zone (20-11)"
+            if f_cols[7].button("7. Low Red", key="off_f7"): st.session_state['off_field_zone'] = "7. Low Red Zone (10-6)"
+            if f_cols[8].button("8. Goal Line", key="off_f8"): st.session_state['off_field_zone'] = "8. Goal Line (5 & In)"
+            if f_cols[8].button("🔄 Show All", key="off_fall"): 
+                st.session_state['off_field_zone'] = None
                 st.rerun()
 
-        # PASSING ZONE DOSSIER
-        if st.session_state['self_pass_zone']:
-            pz = st.session_state['self_pass_zone']
-            pz_df = filtered_df[filtered_df['PASS ZONE'] == pz]
-            
-            st.markdown(f"""
-            <div class="dossier-box">
-                <div class="dossier-title">🎯 TELEMETRY DOSSIER: ZONE {pz} PASS DEFENSE</div>
-            """, unsafe_allow_html=True)
-            
-            if len(pz_df) > 0:
-                p_c1, p_c2, p_c3, p_c4 = st.columns(4)
-                p_c1.metric(f"Zone {pz} Targets", len(pz_df))
-                p_c2.metric("Comp % Allowed", f"{(pz_df['RESULT'].str.contains('Complete', case=False, na=False).mean())*100:.1f}%")
-                p_c3.metric("Def Win Rate", f"{pz_df['DEF_SUCCESS'].mean()*100:.1f}%")
-                p_c4.metric("Avg Yards Allowed", f"{pz_df['GN/LS'].mean():.1f} yds")
+            fig_field = plt.figure(figsize=(16, 5), dpi=150, facecolor='#0B1120')
+            ax_field = fig_field.add_axes([0.05, 0.12, 0.90, 0.78])
+            render_8_zone_field(ax_field, f"ALBERS QC // 100-Yard Field: Big Plays Produced (★) vs. Turnovers/Sacks Conceded (✖)", 
+                                highlight_zone=st.session_state['off_field_zone'])
 
-                st.markdown(f"**Play Breakdown for Zone {pz}:**")
-                st.dataframe(pz_df[['PLAY #', 'DN', 'DIST', 'OFF FORM', 'OFF PLAY', 'DEF FRONT', 'COVERAGE', 'GN/LS', 'RESULT', 'DEF_SUCCESS']], use_container_width=True)
-                
-                pz_playlist = pz_df['PLAY #'].astype(str).tolist()
-                st.text_area(f"Zone {pz} Video Cutup Playlist ({len(pz_playlist)} plays):", ", ".join(pz_playlist), height=70)
+            np.random.seed(42)
+            def calc_y(h, d):
+                base = 20.0 if h == 'L' else (33.3 if h == 'R' else 26.65)
+                offset = -4 if d == 'L' else (4 if d == 'R' else 0)
+                return base + offset + np.random.uniform(-2, 2)
+
+            field_plot_df = filtered_df
+            if st.session_state['off_field_zone']:
+                field_plot_df = filtered_df[filtered_df['FIELD_ZONE'] == st.session_state['off_field_zone']]
+
+            for _, row in field_plot_df[field_plot_df['GN/LS'] >= 20].iterrows():
+                ax_field.scatter(row['FIELD_X'], calc_y(row['HASH'], row['PLAY DIR']), s=140, color='#F59E0B', marker='*', edgecolors='yellow', zorder=5)
+            for _, row in field_plot_df[field_plot_df['RESULT'].str.contains('Interception|Fumble|Sack|Safety', case=False, na=False)].iterrows():
+                ax_field.scatter(row['FIELD_X'], calc_y(row['HASH'], row['PLAY DIR']), s=80, color='#EF4444', marker='X', edgecolors='white', zorder=4)
+
+            st.pyplot(fig_field)
+
+            # Self-Scout Predictability Tells
+            st.markdown("---")
+            st.subheader("⚠️ Offensive Self-Scout: Are We Predictable? (Formation Tells)")
+            form_self = filtered_df.groupby('OFF FORM').agg(
+                Snaps=('PLAY #', 'count'),
+                Run_Snaps=('PLAY TYPE', lambda x: (x == 'Run').sum()),
+                Pass_Snaps=('PLAY TYPE', lambda x: (x == 'Pass').sum()),
+                Avg_Gain=('GN/LS', 'mean'),
+                Success_Rate=('OFF_SUCCESS', lambda x: x.mean() * 100)
+            ).reset_index()
+
+            if len(form_self) > 0:
+                form_self['Run %'] = (form_self['Run_Snaps'] / form_self['Snaps']) * 100
+                form_self['Pass %'] = (form_self['Pass_Snaps'] / form_self['Snaps']) * 100
+                form_filtered_self = form_self[form_self['Snaps'] >= 5].copy()
+
+                def self_tell(row):
+                    if row['Run %'] >= 65: return "🚨 SELF-SCOUT ALERT: 65%+ RUN (TIPPED)"
+                    elif row['Pass %'] >= 75: return "🚨 SELF-SCOUT ALERT: 75%+ PASS (TIPPED)"
+                    elif row['Success_Rate'] >= 55: return "🟢 HIGH PRODUCTION"
+                    return "⚖️ BALANCED"
+
+                form_filtered_self['OC Self-Scout Tell'] = form_filtered_self.apply(self_tell, axis=1)
+                st.dataframe(form_filtered_self.sort_values(by='Snaps', ascending=False)[['OFF FORM', 'Snaps', 'Run %', 'Pass %', 'Avg_Gain', 'Success_Rate', 'OC Self-Scout Tell']], use_container_width=True)
+
+    with tab_2:
+        st.subheader(f"🛡️ Albers QC // Opponent Defense Reconnaissance: {selected_opp}")
+        st.write("Audits how opposing defenses align against our offensive scheme:")
+
+        d_col1, d_col2 = st.columns(2)
+        with d_col1:
+            st.markdown("##### Opponent Defensive Fronts Faced & Our Success")
+            front_rec = filtered_df.groupby('DEF FRONT').agg(
+                Snaps=('PLAY #', 'count'),
+                Our_Yards=('GN/LS', 'mean'),
+                Our_Success=('OFF_SUCCESS', lambda x: x.mean() * 100),
+                Sacks=('RESULT', lambda x: x.str.contains('Sack', case=False, na=False).sum())
+            ).reset_index().sort_values(by='Snaps', ascending=False)
+            st.dataframe(front_rec, use_container_width=True)
+
+        with d_col2:
+            st.markdown("##### Opponent Coverage Distribution & Our Big Plays")
+            cov_rec = filtered_df.groupby('COVERAGE').agg(
+                Snaps=('PLAY #', 'count'),
+                Our_YPA=('GN/LS', 'mean'),
+                Explosive_Gains=('GN/LS', lambda x: (x >= 15).sum()),
+                Our_Success=('OFF_SUCCESS', lambda x: x.mean() * 100)
+            ).reset_index().sort_values(by='Snaps', ascending=False)
+            st.dataframe(cov_rec, use_container_width=True)
+
+    with tab_3:
+        st.subheader("💬 Ask Coach Albers // Offensive QC Assistant")
+        st.markdown("##### ⚡ Offensive Play-Caller Quick Queries:")
+        o_cols1 = st.columns(3)
+        q_off_selected = None
+        if o_cols1[0].button("🚀 Top Run on 2nd & Short?"): q_off_selected = "What is our best run concept on 2nd & Short?"
+        if o_cols1[1].button("🎯 QB Targets in High Red?"): q_off_selected = "Where does our QB throw in the High Red Zone?"
+        if o_cols1[2].button("🧱 Goal-Line Run Arsenal?"): q_off_selected = "What are our top goal line run concepts?"
+
+        o_cols2 = st.columns(3)
+        if o_cols2[0].button("⚠️ Are we tipping by Formation?"): q_off_selected = "Are we tipping run vs pass by formation?"
+        if o_cols2[1].button("🛡️ What Coverage hurts our pass?"): q_off_selected = "What defensive coverage holds us to lowest yards?"
+        if o_cols2[2].button("💥 Top Explosive Pass Schemes?"): q_off_selected = "Show all explosive pass concepts"
+
+        user_off_query = st.text_input("Ask Coach Albers an offensive question:", 
+                                       value=q_off_selected if q_off_selected else "", 
+                                       placeholder="e.g. What is our best run concept on 2nd & Short?")
+
+        if user_off_query:
+            q_lower = user_off_query.lower()
+            where_c = []
+            if '2nd & short' in q_lower: where_c.append("DN = 2 AND DIST <= 3")
+            elif '3rd' in q_lower: where_c.append("DN = 3")
+            if 'high red' in q_lower: where_c.append("FIELD_ZONE LIKE '%High Red%'")
+            elif 'goal line' in q_lower: where_c.append("FIELD_ZONE LIKE '%Goal Line%'")
+            if 'run' in q_lower: where_c.append("PLAY_TYPE_CLEAN = 'Run'")
+            elif 'pass' in q_lower: where_c.append("PLAY_TYPE_CLEAN = 'Pass'")
+
+            w_sql = " AND ".join(where_c) if where_c else "1=1"
+            if 'coverage' in q_lower:
+                sql_off = f"""SELECT "COVERAGE" as Coverage, count(*) as Snaps, round(avg(OFF_SUCCESS)*100, 1) as "Our_Success_%", round(avg("GN/LS"), 2) as "Our_Yards_Per_Play", group_concat("PLAY #", ', ') as Play_List FROM snaps WHERE {w_sql} AND "COVERAGE" IS NOT NULL GROUP BY "COVERAGE" ORDER BY "Our_Success_%" ASC"""
+            elif 'formation' in q_lower:
+                sql_off = f"""SELECT "OFF FORM" as Formation, count(*) as Snaps, round((sum(case when "PLAY TYPE" = 'Run' then 1.0 else 0.0 end)/count(*))*100, 1) as "Run_%", round((sum(case when "PLAY TYPE" = 'Pass' then 1.0 else 0.0 end)/count(*))*100, 1) as "Pass_%", round(avg("GN/LS"), 2) as "Avg_Gain" FROM snaps WHERE {w_sql} AND "OFF FORM" IS NOT NULL GROUP BY "OFF FORM" HAVING count(*) >= 4 ORDER BY Snaps DESC"""
             else:
-                st.write(f"No snaps logged in Zone {pz} under current filters.")
-            st.markdown("</div>", unsafe_allow_html=True)
+                sql_off = f"""SELECT "PLAY TYPE", coalesce("OFF PLAY", 'Base Concept') as Concept, count(*) as Snaps, round(avg(OFF_SUCCESS)*100, 1) as "Success_Rate_%", round(avg("GN/LS"), 1) as "Avg_Gain", group_concat("PLAY #", ', ') as Play_List FROM snaps WHERE {w_sql} GROUP BY "PLAY TYPE", Concept ORDER BY "Success_Rate_%" DESC"""
+
+            res_off_df = pd.read_sql_query(sql_off, conn)
+            st.markdown("---")
+            if len(res_off_df) > 0:
+                st.dataframe(res_off_df[[c for c in res_off_df.columns if c != 'Play_List']], use_container_width=True)
+                st.markdown("""<div class="coach-notes-box"><div class="coach-notes-title">🧠 COACH ALBERS' OFFENSIVE PLAY-CALLING DIRECTIVE:</div>""", unsafe_allow_html=True)
+                st.markdown(f"* Top producing scheme in this situation is **`{res_off_df.iloc[0].get('Concept', res_off_df.iloc[0].get('Coverage', 'Primary'))}`**.")
+                st.markdown("</div>", unsafe_allow_html=True)
+                if 'Play_List' in res_off_df.columns:
+                    p_all = [x.strip() for p in res_off_df['Play_List'].dropna() for x in str(p).split(',') if x.strip()]
+                    st.text_area("Filtered Offensive Play Numbers:", ", ".join(list(dict.fromkeys(p_all))), height=75)
+
+# =========================================================================
+# UNIT 2: DEFENSIVE SUITE (DC MODE - FULL 24-QUERY ARSENAL RESTORED)
+# =========================================================================
+else:
+    with tab_1:
+        st.subheader(f"🛡️ Albers QC // Defensive Self-Scout Audit: {selected_opp}")
+        if 'self_pass_zone' not in st.session_state: st.session_state['self_pass_zone'] = None
+        if 'self_field_zone' not in st.session_state: st.session_state['self_field_zone'] = None
+
+        snaps_self = len(filtered_df)
+        if snaps_self > 0:
+            c1, c2, c3, c4 = st.columns(4)
+            c1.metric("Snaps Evaluated", snaps_self)
+            c2.metric("Defensive Win Rate", f"{filtered_df['DEF_SUCCESS'].mean():.1%}")
+            c3.metric("Avg Yards Allowed", f"{filtered_df['GN/LS'].mean():.2f} yds")
+            exp_count = ((filtered_df['GN/LS'] >= 15) & (filtered_df['PLAY_TYPE_CLEAN'] == 'Pass')).sum() + \
+                        ((filtered_df['GN/LS'] >= 10) & (filtered_df['PLAY_TYPE_CLEAN'] == 'Run')).sum()
+            c4.metric("Explosives Allowed", f"{exp_count} ({(exp_count/snaps_self)*100:.1f}%)")
+
+            st.markdown("---")
+            st.subheader("📍 Albers QC // Spatial & Tactical Battle Boards")
+
+            col_radar_chart, col_radar_click = st.columns([3, 1])
+
+            with col_radar_chart:
+                fig_self = plt.figure(figsize=(10, 8), dpi=150, facecolor='#0B1120')
+                ax_pass = fig_self.add_axes([0.05, 0.05, 0.90, 0.88], facecolor='#111827')
+                ax_pass.set_xlim(0, 3); ax_pass.set_ylim(0, 3)
+                ax_pass.set_xticks([0.5, 1.5, 2.5]); ax_pass.set_xticklabels(['LEFT', 'MIDDLE', 'RIGHT'], color='#FFFFFF', fontsize=11, fontweight='heavy')
+                ax_pass.set_yticks([0.5, 1.5, 2.5]); ax_pass.set_yticklabels(['SHORT (0-9y)', 'INTERMEDIATE (10-19y)', 'DEEP (20y+)'], color='#FFFFFF', fontsize=11, fontweight='heavy')
+                ax_pass.grid(False); ax_pass.tick_params(length=0)
+
+                zone_coords = {7: (0, 2), 8: (1, 2), 9: (2, 2), 4: (0, 1), 5: (1, 1), 6: (2, 1), 1: (0, 0), 2: (1, 0), 3: (2, 0)}
+                for z, (gx, gy) in zone_coords.items():
+                    z_df = filtered_df[filtered_df['PASS ZONE'] == z]
+                    total = len(z_df)
+                    comp = z_df['RESULT'].str.contains('Complete', case=False, na=False).sum()
+                    comp_pct = (comp / total * 100) if total > 0 else 0
+                    succ_pct = (z_df['DEF_SUCCESS'].mean() * 100) if total > 0 else 0
+                    avg_gn = z_df['GN/LS'].mean() if total > 0 else 0
+                    exp = (z_df['GN/LS'] >= 15).sum()
+                    
+                    is_selected = (st.session_state['self_pass_zone'] == z)
+                    if is_selected:
+                        box_col = '#0284C7'; badge = '👉 INSPECTING'; edge_c = '#FDE047'; lw = 3.5
+                    else:
+                        box_col = '#7F1D1D' if (avg_gn >= 15 or succ_pct < 45) else ('#78350F' if (avg_gn >= 8 or succ_pct < 55) else '#064E3B')
+                        badge = '⚠️ VULNERABLE' if (avg_gn >= 15 or succ_pct < 45) else ('⚡ CONTESTED' if (avg_gn >= 8 or succ_pct < 55) else '🛡️ LOCKDOWN')
+                        edge_c = '#38BDF8'; lw = 1.5
+
+                    rect = patches.Rectangle((gx, gy), 1, 1, facecolor=box_col, edgecolor=edge_c, linewidth=lw, alpha=0.85)
+                    ax_pass.add_patch(rect)
+                    ax_pass.text(gx + 0.5, gy + 0.80, f"ZONE {z}", ha='center', color='#FFFFFF', fontsize=12, fontweight='heavy')
+                    ax_pass.text(gx + 0.5, gy + 0.60, f"{total} Tgts ({comp_pct:.0f}% Comp)", ha='center', color='#E2E8F0', fontsize=10, fontweight='bold')
+                    ax_pass.text(gx + 0.5, gy + 0.40, f"Win: {succ_pct:.0f}% | Avg: {avg_gn:.1f}y", ha='center', color='#FFFFFF', fontsize=10.5, fontweight='heavy')
+                    ax_pass.text(gx + 0.5, gy + 0.22, f"Explosives: {exp}", ha='center', color='#FCA5A5' if exp > 1 else '#94A3B8', fontsize=9.5, fontweight='bold')
+                    ax_pass.text(gx + 0.5, gy + 0.08, badge, ha='center', color='#FDE047', fontsize=8.5, fontweight='heavy')
+
+                ax_pass.set_title(f"ALBERS QC // Passing Radar vs {selected_opp}", color='#FFFFFF', fontsize=13, fontweight='heavy', pad=12)
+                st.pyplot(fig_self)
+
+            with col_radar_click:
+                st.markdown("##### 🎯 Click to Inspect Zone:")
+                k_c1, k_c2, k_c3 = st.columns(3)
+                if k_c1.button("Zone 7", key="btn_s7"): st.session_state['self_pass_zone'] = 7
+                if k_c2.button("Zone 8", key="btn_s8"): st.session_state['self_pass_zone'] = 8
+                if k_c3.button("Zone 9", key="btn_s9"): st.session_state['self_pass_zone'] = 9
+
+                if k_c1.button("Zone 4", key="btn_s4"): st.session_state['self_pass_zone'] = 4
+                if k_c2.button("Zone 5", key="btn_s5"): st.session_state['self_pass_zone'] = 5
+                if k_c3.button("Zone 6", key="btn_s6"): st.session_state['self_pass_zone'] = 6
+
+                if k_c1.button("Zone 1", key="btn_s1"): st.session_state['self_pass_zone'] = 1
+                if k_c2.button("Zone 2", key="btn_s2"): st.session_state['self_pass_zone'] = 2
+                if k_c3.button("Zone 3", key="btn_s3"): st.session_state['self_pass_zone'] = 3
+
+                if st.button("🔄 Clear Zone Selection", key="btn_clear_spass"):
+                    st.session_state['self_pass_zone'] = None
+                    st.rerun()
+
+            if st.session_state['self_pass_zone']:
+                pz = st.session_state['self_pass_zone']
+                pz_df = filtered_df[filtered_df['PASS ZONE'] == pz]
+                st.markdown(f"""
+                <div class="dossier-box">
+                    <div class="dossier-title">🎯 TELEMETRY DOSSIER: ZONE {pz} PASS DEFENSE</div>
+                """, unsafe_allow_html=True)
+                if len(pz_df) > 0:
+                    p_c1, p_c2, p_c3, p_c4 = st.columns(4)
+                    p_c1.metric(f"Zone {pz} Targets", len(pz_df))
+                    p_c2.metric("Comp % Allowed", f"{(pz_df['RESULT'].str.contains('Complete', case=False, na=False).mean())*100:.1f}%")
+                    p_c3.metric("Def Win Rate", f"{pz_df['DEF_SUCCESS'].mean()*100:.1f}%")
+                    p_c4.metric("Avg Yards Allowed", f"{pz_df['GN/LS'].mean():.1f} yds")
+                    st.dataframe(pz_df[['PLAY #', 'DN', 'DIST', 'OFF FORM', 'OFF PLAY', 'DEF FRONT', 'COVERAGE', 'GN/LS', 'RESULT', 'DEF_SUCCESS']], use_container_width=True)
+                    pz_playlist = pz_df['PLAY #'].astype(str).tolist()
+                    st.text_area(f"Zone {pz} Video Cutup Playlist ({len(pz_playlist)} plays):", ", ".join(pz_playlist), height=70)
+                st.markdown("</div>", unsafe_allow_html=True)
+
+            st.markdown("---")
+
+            # 100-Yard Field & Territory Selector
+            st.subheader("📍 100-Yard Field & Interactive Territory Selector")
+            f_cols = st.columns(9)
+            if f_cols[0].button("1. Coming Out", key="fbtn_s1"): st.session_state['self_field_zone'] = "1. Coming Out (-1 to -10)"
+            if f_cols[1].button("2. Backed Up", key="fbtn_s2"): st.session_state['self_field_zone'] = "2. Backed Up (-11 to -20)"
+            if f_cols[2].button("3. Open Field", key="fbtn_s3"): st.session_state['self_field_zone'] = "3. Open Field (Own 21 - Opp 41)"
+            if f_cols[3].button("4. Fringe Zone", key="fbtn_s4"): st.session_state['self_field_zone'] = "4. Fringe Zone (Opp 40-30)"
+            if f_cols[4].button("5. Scoring Zone", key="fbtn_s5"): st.session_state['self_field_zone'] = "5. Scoring Zone (Opp 29-21)"
+            if f_cols[5].button("6. High Red", key="fbtn_s6"): st.session_state['self_field_zone'] = "6. High Red Zone (20-11)"
+            if f_cols[7].button("7. Low Red", key="fbtn_s7"): st.session_state['self_field_zone'] = "7. Low Red Zone (10-6)"
+            if f_cols[8].button("8. Goal Line", key="fbtn_s8"): st.session_state['self_field_zone'] = "8. Goal Line (5 & In)"
+            if f_cols[8].button("🔄 Show All", key="fbtn_s_all"): 
+                st.session_state['self_field_zone'] = None
+                st.rerun()
+
+            fig_field = plt.figure(figsize=(16, 5), dpi=150, facecolor='#0B1120')
+            ax_field = fig_field.add_axes([0.05, 0.12, 0.90, 0.78])
+            render_8_zone_field(ax_field, f"ALBERS QC // 100-Yard Field: Explosives (★) vs. Havoc/Turnovers (◆)", 
+                                highlight_zone=st.session_state['self_field_zone'])
+
+            np.random.seed(42)
+            def calc_y(h, d):
+                base = 20.0 if h == 'L' else (33.3 if h == 'R' else 26.65)
+                offset = -4 if d == 'L' else (4 if d == 'R' else 0)
+                return base + offset + np.random.uniform(-2, 2)
+
+            field_plot_df = filtered_df
+            if st.session_state['self_field_zone']:
+                field_plot_df = filtered_df[filtered_df['FIELD_ZONE'] == st.session_state['self_field_zone']]
+
+            for _, row in field_plot_df[field_plot_df['GN/LS'] >= 20].iterrows():
+                ax_field.scatter(row['FIELD_X'], calc_y(row['HASH'], row['PLAY DIR']), s=140, color='#EF4444', marker='*', edgecolors='yellow', zorder=5)
+            for _, row in field_plot_df[field_plot_df['RESULT'].str.contains('Interception|Fumble|Sack|Safety', case=False, na=False)].iterrows():
+                ax_field.scatter(row['FIELD_X'], calc_y(row['HASH'], row['PLAY DIR']), s=80, color='#38BDF8', marker='D', edgecolors='white', zorder=4)
+
+            st.pyplot(fig_field)
+
+            if st.session_state['self_field_zone']:
+                fz = st.session_state['self_field_zone']
+                fz_df = filtered_df[filtered_df['FIELD_ZONE'] == fz]
+                st.markdown(f"""
+                <div class="dossier-box">
+                    <div class="dossier-title">📍 TERRITORY DOSSIER: {fz}</div>
+                """, unsafe_allow_html=True)
+                if len(fz_df) > 0:
+                    fz_c1, fz_c2, fz_c3, fz_c4 = st.columns(4)
+                    fz_c1.metric("Snaps in Territory", len(fz_df))
+                    fz_c2.metric("Defensive Win Rate", f"{fz_df['DEF_SUCCESS'].mean()*100:.1f}%")
+                    fz_c3.metric("Avg Yards Allowed", f"{fz_df['GN/LS'].mean():.2f} yds")
+                    fz_c4.metric("Explosives Conceded", (fz_df['GN/LS'] >= 15).sum())
+                    st.dataframe(fz_df[['PLAY #', 'DN', 'DIST', 'OFF FORM', 'OFF PLAY', 'DEF FRONT', 'COVERAGE', 'GN/LS', 'RESULT', 'DEF_SUCCESS']], use_container_width=True)
+                    fz_playlist = fz_df['PLAY #'].astype(str).tolist()
+                    st.text_area(f"{fz} Video Cutup Playlist ({len(fz_playlist)} plays):", ", ".join(fz_playlist), height=70)
+                st.markdown("</div>", unsafe_allow_html=True)
+
+    with tab_2:
+        st.subheader(f"🎯 Albers QC // Opponent Advance Reconnaissance: {selected_opp}")
+        o1, o2, o3, o4 = st.columns(4)
+        total_opp = len(scoped_df)
+        run_opp = (scoped_df['PLAY TYPE'] == 'Run').sum()
+        pass_opp = (scoped_df['PLAY TYPE'] == 'Pass').sum()
+        o1.metric("Total Snaps Scouted", total_opp)
+        o2.metric("Run / Pass Ratio", f"{(run_opp/total_opp)*100:.1f}% Run / {(pass_opp/total_opp)*100:.1f}% Pass" if total_opp>0 else "0%")
+        o3.metric("Opponent Offensive Success", f"{scoped_df['OFF_SUCCESS'].mean()*100:.1f}%")
+        o4.metric("Avg Yards Gained", f"{scoped_df['GN/LS'].mean():.2f} yds")
 
         st.markdown("---")
+        st.subheader("1. 8-Zone Field Tendency Cards")
+        zone_card_data = []
+        for z in ZONE_ORDER:
+            z_sub = scoped_df[scoped_df['FIELD_ZONE'] == z]
+            tot = len(z_sub)
+            if tot > 0:
+                r_c = (z_sub['PLAY TYPE'] == 'Run').sum()
+                p_c = (z_sub['PLAY TYPE'] == 'Pass').sum()
+                zone_card_data.append({
+                    "Field Zone": z,
+                    "Snaps": tot,
+                    "Run %": f"{(r_c/tot)*100:.1f}%",
+                    "Pass %": f"{(p_c/tot)*100:.1f}%",
+                    "Off Success %": f"{z_sub['OFF_SUCCESS'].mean()*100:.1f}%",
+                    "Avg Gain": f"{z_sub['GN/LS'].mean():.2f} yds",
+                    "Top Run Concept": get_top_concept(z_sub, 'Run'),
+                    "Top Pass Concept": get_top_concept(z_sub, 'Pass')
+                })
+        if zone_card_data: st.dataframe(pd.DataFrame(zone_card_data), use_container_width=True)
 
-        # 100-YARD FIELD & INTERACTIVE STRIP
-        st.subheader("📍 100-Yard Field & Interactive Territory Selector")
-        st.markdown("**Click any Field Zone below to inspect its plays and telemetry:**")
-        f_cols = st.columns(9)
-        if f_cols[0].button("1. Coming Out", key="fbtn_s1"): st.session_state['self_field_zone'] = "1. Coming Out (-1 to -10)"
-        if f_cols[1].button("2. Backed Up", key="fbtn_s2"): st.session_state['self_field_zone'] = "2. Backed Up (-11 to -20)"
-        if f_cols[2].button("3. Open Field", key="fbtn_s3"): st.session_state['self_field_zone'] = "3. Open Field (Own 21 - Opp 41)"
-        if f_cols[3].button("4. Fringe Zone", key="fbtn_s4"): st.session_state['self_field_zone'] = "4. Fringe Zone (Opp 40-30)"
-        if f_cols[4].button("5. Scoring Zone", key="fbtn_s5"): st.session_state['self_field_zone'] = "5. Scoring Zone (Opp 29-21)"
-        if f_cols[5].button("6. High Red", key="fbtn_s6"): st.session_state['self_field_zone'] = "6. High Red Zone (20-11)"
-        if f_cols[7].button("7. Low Red", key="fbtn_s7"): st.session_state['self_field_zone'] = "7. Low Red Zone (10-6)"
-        if f_cols[7].button("8. Goal Line", key="fbtn_s8"): st.session_state['self_field_zone'] = "8. Goal Line (5 & In)"
-        if f_cols[8].button("🔄 Show All", key="fbtn_s_all"): 
-            st.session_state['self_field_zone'] = None
-            st.rerun()
+    # --- TAB 3: THE COMPLETE 24-QUERY DEFENSIVE ARSENAL RESTORED ---
+    with tab_3:
+        st.subheader("💬 Ask Coach Albers // Defensive QC Assistant")
+        st.markdown("Direct tactical inquiries across your defense, opponents, 8 field zones, hash marks, formations, and down/distance situations.")
 
-        fig_field = plt.figure(figsize=(16, 5), dpi=150, facecolor='#0B1120')
-        ax_field = fig_field.add_axes([0.05, 0.12, 0.90, 0.78])
-        render_8_zone_field(ax_field, f"ALBERS QC // 100-Yard Field: Explosives (★) vs. Havoc/Turnovers (◆)", 
-                            highlight_zone=st.session_state['self_field_zone'])
+        st.markdown("##### ⚡ Quick Coaching Arsenal by Tactical Pillar:")
+        tactical_pillar = st.radio(
+            "Choose Tactical Focus:",
+            ["💰 Money Downs", "📍 Hash & Field Zones", "🎯 Formation Tells", "🛡️ Self-Scout Leaks"],
+            horizontal=True
+        )
 
-        np.random.seed(42)
-        def calc_y(h, d):
-            base = 20.0 if h == 'L' else (33.3 if h == 'R' else 26.65)
-            offset = -4 if d == 'L' else (4 if d == 'R' else 0)
-            return base + offset + np.random.uniform(-2, 2)
+        q_def_selected = None
 
-        field_plot_df = filtered_df
-        if st.session_state['self_field_zone']:
-            field_plot_df = filtered_df[filtered_df['FIELD_ZONE'] == st.session_state['self_field_zone']]
+        if tactical_pillar == "💰 Money Downs":
+            qc_c1, qc_c2, qc_c3 = st.columns(3)
+            if qc_c1.button("📍 Top Front in Low Red Zone?"): q_def_selected = "What is our top-performing front in the Low Red Zone?"
+            if qc_c2.button("🎯 Opponent 3rd & Med in Fringe?"): q_def_selected = "What does the opponent run on 3rd & Medium in the Fringe Zone?"
+            if qc_c3.button("🛡️ Best Coverage on 3rd & Long?"): q_def_selected = "What is our best coverage call on 3rd & Long?"
 
-        for _, row in field_plot_df[field_plot_df['GN/LS'] >= 20].iterrows():
-            ax_field.scatter(row['FIELD_X'], calc_y(row['HASH'], row['PLAY DIR']), s=140, color='#EF4444', marker='*', edgecolors='yellow', zorder=5)
-        for _, row in field_plot_df[field_plot_df['RESULT'].str.contains('Interception|Fumble|Sack|Safety', case=False, na=False)].iterrows():
-            ax_field.scatter(row['FIELD_X'], calc_y(row['HASH'], row['PLAY DIR']), s=80, color='#38BDF8', marker='D', edgecolors='white', zorder=4)
+            qc_c4, qc_c5, qc_c6 = st.columns(3)
+            if qc_c4.button("🛑 4th Down Stop Calls?"): q_def_selected = "What is our top front and stop rate on 4th Down?"
+            if qc_c5.button("🚀 2nd & Short Shot Alert?"): q_def_selected = "What does the opponent run on 2nd & Short?"
+            if qc_c6.button("🧱 Goal-Line Run Concepts?"): q_def_selected = "What are their top concepts in the Goal Line zone?"
 
-        st.pyplot(fig_field)
+        elif tactical_pillar == "📍 Hash & Field Zones":
+            qc_c1, qc_c2, qc_c3 = st.columns(3)
+            if qc_c1.button("👈 Left Hash Run vs Pass?"): q_def_selected = "What is their run pass tendency on the Left Hash?"
+            if qc_c2.button("👉 Right Hash Tendency?"): q_def_selected = "What does the opponent run on the Right Hash?"
+            if qc_c3.button("🚨 Coming Out Run Tell?"): q_def_selected = "What do they run in the Coming Out zone?"
 
-        # FIELD ZONE DOSSIER
-        if st.session_state['self_field_zone']:
-            fz = st.session_state['self_field_zone']
-            fz_df = filtered_df[filtered_df['FIELD_ZONE'] == fz]
+            qc_c4, qc_c5, qc_c6 = st.columns(3)
+            if qc_c4.button("💥 Explosives in Open Field?"): q_def_selected = "Show me explosive passes allowed in the Open Field"
+            if qc_c5.button("⚡ Pressure in Red Zone?"): q_def_selected = "Compare blitz success rate in the Red Zone"
+            if qc_c6.button("🎯 Fringe Zone 4-Down Calls?"): q_def_selected = "What do they run on 3rd & 4th down in the Fringe Zone?"
+
+        elif tactical_pillar == "🎯 Formation Tells":
+            qc_c1, qc_c2, qc_c3 = st.columns(3)
+            if qc_c1.button("💨 Empty Formation Tendency?"): q_def_selected = "What does Empty formation do?"
+            if qc_c2.button("📦 Bunch & Stack Rub Alert?"): q_def_selected = "What pass concepts do they run out of Bunch or Stack?"
+            if qc_c3.button("🚛 Heavy 2-Back (RED/BLUE) Tell?"): q_def_selected = "What does RED/BLUE run?"
+
+            qc_c4, qc_c5, qc_c6 = st.columns(3)
+            if qc_c4.button("📐 3x1 Trips Early Down Tell?"): q_def_selected = "What does 3x1 Trips do on 1st & 10?"
+            if qc_c5.button("⚡ GREEN/GOLD Attack Concepts?"): q_def_selected = "What are their top plays out of GREEN/GOLD?"
+            if qc_c6.button("🔄 Motion & Tag Concepts?"): q_def_selected = "Show concepts with TAG or motion"
+
+        else: # 🛡️ Self-Scout Leaks
+            qc_c1, qc_c2, qc_c3 = st.columns(3)
+            if qc_c1.button("🎯 RPO Vulnerability Audit?"): q_def_selected = "How does our defense perform against RPO plays?"
+            if qc_c2.button("🏃 Explosive Runs by Front?"): q_def_selected = "Which defensive front allows the most explosive runs?"
+            if qc_c3.button("🎭 Bluff vs Real Blitz Havoc?"): q_def_selected = "Compare blitz success rate between real pressure and bluffs"
+
+            qc_c4, qc_c5, qc_c6 = st.columns(3)
+            if qc_c4.button("💨 Boundary Cutback Leaks?"): q_def_selected = "Show big plays conceded to the boundary"
+            if qc_c5.button("🛡️ RIP/LIZ Match Audit?"): q_def_selected = "What plays hurt our RIP/LIZ coverage?"
+            if qc_c6.button("💥 Sacks & Turnovers Created?"): q_def_selected = "Show all sacks and turnovers created"
+
+        default_text = q_def_selected if q_def_selected else ""
+        user_def_query = st.text_input("Ask Coach Albers a tactical question (or click any pill above):", value=default_text, placeholder="e.g. What does Lincoln run on 3rd & Medium in the Fringe Zone?")
+
+        def execute_qc_agent(query_str, active_opp):
+            q = query_str.lower()
+            where_clauses = []
+
+            matched_opp = None
+            for opp in all_opponents:
+                if opp.lower() in q:
+                    matched_opp = opp
+                    break
             
-            st.markdown(f"""
-            <div class="dossier-box">
-                <div class="dossier-title">📍 TERRITORY DOSSIER: {fz}</div>
-            """, unsafe_allow_html=True)
-            
-            if len(fz_df) > 0:
-                fz_c1, fz_c2, fz_c3, fz_c4 = st.columns(4)
-                fz_c1.metric("Snaps in Territory", len(fz_df))
-                fz_c2.metric("Defensive Win Rate", f"{fz_df['DEF_SUCCESS'].mean()*100:.1f}%")
-                fz_c3.metric("Avg Yards Allowed", f"{fz_df['GN/LS'].mean():.2f} yds")
-                fz_c4.metric("Explosives Conceded", (fz_df['GN/LS'] >= 15).sum())
-
-                st.markdown(f"**Snap Breakdown for {fz}:**")
-                st.dataframe(fz_df[['PLAY #', 'DN', 'DIST', 'OFF FORM', 'OFF PLAY', 'DEF FRONT', 'COVERAGE', 'GN/LS', 'RESULT', 'DEF_SUCCESS']], use_container_width=True)
-                
-                fz_playlist = fz_df['PLAY #'].astype(str).tolist()
-                st.text_area(f"{fz} Video Cutup Playlist ({len(fz_playlist)} plays):", ", ".join(fz_playlist), height=70)
+            if matched_opp:
+                where_clauses.append(f"OPPONENT_CLEAN = '{matched_opp}'")
+                opp_context = matched_opp
+            elif active_opp != "ALL OPPONENTS (Full Season)":
+                where_clauses.append(f"OPPONENT_CLEAN = '{active_opp}'")
+                opp_context = active_opp
             else:
-                st.write(f"No snaps logged in {fz} under current filters.")
-            st.markdown("</div>", unsafe_allow_html=True)
+                opp_context = "Full Season"
 
-        st.markdown("---")
-        st.subheader("🎬 Coach Albers' Full Filtered Cutup Playlist")
-        playlist_self = filtered_df['PLAY #'].astype(str).tolist()
-        st.text_area(f"Play Numbers ({len(playlist_self)} plays):", ", ".join(playlist_self), height=80)
+            # Field Zone Parsing
+            zone_label = "All Zones"
+            if 'low red' in q:
+                where_clauses.append("FIELD_ZONE LIKE '%Low Red Zone%'")
+                zone_label = "Low Red Zone (10-6)"
+            elif 'high red' in q:
+                where_clauses.append("FIELD_ZONE LIKE '%High Red Zone%'")
+                zone_label = "High Red Zone (20-11)"
+            elif 'goal line' in q or 'goal-line' in q:
+                where_clauses.append("FIELD_ZONE LIKE '%Goal Line%'")
+                zone_label = "Goal Line (5 & In)"
+            elif 'red zone' in q or 'redzone' in q:
+                where_clauses.append("FIELD_ZONE IN ('6. High Red Zone (20-11)', '7. Low Red Zone (10-6)', '8. Goal Line (5 & In)')")
+                zone_label = "Red Zone (Inside 20)"
+            elif 'fringe' in q:
+                where_clauses.append("FIELD_ZONE LIKE '%Fringe%'")
+                zone_label = "Fringe Zone (Opp 40-30)"
+            elif 'scoring' in q:
+                where_clauses.append("FIELD_ZONE LIKE '%Scoring%'")
+                zone_label = "Scoring Zone (Opp 29-21)"
+            elif 'open field' in q:
+                where_clauses.append("FIELD_ZONE LIKE '%Open Field%'")
+                zone_label = "Open Field (Own 21 - Opp 41)"
+            elif 'backed up' in q:
+                where_clauses.append("FIELD_ZONE LIKE '%Backed Up%'")
+                zone_label = "Backed Up (Own 11-20)"
+            elif 'coming out' in q:
+                where_clauses.append("FIELD_ZONE LIKE '%Coming Out%'")
+                zone_label = "Coming Out (Own 1-10)"
 
-# =========================================================================
-# TAB 2: OPPONENT ADVANCE SCOUT (THEIR OFFENSE)
-# =========================================================================
-with tab_opp:
-    st.subheader(f"🎯 Albers QC // Opponent Advance Reconnaissance: {selected_opp}")
+            # Hash Parsing
+            if 'left hash' in q:
+                where_clauses.append("HASH = 'L'")
+                zone_label += " | Left Hash"
+            elif 'right hash' in q:
+                where_clauses.append("HASH = 'R'")
+                zone_label += " | Right Hash"
 
-    if 'opp_pass_zone' not in st.session_state: st.session_state['opp_pass_zone'] = None
-    if 'opp_field_zone' not in st.session_state: st.session_state['opp_field_zone'] = None
+            # Formation Parsing
+            if 'empty' in q:
+                where_clauses.append("OFF_FORM LIKE '%Empty%'")
+            elif 'bunch' in q or 'stack' in q:
+                where_clauses.append("(OFF_FORM LIKE '%Bunch%' OR OFF_FORM LIKE '%Stack%')")
+            elif 'red/blue' in q or '2-back' in q:
+                where_clauses.append("OFF_FORM LIKE '%RED/BLUE%'")
+            elif '3x1' in q or 'trips' in q:
+                where_clauses.append("(OFF_FORM LIKE '%Rita/Lisa%' OR OFF_FORM LIKE '%GREEN/GOLD%' OR OFF_FORM LIKE '%Trip%')")
+            elif 'green/gold' in q:
+                where_clauses.append("OFF_FORM LIKE '%GREEN/GOLD%'")
 
-    total_opp = len(scoped_df)
-    run_opp = (scoped_df['PLAY TYPE'] == 'Run').sum()
-    pass_opp = (scoped_df['PLAY TYPE'] == 'Pass').sum()
-    run_pct_total = (run_opp / total_opp) * 100 if total_opp > 0 else 0
-    pass_pct_total = (pass_opp / total_opp) * 100 if total_opp > 0 else 0
-    off_succ_rate = scoped_df['OFF_SUCCESS'].mean() * 100 if total_opp > 0 else 0
+            # Play Concept / Scheme Parsing
+            if 'rpo' in q:
+                where_clauses.append("OFF_PLAY LIKE '%RPO%'")
+            elif 'rip/liz' in q:
+                where_clauses.append("COVERAGE LIKE '%RIP/LIZ%'")
 
-    o1, o2, o3, o4 = st.columns(4)
-    o1.metric("Total Snaps Scouted", total_opp)
-    o2.metric("Run / Pass Ratio", f"{run_pct_total:.1f}% Run / {pass_pct_total:.1f}% Pass")
-    o3.metric("Offensive Success Rate", f"{off_succ_rate:.1f}%")
-    o4.metric("Offensive Avg Yards/Play", f"{scoped_df['GN/LS'].mean():.2f} yds")
+            # Down & Distance Parsing
+            sit_label = "All Downs"
+            if '3rd & medium' in q or '3rd and medium' in q:
+                where_clauses.append("DN = 3 AND DIST BETWEEN 3 AND 6")
+                sit_label = "3rd & Medium (3-6 yds)"
+            elif '3rd & long' in q or '3rd and long' in q:
+                where_clauses.append("DN = 3 AND DIST >= 7")
+                sit_label = "3rd & Long (7+ yds)"
+            elif '3rd & short' in q or '3rd and short' in q:
+                where_clauses.append("DN = 3 AND DIST <= 2")
+                sit_label = "3rd & Short (1-2 yds)"
+            elif '3rd & 4th' in q:
+                where_clauses.append("DN IN (3, 4)")
+                sit_label = "3rd & 4th Down"
+            elif '3rd down' in q or '3rd dn' in q:
+                where_clauses.append("DN = 3")
+                sit_label = "3rd Down"
+            elif '4th down' in q or '4th' in q:
+                where_clauses.append("DN = 4")
+                sit_label = "4th Down"
+            elif '2nd & short' in q or '2nd and short' in q:
+                where_clauses.append("DN = 2 AND DIST <= 3")
+                sit_label = "2nd & Short (1-3 yds)"
+            elif '2nd & long' in q or '2nd and long' in q:
+                where_clauses.append("DN = 2 AND DIST >= 7")
+                sit_label = "2nd & Long (7+ yds)"
+            elif '2nd down' in q:
+                where_clauses.append("DN = 2")
+                sit_label = "2nd Down"
+            elif '1st down' in q or '1st & 10' in q:
+                where_clauses.append("DN = 1")
+                sit_label = "1st Down"
 
-    st.markdown("---")
-    st.subheader(f"📍 Albers QC // Opponent Tactical Attack Boards: {selected_opp}")
+            where_sql = " AND ".join(where_clauses) if where_clauses else "1=1"
 
-    col_opp_radar, col_opp_click = st.columns([3, 1])
+            if 'front' in q or '4th down' in q:
+                sql = f"""
+                    SELECT "DEF FRONT" as Front, count(*) as Snaps, 
+                           round(avg(DEF_SUCCESS)*100, 1) as "Def_Win_%", 
+                           round(avg("GN/LS"), 2) as "Avg_Yds_Allowed",
+                           group_concat("PLAY #", ', ') as Play_List
+                    FROM snaps 
+                    WHERE {where_sql} AND "DEF FRONT" IS NOT NULL
+                    GROUP BY "DEF FRONT" 
+                    ORDER BY "Def_Win_%" DESC, Snaps DESC
+                """
+                title = f"Defensive Front Performance ({zone_label} | {sit_label})"
+                mode = "front"
 
-    with col_opp_radar:
-        fig_opp = plt.figure(figsize=(10, 8), dpi=150, facecolor='#0B1120')
-        ax_opp_pass = fig_opp.add_axes([0.05, 0.05, 0.90, 0.88], facecolor='#111827')
-        ax_opp_pass.set_xlim(0, 3); ax_opp_pass.set_ylim(0, 3)
-        ax_opp_pass.set_xticks([0.5, 1.5, 2.5]); ax_opp_pass.set_xticklabels(['LEFT', 'MIDDLE', 'RIGHT'], color='#FFFFFF', fontsize=11, fontweight='heavy')
-        ax_opp_pass.set_yticks([0.5, 1.5, 2.5]); ax_opp_pass.set_yticklabels(['SHORT (0-9y)', 'INTERMEDIATE (10-19y)', 'DEEP (20y+)'], color='#FFFFFF', fontsize=11, fontweight='heavy')
-        ax_opp_pass.grid(False)
-        ax_opp_pass.tick_params(length=0)
-
-        zone_coords = {7: (0, 2), 8: (1, 2), 9: (2, 2), 4: (0, 1), 5: (1, 1), 6: (2, 1), 1: (0, 0), 2: (1, 0), 3: (2, 0)}
-        total_passes = len(scoped_df[scoped_df['PASS ZONE'].notna()])
-
-        for z, (gx, gy) in zone_coords.items():
-            z_df = scoped_df[scoped_df['PASS ZONE'] == z]
-            total_z = len(z_df)
-            comp_z = z_df['RESULT'].str.contains('Complete', case=False, na=False).sum()
-            comp_pct = (comp_z / total_z * 100) if total_z > 0 else 0
-            share_pct = (total_z / total_passes * 100) if total_passes > 0 else 0
-            avg_gn = z_df['GN/LS'].mean() if total_z > 0 else 0
-            exp_z = (z_df['GN/LS'] >= 15).sum()
-            
-            is_opp_selected = (st.session_state['opp_pass_zone'] == z)
-            if is_opp_selected:
-                box_col = '#0284C7'; badge = '👉 INSPECTING'; edge_c = '#FDE047'; lw = 3.5
-            else:
-                box_col = '#991B1B' if (total_z >= 15 or avg_gn >= 15) else ('#C2410C' if (total_z >= 8 or avg_gn >= 8) else '#1E293B')
-                badge = '🔥 PRIMARY THREAT' if (total_z >= 15 or avg_gn >= 15) else ('⚡ ACTIVE ATTACK' if (total_z >= 8 or avg_gn >= 8) else '❄️ LOW VOLUME')
-                edge_c = '#F59E0B'; lw = 1.5
-
-            rect = patches.Rectangle((gx, gy), 1, 1, facecolor=box_col, edgecolor=edge_c, linewidth=lw, alpha=0.85)
-            ax_opp_pass.add_patch(rect)
-            ax_opp_pass.text(gx + 0.5, gy + 0.80, f"ZONE {z}", ha='center', color='#FFFFFF', fontsize=12, fontweight='heavy')
-            ax_opp_pass.text(gx + 0.5, gy + 0.60, f"{total_z} Att ({share_pct:.0f}% Share)", ha='center', color='#E2E8F0', fontsize=10, fontweight='bold')
-            ax_opp_pass.text(gx + 0.5, gy + 0.40, f"{comp_pct:.0f}% Comp | {avg_gn:.1f} YPA", ha='center', color='#FFFFFF', fontsize=10.5, fontweight='heavy')
-            ax_opp_pass.text(gx + 0.5, gy + 0.22, f"Explosive Passes: {exp_z}", ha='center', color='#FCA5A5' if exp_z > 1 else '#94A3B8', fontsize=9.5, fontweight='bold')
-            ax_opp_pass.text(gx + 0.5, gy + 0.08, badge, ha='center', color='#FDE047', fontsize=8.5, fontweight='heavy')
-
-        ax_opp_pass.set_title("ALBERS QC // Opponent Passing Sector Heatmap", color='#FFFFFF', fontsize=13, fontweight='heavy', pad=12)
-        st.pyplot(fig_opp)
-
-    with col_opp_click:
-        st.markdown("##### 🎯 Click to Inspect Attack Zone:")
-        ok_c1, ok_c2, ok_c3 = st.columns(3)
-        if ok_c1.button("Zone 7", key="btn_o7"): st.session_state['opp_pass_zone'] = 7
-        if ok_c2.button("Zone 8", key="btn_o8"): st.session_state['opp_pass_zone'] = 8
-        if ok_c3.button("Zone 9", key="btn_o9"): st.session_state['opp_pass_zone'] = 9
-
-        if ok_c1.button("Zone 4", key="btn_o4"): st.session_state['opp_pass_zone'] = 4
-        if ok_c2.button("Zone 5", key="btn_o5"): st.session_state['opp_pass_zone'] = 5
-        if ok_c3.button("Zone 6", key="btn_o6"): st.session_state['opp_pass_zone'] = 6
-
-        if ok_c1.button("Zone 1", key="btn_o1"): st.session_state['opp_pass_zone'] = 1
-        if ok_c2.button("Zone 2", key="btn_o2"): st.session_state['opp_pass_zone'] = 2
-        if ok_c3.button("Zone 3", key="btn_o3"): st.session_state['opp_pass_zone'] = 3
-
-        if st.button("🔄 Clear Opponent Zone", key="btn_clear_opass"):
-            st.session_state['opp_pass_zone'] = None
-            st.rerun()
-
-    # Opponent Passing Dossier
-    if st.session_state['opp_pass_zone']:
-        opz = st.session_state['opp_pass_zone']
-        opz_df = scoped_df[scoped_df['PASS ZONE'] == opz]
-        
-        st.markdown(f"""
-        <div class="dossier-box">
-            <div class="dossier-title">🎯 OPPONENT PASSING RECONNAISSANCE: ZONE {opz}</div>
-        """, unsafe_allow_html=True)
-        
-        if len(opz_df) > 0:
-            oc1, oc2, oc3, oc4 = st.columns(4)
-            oc1.metric(f"Zone {opz} Attempts", len(opz_df))
-            oc2.metric("Completion %", f"{(opz_df['RESULT'].str.contains('Complete', case=False, na=False).mean())*100:.1f}%")
-            oc3.metric("Yards Per Attempt", f"{opz_df['GN/LS'].mean():.1f} YPA")
-            oc4.metric("Explosive Passes (>=15)", (opz_df['GN/LS'] >= 15).sum())
-
-            st.markdown(f"**Opponent Concepts Targeted in Zone {opz}:**")
-            st.dataframe(opz_df[['PLAY #', 'DN', 'DIST', 'OFF FORM', 'OFF PLAY', 'GN/LS', 'RESULT', 'COVERAGE', 'DEF_SUCCESS']], use_container_width=True)
-            
-            opz_playlist = opz_df['PLAY #'].astype(str).tolist()
-            st.text_area(f"Zone {opz} Film Cutup ({len(opz_playlist)} plays):", ", ".join(opz_playlist), height=70)
-        st.markdown("</div>", unsafe_allow_html=True)
-
-    st.markdown("---")
-
-    # Opponent 100-Yard Field & Interactive Strip
-    st.subheader("📍 Opponent 100-Yard Field & Territory Selector")
-    st.markdown("**Click any Field Zone below to inspect opponent tendencies in that territory:**")
-    
-    of_cols = st.columns(9)
-    if of_cols[0].button("1. Coming Out", key="ofbtn_1"): st.session_state['opp_field_zone'] = "1. Coming Out (-1 to -10)"
-    if of_cols[1].button("2. Backed Up", key="ofbtn_2"): st.session_state['opp_field_zone'] = "2. Backed Up (-11 to -20)"
-    if of_cols[2].button("3. Open Field", key="ofbtn_3"): st.session_state['opp_field_zone'] = "3. Open Field (Own 21 - Opp 41)"
-    if of_cols[3].button("4. Fringe Zone", key="ofbtn_4"): st.session_state['opp_field_zone'] = "4. Fringe Zone (Opp 40-30)"
-    if of_cols[4].button("5. Scoring Zone", key="ofbtn_5"): st.session_state['opp_field_zone'] = "5. Scoring Zone (Opp 29-21)"
-    if of_cols[5].button("6. High Red", key="ofbtn_6"): st.session_state['opp_field_zone'] = "6. High Red Zone (20-11)"
-    if of_cols[6].button("7. Low Red", key="ofbtn_7"): st.session_state['opp_field_zone'] = "7. Low Red Zone (10-6)"
-    if of_cols[7].button("8. Goal Line", key="ofbtn_8"): st.session_state['opp_field_zone'] = "8. Goal Line (5 & In)"
-    if of_cols[8].button("🔄 Show All", key="ofbtn_all"): 
-        st.session_state['opp_field_zone'] = None
-        st.rerun()
-
-    fig_opp_field = plt.figure(figsize=(16, 5), dpi=150, facecolor='#0B1120')
-    ax_opp_field = fig_opp_field.add_axes([0.05, 0.12, 0.90, 0.78])
-    render_8_zone_field(ax_opp_field, f"ALBERS QC // Opponent Strike Map: Big Plays (★) vs. Mistakes/Turnovers (✖)",
-                        highlight_zone=st.session_state['opp_field_zone'])
-
-    opp_plot_df = scoped_df
-    if st.session_state['opp_field_zone']:
-        opp_plot_df = scoped_df[scoped_df['FIELD_ZONE'] == st.session_state['opp_field_zone']]
-
-    for _, row in opp_plot_df[opp_plot_df['GN/LS'] >= 20].iterrows():
-        ax_opp_field.scatter(row['FIELD_X'], calc_y(row['HASH'], row['PLAY DIR']), s=140, color='#F59E0B', marker='*', edgecolors='red', linewidth=1, zorder=5)
-    for _, row in opp_plot_df[opp_plot_df['RESULT'].str.contains('Interception|Fumble|Sack|Safety', case=False, na=False)].iterrows():
-        ax_opp_field.scatter(row['FIELD_X'], calc_y(row['HASH'], row['PLAY DIR']), s=80, color='#DC2626', marker='X', edgecolors='white', linewidth=1, zorder=4)
-
-    st.pyplot(fig_opp_field)
-
-    # Opponent Territory Dossier
-    if st.session_state['opp_field_zone']:
-        ofz = st.session_state['opp_field_zone']
-        ofz_df = scoped_df[scoped_df['FIELD_ZONE'] == ofz]
-        
-        st.markdown(f"""
-        <div class="dossier-box">
-            <div class="dossier-title">📍 OPPONENT TERRITORY DOSSIER: {ofz}</div>
-        """, unsafe_allow_html=True)
-        
-        if len(ofz_df) > 0:
-            oc1, oc2, oc3, oc4 = st.columns(4)
-            oc1.metric("Snaps in Territory", len(ofz_df))
-            oc2.metric("Run / Pass Ratio", f"{(ofz_df['PLAY TYPE']=='Run').mean()*100:.0f}% Run / {(ofz_df['PLAY TYPE']=='Pass').mean()*100:.0f}% Pass")
-            oc3.metric("Offensive Success", f"{ofz_df['OFF_SUCCESS'].mean()*100:.1f}%")
-            oc4.metric("Avg Yards Gained", f"{ofz_df['GN/LS'].mean():.2f} yds")
-
-            st.markdown(f"**Opponent Scheme Breakdown in {ofz}:**")
-            st.dataframe(ofz_df[['PLAY #', 'DN', 'DIST', 'OFF FORM', 'OFF PLAY', 'GN/LS', 'RESULT', 'DEF FRONT', 'COVERAGE', 'DEF_SUCCESS']], use_container_width=True)
-            
-            ofz_playlist = ofz_df['PLAY #'].astype(str).tolist()
-            st.text_area(f"{ofz} Video Cutup Playlist ({len(ofz_playlist)} plays):", ", ".join(ofz_playlist), height=70)
-        st.markdown("</div>", unsafe_allow_html=True)
-
-    st.markdown("---")
-
-    # 8-ZONE TENDENCY TABLE
-    st.subheader("1. 8-Zone Field Tendency Cards & Arsenal Breakdown")
-    zone_card_data = []
-    for z in ZONE_ORDER:
-        z_sub = scoped_df[scoped_df['FIELD_ZONE'] == z]
-        tot = len(z_sub)
-        if tot > 0:
-            r_c = (z_sub['PLAY TYPE'] == 'Run').sum()
-            p_c = (z_sub['PLAY TYPE'] == 'Pass').sum()
-            run_pct = (r_c / tot) * 100
-            pass_pct = (p_c / tot) * 100
-            tell = "🚨 HEAVY RUN (CONSERVATIVE)" if run_pct >= 65 else ("🎯 PASS HEAVY (AGGRESSIVE)" if pass_pct >= 60 else "⚖️ BALANCED ATTACK")
-            zone_card_data.append({
-                "Field Zone": z,
-                "Snaps": tot,
-                "Run %": f"{run_pct:.1f}%",
-                "Pass %": f"{pass_pct:.1f}%",
-                "Off Success %": f"{z_sub['OFF_SUCCESS'].mean()*100:.1f}%",
-                "Avg Gain": f"{z_sub['GN/LS'].mean():.2f} yds",
-                "Primary Tell": tell,
-                "Top Run Concept": get_top_concept(z_sub, 'Run'),
-                "Top Pass Concept": get_top_concept(z_sub, 'Pass')
-            })
-
-    if zone_card_data:
-        st.dataframe(pd.DataFrame(zone_card_data), use_container_width=True)
-
-    st.markdown("---")
-    st.subheader("2. Down & Distance Tendencies")
-    down_data = []
-    for d in [1, 2, 3, 4]:
-        d_sub = scoped_df[scoped_df['DN'] == d]
-        tot = len(d_sub)
-        if tot > 0:
-            r_c = (d_sub['PLAY TYPE'] == 'Run').sum()
-            p_c = (d_sub['PLAY TYPE'] == 'Pass').sum()
-            down_data.append({
-                "Down": f"Down {d}",
-                "Snaps": tot,
-                "Run %": f"{(r_c/tot)*100:.1f}%",
-                "Pass %": f"{(p_c/tot)*100:.1f}%",
-                "Off Success %": f"{d_sub['OFF_SUCCESS'].mean()*100:.1f}%",
-                "Avg Gain": f"{d_sub['GN/LS'].mean():.2f} yds",
-                "Primary Tell": "🚨 RUN HEAVY" if (r_c/tot) >= 0.55 else ("🎯 PASS HEAVY" if (p_c/tot) >= 0.60 else "⚖️ BALANCED")
-            })
-    if down_data:
-        st.table(pd.DataFrame(down_data))
-
-    st.markdown("---")
-    st.subheader("3. Formation 'Tip-Off' Matrix")
-    form_df = scoped_df.groupby('OFF FORM').agg(
-        Snaps=('PLAY #', 'count'),
-        Run_Snaps=('PLAY TYPE', lambda x: (x == 'Run').sum()),
-        Pass_Snaps=('PLAY TYPE', lambda x: (x == 'Pass').sum()),
-        Avg_Gain=('GN/LS', 'mean'),
-        Off_Success=('OFF_SUCCESS', lambda x: x.mean() * 100)
-    ).reset_index()
-
-    if len(form_df) > 0:
-        form_df['Run %'] = (form_df['Run_Snaps'] / form_df['Snaps']) * 100
-        form_df['Pass %'] = (form_df['Pass_Snaps'] / form_df['Snaps']) * 100
-        form_filtered = form_df[form_df['Snaps'] >= max(3, int(total_opp * 0.03))].copy()
-        def get_tip_off(row):
-            if row['Run %'] >= 65: return "🚨 HEAVY RUN TELL"
-            elif row['Pass %'] >= 75: return "🎯 HEAVY PASS TELL"
-            elif row['Off_Success'] >= 50: return "⚠️ HIGH EFFICIENCY"
-            return "⚖️ BALANCED"
-        form_filtered['Coaching Tell'] = form_filtered.apply(get_tip_off, axis=1)
-        st.dataframe(form_filtered.sort_values(by='Snaps', ascending=False)[['OFF FORM', 'Snaps', 'Run %', 'Pass %', 'Avg_Gain', 'Off_Success', 'Coaching Tell']], use_container_width=True)
-
-    st.subheader("4. 🎬 Opponent Cutup Strings")
-    opp_filter = st.selectbox("Generate Cutup For:", [
-        "Opponent Explosive Runs (>=10 yds)",
-        "Opponent 3rd Down Passing Snaps",
-        "Opponent Red Zone Snaps (Zones 6, 7 & 8)",
-        "Opponent Coming Out / Backed Up Snaps (Zones 1 & 2)",
-        "Opponent Incomplete / Sacked Passing Snaps"
-    ])
-    if opp_filter == "Opponent Explosive Runs (>=10 yds)":
-        p_list = scoped_df[(scoped_df['PLAY TYPE'] == 'Run') & (scoped_df['GN/LS'] >= 10)]['PLAY #'].astype(str).tolist()
-    elif opp_filter == "Opponent 3rd Down Passing Snaps":
-        p_list = scoped_df[(scoped_df['DN'] == 3) & (scoped_df['PLAY TYPE'] == 'Pass')]['PLAY #'].astype(str).tolist()
-    elif opp_filter == "Opponent Red Zone Snaps (Zones 6, 7 & 8)":
-        p_list = scoped_df[scoped_df['FIELD_ZONE'].isin(["6. High Red Zone (20-11)", "7. Low Red Zone (10-6)", "8. Goal Line (5 & In)"])]['PLAY #'].astype(str).tolist()
-    elif opp_filter == "Opponent Coming Out / Backed Up Snaps (Zones 1 & 2)":
-        p_list = scoped_df[scoped_df['FIELD_ZONE'].isin(["1. Coming Out (-1 to -10)", "2. Backed Up (-11 to -20)"])]['PLAY #'].astype(str).tolist()
-    else:
-        p_list = scoped_df[scoped_df['RESULT'].str.contains('Incomplete|Sack', case=False, na=False)]['PLAY #'].astype(str).tolist()
-
-    st.text_area(f"{opp_filter} Play Numbers ({len(p_list)} plays):", ", ".join(p_list), height=90)
-
-# =========================================================================
-# TAB 3: ASK COACH ALBERS (THE EXPANDED ARSENAL)
-# =========================================================================
-with tab_qc:
-    st.subheader("💬 Ask Coach Albers // Your Personalized QC Assistant")
-    st.markdown("Direct tactical inquiries across your defense, opponents, 8 field zones, hash marks, formations, and down/distance situations.")
-
-    # Segmented Tactical Focus Areas
-    st.markdown("##### ⚡ Quick Coaching Arsenal by Tactical Pillar:")
-    tactical_pillar = st.radio(
-        "Choose Tactical Focus:",
-        ["💰 Money Downs", "📍 Hash & Field Zones", "🎯 Formation Tells", "🛡️ Self-Scout Leaks"],
-        horizontal=True
-    )
-
-    q_selected = None
-
-    if tactical_pillar == "💰 Money Downs":
-        qc_c1, qc_c2, qc_c3 = st.columns(3)
-        if qc_c1.button("📍 Top Front in Low Red Zone?"): q_selected = "What is our top-performing front in the Low Red Zone?"
-        if qc_c2.button("🎯 Opponent 3rd & Med in Fringe?"): q_selected = "What does the opponent run on 3rd & Medium in the Fringe Zone?"
-        if qc_c3.button("🛡️ Best Coverage on 3rd & Long?"): q_selected = "What is our best coverage call on 3rd & Long?"
-
-        qc_c4, qc_c5, qc_c6 = st.columns(3)
-        if qc_c4.button("🛑 4th Down Stop Calls?"): q_selected = "What is our top front and stop rate on 4th Down?"
-        if qc_c5.button("🚀 2nd & Short Shot Alert?"): q_selected = "What does the opponent run on 2nd & Short?"
-        if qc_c6.button("🧱 Goal-Line Run Concepts?"): q_selected = "What are their top concepts in the Goal Line zone?"
-
-    elif tactical_pillar == "📍 Hash & Field Zones":
-        qc_c1, qc_c2, qc_c3 = st.columns(3)
-        if qc_c1.button("👈 Left Hash Run vs Pass?"): q_selected = "What is their run pass tendency on the Left Hash?"
-        if qc_c2.button("👉 Right Hash Tendency?"): q_selected = "What does the opponent run on the Right Hash?"
-        if qc_c3.button("🚨 Coming Out Run Tell?"): q_selected = "What do they run in the Coming Out zone?"
-
-        qc_c4, qc_c5, qc_c6 = st.columns(3)
-        if qc_c4.button("💥 Explosives in Open Field?"): q_selected = "Show me explosive passes allowed in the Open Field"
-        if qc_c5.button("⚡ Pressure in Red Zone?"): q_selected = "Compare blitz success rate in the Red Zone"
-        if qc_c6.button("🎯 Fringe Zone 4-Down Calls?"): q_selected = "What do they run on 3rd & 4th down in the Fringe Zone?"
-
-    elif tactical_pillar == "🎯 Formation Tells":
-        qc_c1, qc_c2, qc_c3 = st.columns(3)
-        if qc_c1.button("💨 Empty Formation Tendency?"): q_selected = "What does Empty formation do?"
-        if qc_c2.button("📦 Bunch & Stack Rub Alert?"): q_selected = "What pass concepts do they run out of Bunch or Stack?"
-        if qc_c3.button("🚛 Heavy 2-Back (RED/BLUE) Tell?"): q_selected = "What does RED/BLUE run?"
-
-        qc_c4, qc_c5, qc_c6 = st.columns(3)
-        if qc_c4.button("📐 3x1 Trips Early Down Tell?"): q_selected = "What does 3x1 Trips do on 1st & 10?"
-        if qc_c5.button("⚡ GREEN/GOLD Attack Concepts?"): q_selected = "What are their top plays out of GREEN/GOLD?"
-        if qc_c6.button("🔄 Motion & Tag Concepts?"): q_selected = "Show concepts with TAG or motion"
-
-    else: # 🛡️ Self-Scout Leaks
-        qc_c1, qc_c2, qc_c3 = st.columns(3)
-        if qc_c1.button("🎯 RPO Vulnerability Audit?"): q_selected = "How does our defense perform against RPO plays?"
-        if qc_c2.button("🏃 Explosive Runs by Front?"): q_selected = "Which defensive front allows the most explosive runs?"
-        if qc_c3.button("🎭 Bluff vs Real Blitz Havoc?"): q_selected = "Compare blitz success rate between real pressure and bluffs"
-
-        qc_c4, qc_c5, qc_c6 = st.columns(3)
-        if qc_c4.button("💨 Boundary Cutback Leaks?"): q_selected = "Show big plays conceded to the boundary"
-        if qc_c5.button("🛡️ RIP/LIZ Match Audit?"): q_selected = "What plays hurt our RIP/LIZ coverage?"
-        if qc_c6.button("💥 Sacks & Turnovers Created?"): q_selected = "Show all sacks and turnovers created"
-
-    default_text = q_selected if q_selected else ""
-    user_query = st.text_input("Ask Coach Albers a tactical question (or click any pill above):", value=default_text, placeholder="e.g. What does Lincoln run on 3rd & Medium in the Fringe Zone?")
-
-    def execute_qc_agent(query_str, active_opp):
-        q = query_str.lower()
-        where_clauses = []
-
-        matched_opp = None
-        for opp in all_opponents:
-            if opp.lower() in q:
-                matched_opp = opp
-                break
-        
-        if matched_opp:
-            where_clauses.append(f"OPPONENT_CLEAN = '{matched_opp}'")
-            opp_context = matched_opp
-        elif active_opp != "ALL OPPONENTS (Full Season)":
-            where_clauses.append(f"OPPONENT_CLEAN = '{active_opp}'")
-            opp_context = active_opp
-        else:
-            opp_context = "Full Season"
-
-        # Field Zone Parsing
-        zone_label = "All Zones"
-        if 'low red' in q:
-            where_clauses.append("FIELD_ZONE LIKE '%Low Red Zone%'")
-            zone_label = "Low Red Zone (10-6)"
-        elif 'high red' in q:
-            where_clauses.append("FIELD_ZONE LIKE '%High Red Zone%'")
-            zone_label = "High Red Zone (20-11)"
-        elif 'goal line' in q or 'goal-line' in q:
-            where_clauses.append("FIELD_ZONE LIKE '%Goal Line%'")
-            zone_label = "Goal Line (5 & In)"
-        elif 'red zone' in q or 'redzone' in q:
-            where_clauses.append("FIELD_ZONE IN ('6. High Red Zone (20-11)', '7. Low Red Zone (10-6)', '8. Goal Line (5 & In)')")
-            zone_label = "Red Zone (Inside 20)"
-        elif 'fringe' in q:
-            where_clauses.append("FIELD_ZONE LIKE '%Fringe%'")
-            zone_label = "Fringe Zone (Opp 40-30)"
-        elif 'scoring' in q:
-            where_clauses.append("FIELD_ZONE LIKE '%Scoring%'")
-            zone_label = "Scoring Zone (Opp 29-21)"
-        elif 'open field' in q:
-            where_clauses.append("FIELD_ZONE LIKE '%Open Field%'")
-            zone_label = "Open Field (Own 21 - Opp 41)"
-        elif 'backed up' in q:
-            where_clauses.append("FIELD_ZONE LIKE '%Backed Up%'")
-            zone_label = "Backed Up (Own 11-20)"
-        elif 'coming out' in q:
-            where_clauses.append("FIELD_ZONE LIKE '%Coming Out%'")
-            zone_label = "Coming Out (Own 1-10)"
-
-        # Hash Parsing
-        if 'left hash' in q:
-            where_clauses.append("HASH = 'L'")
-            zone_label += " | Left Hash"
-        elif 'right hash' in q:
-            where_clauses.append("HASH = 'R'")
-            zone_label += " | Right Hash"
-
-        # Formation Parsing
-        if 'empty' in q:
-            where_clauses.append("OFF_FORM LIKE '%Empty%'")
-        elif 'bunch' in q or 'stack' in q:
-            where_clauses.append("(OFF_FORM LIKE '%Bunch%' OR OFF_FORM LIKE '%Stack%')")
-        elif 'red/blue' in q or '2-back' in q:
-            where_clauses.append("OFF_FORM LIKE '%RED/BLUE%'")
-        elif '3x1' in q or 'trips' in q:
-            where_clauses.append("(OFF_FORM LIKE '%Rita/Lisa%' OR OFF_FORM LIKE '%GREEN/GOLD%' OR OFF_FORM LIKE '%Trip%')")
-        elif 'green/gold' in q:
-            where_clauses.append("OFF_FORM LIKE '%GREEN/GOLD%'")
-
-        # Play Concept / Scheme Parsing
-        if 'rpo' in q:
-            where_clauses.append("OFF_PLAY LIKE '%RPO%'")
-        elif 'rip/liz' in q:
-            where_clauses.append("COVERAGE LIKE '%RIP/LIZ%'")
-
-        # Down & Distance Parsing
-        sit_label = "All Downs"
-        if '3rd & medium' in q or '3rd and medium' in q:
-            where_clauses.append("DN = 3 AND DIST BETWEEN 3 AND 6")
-            sit_label = "3rd & Medium (3-6 yds)"
-        elif '3rd & long' in q or '3rd and long' in q:
-            where_clauses.append("DN = 3 AND DIST >= 7")
-            sit_label = "3rd & Long (7+ yds)"
-        elif '3rd & short' in q or '3rd and short' in q:
-            where_clauses.append("DN = 3 AND DIST <= 2")
-            sit_label = "3rd & Short (1-2 yds)"
-        elif '3rd & 4th' in q:
-            where_clauses.append("DN IN (3, 4)")
-            sit_label = "3rd & 4th Down"
-        elif '3rd down' in q or '3rd dn' in q:
-            where_clauses.append("DN = 3")
-            sit_label = "3rd Down"
-        elif '4th down' in q or '4th' in q:
-            where_clauses.append("DN = 4")
-            sit_label = "4th Down"
-        elif '2nd & short' in q or '2nd and short' in q:
-            where_clauses.append("DN = 2 AND DIST <= 3")
-            sit_label = "2nd & Short (1-3 yds)"
-        elif '2nd & long' in q or '2nd and long' in q:
-            where_clauses.append("DN = 2 AND DIST >= 7")
-            sit_label = "2nd & Long (7+ yds)"
-        elif '2nd down' in q:
-            where_clauses.append("DN = 2")
-            sit_label = "2nd Down"
-        elif '1st down' in q or '1st & 10' in q:
-            where_clauses.append("DN = 1")
-            sit_label = "1st Down"
-
-        where_sql = " AND ".join(where_clauses) if where_clauses else "1=1"
-
-        if 'front' in q or '4th down' in q:
-            sql = f"""
-                SELECT "DEF FRONT" as Front, count(*) as Snaps, 
+            elif 'coverage' in q:
+                sql = f"""
+                    SELECT "COVERAGE" as Coverage, count(*) as Snaps, 
                        round(avg(DEF_SUCCESS)*100, 1) as "Def_Win_%", 
                        round(avg("GN/LS"), 2) as "Avg_Yds_Allowed",
                        group_concat("PLAY #", ', ') as Play_List
-                FROM snaps 
-                WHERE {where_sql} AND "DEF FRONT" IS NOT NULL
-                GROUP BY "DEF FRONT" 
-                ORDER BY "Def_Win_%" DESC, Snaps DESC
-            """
-            title = f"Defensive Front Performance ({zone_label} | {sit_label})"
-            mode = "front"
+                    FROM snaps 
+                    WHERE {where_sql} AND "COVERAGE" IS NOT NULL
+                    GROUP BY "COVERAGE" 
+                    ORDER BY "Def_Win_%" DESC, Snaps DESC
+                """
+                title = f"Coverage Efficiency ({zone_label} | {sit_label})"
+                mode = "coverage"
 
-        elif 'coverage' in q:
-            sql = f"""
-                SELECT "COVERAGE" as Coverage, count(*) as Snaps, 
+            elif 'blitz' in q or 'pressure' in q:
+                sql = f"""
+                    SELECT BLITZ_CLEAN as Pressure, count(*) as Snaps, 
                        round(avg(DEF_SUCCESS)*100, 1) as "Def_Win_%", 
                        round(avg("GN/LS"), 2) as "Avg_Yds_Allowed",
                        group_concat("PLAY #", ', ') as Play_List
-                FROM snaps 
-                WHERE {where_sql} AND "COVERAGE" IS NOT NULL
-                GROUP BY "COVERAGE" 
-                ORDER BY "Def_Win_%" DESC, Snaps DESC
-            """
-            title = f"Coverage Efficiency ({zone_label} | {sit_label})"
-            mode = "coverage"
+                    FROM snaps 
+                    WHERE {where_sql}
+                    GROUP BY BLITZ_CLEAN 
+                    ORDER BY "Def_Win_%" DESC, Snaps DESC
+                """
+                title = f"Pressure & Blitz Efficiency ({zone_label} | {sit_label})"
+                mode = "pressure"
 
-        elif 'blitz' in q or 'pressure' in q:
-            sql = f"""
-                SELECT BLITZ_CLEAN as Pressure, count(*) as Snaps, 
-                       round(avg(DEF_SUCCESS)*100, 1) as "Def_Win_%", 
-                       round(avg("GN/LS"), 2) as "Avg_Yds_Allowed",
-                       group_concat("PLAY #", ', ') as Play_List
-                FROM snaps 
-                WHERE {where_sql}
-                GROUP BY BLITZ_CLEAN 
-                ORDER BY "Def_Win_%" DESC, Snaps DESC
-            """
-            title = f"Pressure & Blitz Efficiency ({zone_label} | {sit_label})"
-            mode = "pressure"
+            elif 'explosive' in q:
+                sql = f"""
+                    SELECT "PLAY #", "DN", "DIST", "FIELD_ZONE", "PLAY TYPE", coalesce("OFF PLAY", 'Unspecified') as Concept, 
+                           "DEF FRONT", "COVERAGE", "GN/LS" as Yards_Gained
+                    FROM snaps 
+                    WHERE {where_sql} AND "GN/LS" >= 15
+                    ORDER BY "GN/LS" DESC
+                """
+                title = f"Explosive Plays Allowed ({zone_label} | {sit_label})"
+                mode = "explosive"
 
-        elif 'explosive' in q:
-            sql = f"""
-                SELECT "PLAY #", "DN", "DIST", "FIELD_ZONE", "PLAY TYPE", coalesce("OFF PLAY", 'Unspecified') as Concept, 
-                       "DEF FRONT", "COVERAGE", "GN/LS" as Yards_Gained
-                FROM snaps 
-                WHERE {where_sql} AND "GN/LS" >= 15
-                ORDER BY "GN/LS" DESC
-            """
-            title = f"Explosive Plays Allowed ({zone_label} | {sit_label})"
-            mode = "explosive"
+            elif 'turnover' in q or 'sack' in q:
+                sql = f"""
+                    SELECT "PLAY #", "DN", "DIST", "FIELD_ZONE", "PLAY TYPE", "RESULT", "DEF FRONT", "COVERAGE", "BLITZ_CLEAN", "GN/LS"
+                    FROM snaps 
+                    WHERE {where_sql} AND (RESULT LIKE '%Sack%' OR RESULT LIKE '%Interception%' OR RESULT LIKE '%Fumble%' OR RESULT LIKE '%Safety%')
+                    ORDER BY "DN" ASC
+                """
+                title = f"Havoc, Sacks & Turnovers Created ({zone_label} | {sit_label})"
+                mode = "havoc"
 
-        elif 'turnover' in q or 'sack' in q:
-            sql = f"""
-                SELECT "PLAY #", "DN", "DIST", "FIELD_ZONE", "PLAY TYPE", "RESULT", "DEF FRONT", "COVERAGE", "BLITZ_CLEAN", "GN/LS"
-                FROM snaps 
-                WHERE {where_sql} AND (RESULT LIKE '%Sack%' OR RESULT LIKE '%Interception%' OR RESULT LIKE '%Fumble%' OR RESULT LIKE '%Safety%')
-                ORDER BY "DN" ASC
-            """
-            title = f"Havoc, Sacks & Turnovers Created ({zone_label} | {sit_label})"
-            mode = "havoc"
-
-        else:
-            sql = f"""
-                SELECT "PLAY TYPE", coalesce("OFF PLAY", 'Unspecified Concept') as Concept, 
-                       count(*) as Snaps, 
-                       round(avg("GN/LS"), 1) as "Avg_Gain",
-                       group_concat("PLAY #", ', ') as Play_List
-                FROM snaps 
-                WHERE {where_sql}
-                GROUP BY "PLAY TYPE", Concept 
-                ORDER BY Snaps DESC
-            """
-            title = f"Tactical Scheme Breakdown ({opp_context} | {zone_label} | {sit_label})"
-            mode = "scheme"
-
-        res_df = pd.read_sql_query(sql, conn)
-        return title, mode, opp_context, zone_label, sit_label, res_df
-
-    if user_query:
-        title, mode, opp_ctx, z_lbl, s_lbl, result_df = execute_qc_agent(user_query, selected_opp)
-        
-        st.markdown("---")
-        st.subheader(f"📋 Coach Albers' Report: {title}")
-
-        if len(result_df) > 0:
-            k1, k2, k3 = st.columns(3)
-            tot_snaps = result_df['Snaps'].sum() if 'Snaps' in result_df.columns else len(result_df)
-            k1.metric("Sample Size", f"{tot_snaps} Snaps")
-            k2.metric("Opponent Scope", opp_ctx)
-            k3.metric("Situational Context", f"{z_lbl} | {s_lbl}")
-
-            display_cols = [c for c in result_df.columns if c != 'Play_List']
-            st.dataframe(result_df[display_cols], use_container_width=True)
-
-            # COACH ALBERS' FIELD NOTES
-            st.markdown("""
-            <div class="coach-notes-box">
-                <div class="coach-notes-title">🧠 COACH ALBERS' FIELD NOTES & GAMEPLAN DIRECTIVE:</div>
-            """, unsafe_allow_html=True)
-
-            if mode == "front":
-                top_front = result_df.iloc[0]['Front']
-                top_win = result_df.iloc[0]['Def_Win_%']
-                avg_yds = result_df.iloc[0]['Avg_Yds_Allowed']
-                st.markdown(f"""
-                * **Primary Call:** `{top_front}` is your highest-performing front in this situation (**{top_win}% defensive win rate**, holding the offense to **{avg_yds} yards**).
-                * **QC Recommendation:** Green-light `{top_front}` on your wristband / call sheet for {z_lbl}.
-                """)
-            elif mode == "coverage":
-                top_cov = result_df.iloc[0]['Coverage']
-                top_win = result_df.iloc[0]['Def_Win_%']
-                st.markdown(f"""
-                * **Lockdown Look:** `{top_cov}` ranks #1 with a **{top_win}% defensive win rate**.
-                * **Assignment Note:** Ensure boundary safety communication and cutback lane fits are reviewed during Friday walk-through.
-                """)
-            elif mode == "pressure":
-                top_press = result_df.iloc[0]['Pressure']
-                top_win = result_df.iloc[0]['Def_Win_%']
-                st.markdown(f"""
-                * **Optimal Pressure:** `{top_press}` leads the unit with a **{top_win}% win rate**.
-                * **Self-Scout Alert:** Mix in simulated pressure (Bluffs) to freeze the quarterback and prevent offensive line slide adjustments.
-                """)
-            elif mode == "scheme":
-                runs = result_df[result_df['PLAY TYPE'] == 'Run']['Snaps'].sum()
-                passes = result_df[result_df['PLAY TYPE'] == 'Pass']['Snaps'].sum()
-                top_concept = result_df.iloc[0]['Concept']
-                st.markdown(f"""
-                * **Run / Pass Ratio:** Offense leans **{runs} Runs vs. {passes} Passes** in this situation.
-                * **Primary Concept Alert:** Offense heavily favors **`{top_concept}`** as their go-to call.
-                * **Practice Installation:** Drill defensive ends and overhangs against this concept during Tuesday/Wednesday practice.
-                """)
-            elif mode == "havoc":
-                st.markdown(f"* Created **{len(result_df)} game-changing negative plays / turnovers** in this situation. Review tape to reinforce player execution.")
             else:
-                st.markdown(f"* Surrendered **{len(result_df)} explosive plays** in this situation. Audit film below for missed tackles and coverage busts.")
+                sql = f"""
+                    SELECT "PLAY TYPE", coalesce("OFF PLAY", 'Unspecified Concept') as Concept, 
+                           count(*) as Snaps, 
+                           round(avg("GN/LS"), 1) as "Avg_Gain",
+                           group_concat("PLAY #", ', ') as Play_List
+                    FROM snaps 
+                    WHERE {where_sql}
+                    GROUP BY "PLAY TYPE", Concept 
+                    ORDER BY Snaps DESC
+                """
+                title = f"Tactical Scheme Breakdown ({opp_context} | {zone_label} | {sit_label})"
+                mode = "scheme"
 
-            st.markdown("</div>", unsafe_allow_html=True)
+            res_df = pd.read_sql_query(sql, conn)
+            return title, mode, opp_context, zone_label, sit_label, res_df
 
-            # FILM ROOM PLAYLIST
-            st.markdown("##### 🎬 Coach Albers' Film Room Playlist:")
-            if 'Play_List' in result_df.columns:
-                all_plays = []
-                for p_str in result_df['Play_List'].dropna():
-                    all_plays.extend([x.strip() for x in str(p_str).split(',') if x.strip()])
-                unique_plays = list(dict.fromkeys(all_plays))
-                st.text_area("Filtered Play Numbers (Copy & paste directly into Hudl/Catapult):", ", ".join(unique_plays), height=80)
-            elif 'PLAY #' in result_df.columns:
-                p_list = result_df['PLAY #'].astype(str).tolist()
-                st.text_area("Filtered Play Numbers (Copy & paste directly into Hudl/Catapult):", ", ".join(p_list), height=80)
+        if user_def_query:
+            title, mode, opp_ctx, z_lbl, s_lbl, result_df = execute_qc_agent(user_def_query, selected_opp)
+            
+            st.markdown("---")
+            st.subheader(f"📋 Coach Albers' Report: {title}")
 
-        else:
-            st.warning(f"No snaps in the dataset match '{user_query}' under the current scope. Try widening the situation or selecting 'ALL OPPONENTS'.")
+            if len(result_df) > 0:
+                k1, k2, k3 = st.columns(3)
+                tot_snaps = result_df['Snaps'].sum() if 'Snaps' in result_df.columns else len(result_df)
+                k1.metric("Sample Size", f"{tot_snaps} Snaps")
+                k2.metric("Opponent Scope", opp_ctx)
+                k3.metric("Situational Context", f"{z_lbl} | {s_lbl}")
+
+                display_cols = [c for c in result_df.columns if c != 'Play_List']
+                st.dataframe(result_df[display_cols], use_container_width=True)
+
+                st.markdown("""
+                <div class="coach-notes-box">
+                    <div class="coach-notes-title">🧠 COACH ALBERS' FIELD NOTES & GAMEPLAN DIRECTIVE:</div>
+                """, unsafe_allow_html=True)
+
+                if mode == "front":
+                    top_front = result_df.iloc[0]['Front']
+                    top_win = result_df.iloc[0]['Def_Win_%']
+                    avg_yds = result_df.iloc[0]['Avg_Yds_Allowed']
+                    st.markdown(f"""
+                    * **Primary Call:** `{top_front}` is your highest-performing front in this situation (**{top_win}% defensive win rate**, holding the offense to **{avg_yds} yards**).
+                    * **QC Recommendation:** Green-light `{top_front}` on your wristband / call sheet for {z_lbl}.
+                    """)
+                elif mode == "coverage":
+                    top_cov = result_df.iloc[0]['Coverage']
+                    top_win = result_df.iloc[0]['Def_Win_%']
+                    st.markdown(f"""
+                    * **Lockdown Look:** `{top_cov}` ranks #1 with a **{top_win}% defensive win rate**.
+                    * **Assignment Note:** Ensure boundary safety communication and cutback lane fits are reviewed during Friday walk-through.
+                    """)
+                elif mode == "pressure":
+                    top_press = result_df.iloc[0]['Pressure']
+                    top_win = result_df.iloc[0]['Def_Win_%']
+                    st.markdown(f"""
+                    * **Optimal Pressure:** `{top_press}` leads the unit with a **{top_win}% win rate**.
+                    * **Self-Scout Alert:** Mix in simulated pressure (Bluffs) to freeze the quarterback and prevent offensive line slide adjustments.
+                    """)
+                elif mode == "scheme":
+                    runs = result_df[result_df['PLAY TYPE'] == 'Run']['Snaps'].sum()
+                    passes = result_df[result_df['PLAY TYPE'] == 'Pass']['Snaps'].sum()
+                    top_concept = result_df.iloc[0]['Concept']
+                    st.markdown(f"""
+                    * **Run / Pass Ratio:** Offense leans **{runs} Runs vs. {passes} Passes** in this situation.
+                    * **Primary Concept Alert:** Offense heavily favors **`{top_concept}`** as their go-to call.
+                    * **Practice Installation:** Drill defensive ends and overhangs against this concept during Tuesday/Wednesday practice.
+                    """)
+                elif mode == "havoc":
+                    st.markdown(f"* Created **{len(result_df)} game-changing negative plays / turnovers** in this situation. Review tape to reinforce player execution.")
+                else:
+                    st.markdown(f"* Surrendered **{len(result_df)} explosive plays** in this situation. Audit film below for missed tackles and coverage busts.")
+
+                st.markdown("</div>", unsafe_allow_html=True)
+
+                st.markdown("##### 🎬 Coach Albers' Film Room Playlist:")
+                if 'Play_List' in result_df.columns:
+                    all_plays = []
+                    for p_str in result_df['Play_List'].dropna():
+                        all_plays.extend([x.strip() for x in str(p_str).split(',') if x.strip()])
+                    unique_plays = list(dict.fromkeys(all_plays))
+                    st.text_area("Filtered Play Numbers (Copy & paste directly into Hudl/Catapult):", ", ".join(unique_plays), height=80)
+                elif 'PLAY #' in result_df.columns:
+                    p_list = result_df['PLAY #'].astype(str).tolist()
+                    st.text_area("Filtered Play Numbers (Copy & paste directly into Hudl/Catapult):", ", ".join(p_list), height=80)
+
+            else:
+                st.warning(f"No snaps in the dataset match '{user_def_query}' under the current scope. Try widening the situation or selecting 'ALL OPPONENTS'.")
 
 # --- FOOTER SIGNATURE ---
 st.markdown("---")
