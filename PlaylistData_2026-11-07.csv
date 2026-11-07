@@ -1,0 +1,641 @@
+PLAY #,ODK,DN,DIST,HASH,YARD LN,PLAY TYPE,RESULT,GN/LS,OFF FORM,OFF PLAY,OFF STR,PLAY DIR,GAP,PASS ZONE,DEF FRONT,COVERAGE,BLITZ,QTR,OPP TEAM
+16,D,1,10,R,46,Pass,Interception,,River/Lake (Empty),,L,L,,,,,,1,Maine South High School
+165,D,1,10,R,10,Pass,"Interception, Def TD",,RIVER/LAKE,,L,L,,,OVER,MEG,,4,Other Items
+33,D,2,26,L,-43,Pass,Interception,,RIVER/LAKE (DUAL),454 - 9,R,L,,1,OVER,MOD - MEG,,1,Alton High School
+124,D,1,10,R,-21,Pass,"Fumble, Def TD",,RIVER/LAKE,2 - 627,R,L,,2,OVER,MOD,,4,Alton High School
+91,D,3,8,L,-43,Pass,Interception,,GOLD/GREEN,951 - 9,L,R,,6,OVER,MOD,,3,Belleville East High School
+57,D,1,10,L,50,Pass,Interception,,RIVER/LAKE (BUNCH),BOGO,R,R,,3,UNDER,MOD,MIKE BLUFF,2,Edwardsville High School
+42,D,3,8,L,25,Pass,"Interception, Def TD",,RIVER/LAKE,222 - 2SWING,,,,2,UNDER,STUBBIE - MEG,WAM BLUFF,1,East St. Louis High School
+73,D,1,10,L,-10,Run,Rush,0,TITE - WING,QB KNEEL,BAL,,,,,,,2,Troy-Buchanan High School
+72,D,3,3,M,-48,Pass,Interception,,RIVER/LAKE,598 - 9,L,R,,5,OVER,MOD,WIL,2,Francis Howell High School
+102,D,1,10,M,-4,Run,"Rush, TD",96,RIVER/LAKE,IZ,R,R,,,OVER,MOD - MEG,WIL KNIFE,3,Alton High School
+143,D,1,10,R,-17,Run,"Rush, TD",83,RIVER/LAKE,,L,L,,,,,,4,Maine South High School
+104,D,2,4,M,-26,Pass,"Complete, TD",74,RIVER/LAKE,,L,L,,,,,,3,Maine South High School
+20,D,1,10,L,-39,Pass,"Complete, TD",61,GOLD/GREEN,87 - 47,L,R,,8,UNDER,MOD,,1,Belleville East High School
+23,D,1,10,L,-37,Pass,Complete,58,RIVER/LAKE,,L,R,,,,,,1,Maine South High School
+129,D,2,6,R,-43,Pass,"Complete, TD",57,RIVER/LAKE,99 - 99,L,R,,9,OVER,MOD,,4,Alton High School
+123,D,3,11,R,-39,Pass,Complete,56,RIVER/LAKE,44 - 44,L,R,,6,JET - OVER,MOD,,4,Francis Howell High School
+121,D,1,10,M,-36,Pass,Complete,54,GREEN/GOLD,87 - 29,,R,,5,OVER,MOD,,3,Belleville East High School
+142,D,1,10,L,-25,Pass,Complete,50,RIVER/LAKE,98SWING - 42,L,L,,7,JET - OVER,OFF MOD,,4,Edwardsville High School
+143,D,1,10,L,-25,Pass,Complete,50,RIVER/LAKE,,L,,,,,,,4,
+61,D,2,10,L,42,Run,"Rush, TD",42,GREEN/GOLD (YO),IZ - SLICE,L,L,,,UNDER,RIP/LIZ,,2,East St. Louis High School
+54,D,1,10,R,-19,Run,Rush,42,RIVER/LAKE,HB TAG,L,R,,,UNDER,STUBBIE - MOD,,2,Francis Howell High School
+4,D,2,20,M,-17,Pass,Complete,41,GOLD/GREEN,951 - 2,L,L,,7,JET - OVER,MOD,,1,Triad High School
+70,D,1,10,L,-32,Pass,Complete,40,GOLD/GREEN,HB SLIP SCREEN,L,R,,3,OVER,MOD,,2,Belleville East High School
+3,D,2,3,R,39,Run,"Rush, TD",39,RIVER/LAKE,,L,L,,,,,,1,Maine South High School
+141,D,1,10,M,40,Run,Rush,38,RIVER/LAKE,IZ - READ,R,L,,,OVER,MOD,,4,Belleville West High School
+45,D,1,10,L,-27,Pass,Complete,37,RIVER/LAKE,8 - 961,R,L,,4,OVER,MOD,,2,Belleville West High School
+11,D,3,6,R,-14,Pass,Complete,37,RIVER/LAKE,HB MIDDLE SCREEN,R,L,,2,JET - OVER,MOD,,1,Quincy Senior High School
+125,D,1,10,R,-41,Pass,Complete,36,RIVER/LAKE,999SWING - 9,L,L,,8,OVER,STUMP - MOD,MIKE BLUFF WIL,4,Edwardsville High School
+54,D,2,9,M,47,Pass,Complete,36,GREEN/GOLD (YO),6WHEEL - 6MAX,R,R,,6,OVER,MOD,,2,Triad High School
+90,D,1,10,R,47,Pass,Complete,36,RIVER/LAKE,8 - 9614,L,R,,6,OVER,STUMP - MOD,,3,Belleville West High School
+5,D,1,10,M,-30,Pass,Complete,35,RIVER/LAKE,85&UP8 - 4,R,R,,8,OVER,CUT - MOD,,1,Belleville East High School
+30,D,2,10,L,35,Run,"Rush, TD",35,GREEN/GOLD (YO),HB OGOY,L,R,,,OVER,AUTO,,1,East St. Louis High School
+37,D,1,10,L,35,Pass,"Complete, TD",35,GREEN/GOLD,681 - MAX,R,R,,8,OVER,MOD,,2,Troy-Buchanan High School
+97,D,1,10,L,35,Pass,"Complete, TD",35,RIVER/LAKE,HB MIDDLE SCREEN,L,R,,2,OVER,MOD,,3,Quincy Senior High School
+81,D,2,10,L,34,Pass,"Complete, TD",34,RIVER/LAKE,,R,R,,,,,,2,Maine South High School
+105,D,1,10,L,34,Pass,"Complete, TD",34,RIVER/LAKE,NOGO,L,L,,7,JET - OVER,,,3,Francis Howell High School
+131,D,1,10,L,43,Run,Rush,32,GREEN/GOLD (ZO) (TT),HB WIDE TRAP,R,R,,,OVER,MOD,,4,Belleville East High School
+112,D,3,10,L,30,Pass,"Complete, TD",30,RIVER/LAKE,99 - 99,,R,,9,JET - OVER,RIP/LIZ,WAM BLUFF,4,East St. Louis High School
+100,D,1,10,R,-11,Pass,Complete,29,RIVER/LAKE,9 -999FLARE,L,R,,9,UNDER,MOD - MEG,WIL,4,Edwardsville High School
+158,D,2,9,L,39,Pass,Complete,28,RIVER/LAKE (BUNCH) (SNUG),575 - 8,R,R,,9,UNDER,MOD,,4,Belleville East High School
+75,D,1,10,L,48,Run,Rush,28,RIVER/LAKE,IZ - READ,L,L,,,OVER,MOD,MIKE,2,East St. Louis High School
+117,D,1,10,R,27,Pass,"Complete, TD",27,GOLD/GREEN,98 - 4MAX,R,L,,8,JET - OVER,STUMP - MOD,,4,Belleville West High School
+57,D,1,10,M,-20,Pass,Complete,26,GREEN/GOLD,57 - 95,L,L,,1,OVER,MOD,,2,Belleville East High School
+89,D,3,6,M,-27,Pass,Complete,26,RIVER/LAKE,47 - 88,L,R,,6,OVER,MOD,,3,Belleville West High School
+102,D,1,10,M,41,Pass,Complete,26,GREEN/GOLD (OVER),86WHEEL - 5,R,R,,5,OVER,MOD,,3,Troy-Buchanan High School
+14,D,1,10,L,35,Pass,Complete,26,River/Lake (Empty),992 - 21,L,L,,4,UNDER,STUBBIE - MOD,,1,Quincy Senior High School
+156,D,1,10,M,-37,Run,Rush,26,RIVER/LAKE,HB DRAW,R,L,,,OVER,MOD,,4,Quincy Senior High School
+61,D,2,5,M,-44,Pass,Complete,24,RIVER/LAKE,45 - 44,L,R,,,OVER,MOD,,2,Alton High School
+112,D,2,12,R,-2,Pass,Complete,24,RIVER/LAKE,9BUBBLE - 99,L,L,,7,OVER,MOD,,3,Alton High School
+53,D,2,9,M,24,Run,"Rush, TD",24,RIVER/LAKE,IZ - READ,,L,,,OVER,MOD,,2,East St. Louis High School
+122,D,4,6,R,23,Pass,"Complete, TD",23,RIVER/LAKE,,L,L,,,,,,4,Maine South High School
+11,D,4,19,L,26,Pass,Complete,23,RIVER/LAKE,98WHEEL - 9,L,R,,9,OVER,MOD,,1,Belleville East High School
+96,D,2,10,R,23,Pass,"Complete, TD",23,GREEN/GOLD (YO),9 - 999,L,L,,9,UNDER,RIP/LIZ,,3,East St. Louis High School
+121,D,3,22,L,22,Pass,"Complete, TD",22,RIVER/LAKE (BUNCH),,L,L,,,JET,MOD - MEG,,4,Joliet West High School
+31,D,3,9,L,-37,Pass,Complete,22,GREEN/GOLD (ZO) (TT),86 - 9,R,L,,7,OVER,MOD,MIKE BLUFF,1,Alton High School
+4,D,1,10,R,22,Pass,"Complete, TD",22,GREEN/GOLD (YO),999 - 9,L,L,,5,OVER,AUTO,,1,East St. Louis High School
+120,D,3,20,R,-10,Pass,Penalty,21,River/Lake (2/3 Stack),429 - 9SWING,R,L,,,OVER,STUMP - MEG,,4,Edwardsville High School
+110,D,2,13,R,39,Pass,Complete,20,RIVER/LAKE,,R,R,,,OVER,OFF MOD,,3,Joliet West High School
+64,D,1,10,R,20,Pass,"Complete, TD",20,RIVER/LAKE (BUNCH),8 - 575,L,R,,8,OVER,STUMP - MOD,,2,Belleville East High School
+81,D,3,24,L,-28,Pass,Complete,20,RIVER/LAKE,949FLARE - 2,R,R,,5,JET - OVER,STUMP - MOD,MIKE BLUFF WIL,3,Edwardsville High School
+156,D,2,6,L,-48,Pass,Complete,19,RIVER/LAKE (BUNCH),,L,L,,,OVER,STUMP - MOD,MIKE,4,Joliet West High School
+20,D,2,10,R,30,Run,Rush,19,GREEN/GOLD (YO),HB OGOY,L,R,,,UNDER,MOD,MIKE BLUFF,1,East St. Louis High School
+94,D,1,10,R,42,Pass,Complete,19,RIVER/LAKE,47BUBBLE - 4,L,L,,2,OVER,STUMP - MEG,,3,East St. Louis High School
+9,D,1,10,R,-20,Pass,Complete,19,RED/BLUE (OVER),951 - 2,L,L,,1,UNDER,MOD,,1,Troy-Buchanan High School
+43,D,3,6,R,-24,Pass,Complete,19,RED/BLUE (ZO),98WHEEL - 1,R,R,,6,UNDER,STUBBIE - MOD,,2,Quincy Senior High School
+132,D,3,8,L,-42,Pass,Complete,19,RIVER/LAKE (BUNCH),581 - 9,R,R,,6,OVER,STUMP - MEG,,4,Quincy Senior High School
+127,D,1,10,M,-21,Run,Rush,18,RIVER/LAKE,IZ,L,R,,,OVER,MOD,,4,Alton High School
+139,D,3,4,M,-42,Pass,Scramble,18,RIVER/LAKE,22 - 22,L,L,,,OVER,MOD,,4,Alton High School
+47,D,3,7,R,50,Pass,Scramble,18,RIVER/LAKE,949SWING - 9,L,R,,,UNDER,STUBBIE - BOW,,2,Edwardsville High School
+103,D,1,10,L,-39,Pass,Complete,18,RIVER/LAKE (BUNCH),RPO IZ HITCHES,L,L,,1,UNDER,RIP/LIZ,,3,East St. Louis High School
+121,D,3,11,R,18,Pass,"Complete, TD",18,GREEN/GOLD,951 - 2WHEEL,BAL,R,,6,OVER,MEG,WIL,4,Troy-Buchanan High School
+61,D,1,10,M,18,Run,"Rush, TD",18,RIVER/LAKE,HB DRAW,L,R,,,OVER,STUBBIE - MEG,,2,Francis Howell High School
+78,D,2,10,L,-23,Pass,Complete,17,RIVER/LAKE (DUAL),99SWING - 99,R,L,,,OVER,MOD,,2,Alton High School
+110,D,2,15,L,17,Pass,"Complete, TD",17,RIVER/LAKE (BUNCH),91 - 681,R,L,,4,OVER,MOD - MEG,,4,Edwardsville High School
+46,D,2,4,M,-32,Run,Rush,17,GREEN/GOLD (YO),HB TAG - READ,R,L,,,OVER,MOD - MEG,SAM,1,East St. Louis High School
+84,D,2,10,L,50,Pass,Complete,16,RIVER/LAKE,951 - 4,R,R,,6,JET,STUMP - MOD,,2,Belleville East High School
+89,D,1,10,M,-34,Pass,Complete,16,RIVER/LAKE,RPO TAG BUBBLE,L,R,,1,UNDER,MOD - MEG,MIKE SHOW,3,Edwardsville High School
+103,D,1,10,R,-48,Run,Rush,16,GREEN/GOLD (YO),IZ - LOAD,L,L,,,OVER,MOD,,4,Belleville West High School
+105,D,2,1,L,27,Run,Rush,16,GREEN/GOLD (YO),HB DART,R,L,,,OVER,MOD,MIKE,4,Belleville West High School
+27,D,2,9,L,-20,Run,Rush,16,RED/BLUE (SNUG),BUCK SWEEP,BAL,R,,,OVER,AUTO,,2,Troy-Buchanan High School
+45,D,2,7,R,-46,Pass,Penalty,15,RIVER/LAKE,498 - 4SWING,R,R,,9,UNDER,MOD - MEG,,2,Quincy Senior High School
+51,D,2,15,R,30,Run,Rush,16,RIVER/LAKE,HB DRAW,R,R,,,OVER,MOD,,2,Quincy Senior High School
+53,D,1,15,M,-41,Run,Rush,15,River/Lake (Empty),,R,R,,,,,,2,Maine South High School
+124,D,4,15,R,-26,Pass,Complete,15,RIVER/LAKE (BUNCH),681 - 94,L,R,,3,UNDER,STUMP - MOD,,4,Edwardsville High School
+57,D,2,20,R,49,Pass,Complete,15,RIVER/LAKE,8441 - 9,,L,,4,JET - OVER,MOD,,2,Francis Howell High School
+84,D,3,6,R,40,Pass,Penalty,15,River/Lake (Empty),999 - 99,L,L,,5,JET - OVER,STUBBIE - MOD,,2,Quincy Senior High School
+27,D,3,14,R,14,Run,"Rush, TD",14,River/Lake (Empty - Four),,L,R,,,,,,1,Maine South High School
+19,D,3,24,L,-31,Pass,Complete,14,RIVER/LAKE,29SWING - 29,L,R,,3,OVER,MOD,,1,Alton High School
+60,D,3,2,R,46,Run,Rush,14,GOLD/GREEN,HB TAG,R,R,,,UNDER,MEG,SAW,2,Belleville East High School
+40,D,2,10,R,-7,Pass,Scramble,14,RIVER/LAKE,9WHEEL - 444,L,R,,,,STUBBIE - MEG,,2,Edwardsville High School
+106,D,2,6,L,26,Run,Penalty,14,GREEN/GOLD (YO),QB OGOY,L,R,,,OVER,RIP/LIZ,,4,Edwardsville High School
+116,D,1,10,R,41,Pass,Penalty,15,GOLD/GREEN,99 - 4MAX,R,L,,,UNDER,MOD,MIKE,4,Belleville West High School
+16,D,3,9,R,-41,Pass,Complete,14,GREEN/GOLD (YO),9951 - 3,L,L,,1,JET - OVER,STUMP - MOD,MIKE BLUFF,1,East St. Louis High School
+103,D,1,10,M,15,Run,Rush,14,RED/BLUE (OVER),OTUSIDE ZONE,BAL,L,,,OVER,MOD,MIKE,3,Troy-Buchanan High School
+2,D,1,10,M,45,Run,Rush,14,RIVER/LAKE,IZ - READ,L,R,,,UNDER,MOD,,1,Francis Howell High School
+60,D,2,13,L,32,Pass,Complete,14,GREEN/GOLD (YO),RPO OGOY HITCH,,R,,2,JET - OVER,STUBBIE - MEG,,2,Francis Howell High School
+141,D,3,12,L,17,Pass,Complete,14,River/Lake (Snug),MHES,L,L,,1,JET - OVER,CUT,,4,Quincy Senior High School
+22,D,1,10,R,-24,Pass,Complete,13,RIVER/LAKE,,L,L,,,,,,1,Maine South High School
+114,D,3,6,M,-49,Pass,Complete,13,RIVER/LAKE,,L,L,,,,,,3,Maine South High School
+7,D,2,5,M,30,Pass,Complete,13,GOLD/GREEN,RPO IZ SLANTS,R,L,,1,UNDER,MOD,,1,Belleville East High School
+104,D,2,4,M,43,Pass,Scramble,13,RIVER/LAKE,95&UP4 - 61,R,L,,,OVER,STUBBIE - MEG,,4,Edwardsville High School
+77,D,1,10,M,-44,Pass,Complete,12,River/Lake (Empty),,R,L,,,,,,2,Maine South High School
+86,D,1,10,L,-22,Pass,Complete,12,River/Lake (Empty - Stack),,L,L,,,,,,2,Maine South High School
+99,D,4,17,M,-13,Run,Rush,12,GREEN/GOLD,HB TAG,,L,,,OVER,MOD,,3,Belleville East High School
+46,D,1,10,R,36,Pass,Scramble,12,RIVER/LAKE,961 - 8,R,L,,,OVER,STUBBIE - MEG,,2,Belleville West High School
+28,D,2,3,L,47,Run,Rush,12,GREEN/GOLD (YO),IZ - SLICE,R,R,,,UNDER,MOD,MIKE,1,East St. Louis High School
+114,D,3,4,L,44,Pass,Penalty,12,Rita/Lisa,91 - 82,L,R,,3,OVER,MOD,,4,Troy-Buchanan High School
+20,D,3,1,L,-47,Run,Rush,12,GREEN/GOLD,IZ - READ,R,R,,,UNDER,MOD - MEG,,1,Francis Howell High School
+68,D,2,10,L,27,Run,Rush,11,RIVER/LAKE,,R,L,,,,,,2,Maine South High School
+79,D,1,10,L,-40,Pass,Complete,11,RIVER/LAKE (DUAL),99SWING - 99,R,L,,4,OVER,MOD,,2,Alton High School
+132,D,1,10,R,11,Run,"Rush, TD",11,GREEN/GOLD (YO),HB WIDE TRAP,L,L,,,UNDER,MEG,WAM,4,Belleville East High School
+102,D,1,10,R,-40,Pass,Complete,11,River/Lake (2/3 Stack),229 - 91,L,R,,3,OVER,STUMP - MEG,WIL,4,Edwardsville High School
+11,D,2,8,R,27,Pass,Complete,11,RED/BLUE,RPO IZ ARROW,R,L,,1,JET - OVER,MOD,,1,Triad High School
+93,D,3,10,R,11,Pass,"Complete, TD",11,RIVER/LAKE,RPO OUTSIDE ZONE SLANT,L,R,,3,JET - OVER,MEG,WAM,3,Belleville West High School
+50,D,2,8,L,36,Pass,Complete,11,River/Lake (Empty),95 - 954,R,L,,1,UNDER,MOD,,2,East St. Louis High School
+52,D,1,20,M,35,Run,Rush,11,RIVER/LAKE,IZ - READ,L,R,,,UNDER,RIP/LIZ,,2,East St. Louis High School
+8,D,3,8,L,-9,Pass,Complete,11,RED/BLUE (ZO),451 - MAX,L,R,,2,OVER,AUTO,,1,Troy-Buchanan High School
+96,D,4,2,R,46,Run,Rush,11,RED/BLUE,WING LEAD,R,L,,,OVER,MEG,,3,Quincy Senior High School
+111,D,2,6,M,-24,Pass,Complete,11,RED/BLUE,#1 JAILBREAK,L,R,,3,UNDER,MOD,,3,Quincy Senior High School
+66,D,2,1,R,37,Pass,Complete,10,RIVER/LAKE,,L,L,,,,,,2,Maine South High School
+69,D,1,10,L,16,Run,Rush,10,RIVER/LAKE,,L,R,,,,,,2,Maine South High School
+79,D,2,10,L,44,Pass,Complete,10,River/Lake (Empty),,R,L,,,,,,2,Maine South High School
+136,D,3,5,L,-13,Run,Rush,10,RIVER/LAKE (Dual) (Pile),,L,L,,,OVER,MOD - MEG,,4,Joliet West High School
+164,D,4,7,L,20,Pass,Complete,10,RIVER/LAKE (DUAL),,R,R,,,OVER,STUMP - MOD,,4,Joliet West High School
+65,D,3,12,M,34,Pass,Penalty,10,RIVER/LAKE (DUAL),49 - 94,R,L,,,OVER,MOD,,2,Alton High School
+63,D,3,8,R,30,Run,Rush,10,RIVER/LAKE (BUNCH) (SNUG),HB TAG,R,L,,,OVER,MOD - MEG,,2,Belleville East High School
+124,D,3,10,M,10,Run,"Rush, TD",10,GOLD/GREEN,HB TAG,R,L,,,UNDER,MEG,MIKE,4,Belleville East High School
+44,D,1,10,R,-37,Pass,Complete,10,RIVER/LAKE,HB SWING SCREEN,L,L,,1,OVER,MOD,MIKE BLUFF,2,Edwardsville High School
+99,D,1,10,R,-1,Run,Rush,10,GREEN/GOLD (YO),QB OGOY,R,R,,,UNDER,MEG,SAW,4,Edwardsville High School
+108,D,1,20,L,22,Run,Rush,10,RIVER/LAKE,HB TAG,R,L,,,UNDER,STUBBIE - MEG,WIL,4,Edwardsville High School
+141,D,1,10,M,-15,Pass,Complete,10,RIVER/LAKE,98SWING - 42,L,L,,4,JET,OFF MOD,,4,Edwardsville High School
+115,D,1,10,R,-49,Pass,Complete,10,GOLD/GREEN,4 - 29,R,R,,3,UNDER,MOD,,4,Belleville West High School
+76,D,1,10,L,20,Pass,Complete,10,RIVER/LAKE,27BUBBLE - 3,R,L,,3,OVER,STUMP - MOD,,2,East St. Louis High School
+54,D,3,10,M,14,Pass,Complete,10,River/Lake (2/3 Stack),22WHEEL - 2,L,L,,1,JET - OVER,STUBBIE - MEG,,2,Quincy Senior High School
+81,D,4,2,R,-46,Run,Rush,10,RIVER/LAKE,IZ,L,L,,,JET - OVER,MOD,,2,Quincy Senior High School
+129,D,3,4,R,-30,Pass,Complete,10,RIVER/LAKE,941 - 44,L,L,,1,OVER,MOD,,4,Quincy Senior High School
+65,D,1,10,M,46,Pass,Complete,9,River/Lake (Empty),,R,R,,,,,,2,Maine South High School
+38,D,3,4,M,-26,Pass,Complete,9,GOLD/GREEN,,R,R,,,UNDER,MOD - MEG,,2,Joliet West High School
+45,D,4,4,L,49,Pass,Complete,9,RIVER/LAKE,,L,R,,,OVER,MEG,MIKE,2,Joliet West High School
+155,D,1,15,R,-39,Pass,Complete,9,River/Lake (Empty - Stack),,L,L,,,OVER,STUMP - MOD,,4,Joliet West High School
+80,D,1,10,L,49,Pass,Scramble,9,RIVER/LAKE (DUAL),99SWING - 99,R,L,,,,,,2,Alton High School
+11,D,2,8,L,-48,Run,Rush,9,GREEN/GOLD (YO),QB OGOY LEAD,L,R,,,OVER,MOD,,1,Edwardsville High School
+28,D,2,10,M,-11,Pass,Complete,9,RIVER/LAKE (BUNCH),RPO TAG BUBBLE,L,L,,1,OVER,MOD,,1,Edwardsville High School
+78,D,2,6,R,-33,Run,Rush,9,GREEN/GOLD (ZO),QB POWER BASH,L,L,,,UNDER,MOD,,3,Edwardsville High School
+128,D,3,2,L,15,Pass,Complete,9,RIVER/LAKE,9WHEEL - 444,R,L,,1,,,,4,Edwardsville High School
+129,D,2,19,M,47,Pass,Complete,9,RIVER/LAKE,841 - 2,R,R,,2,OVER,STUMP - MOD,,4,Triad High School
+104,D,1,10,L,36,Pass,Complete,9,GREEN/GOLD (YO),RPO IZ HITCH,R,L,,1,UNDER,MOD,,4,Belleville West High School
+106,D,1,10,L,11,Pass,Complete,9,GREEN/GOLD (YO),#2 BUBBLE,L,R,,3,UNDER,MOD,,4,Belleville West High School
+2,D,1,10,R,40,Run,Fumble,9,GREEN/GOLD (YO),IZ - SLICE,L,L,,,UNDER,MOD,,1,East St. Louis High School
+3,D,2,1,R,31,Run,Rush,9,GREEN/GOLD (YO),IZ,L,L,,,UNDER,MOD,MIKE,1,East St. Louis High School
+12,D,3,10,M,-39,Pass,Complete,9,GREEN/GOLD (ZO),479 - MAX,L,L,,1,OVER,STUMP - MOD,,1,Troy-Buchanan High School
+101,D,3,7,R,-44,Run,Rush,9,GREEN/GOLD,371 - 6,L,L,,4,OVER,MOD - MEG,,3,Francis Howell High School
+157,D,1,10,L,37,Pass,Complete,9,Red/Blue (Empty),#1 JAILBREAK,,L,,1,OVER,STUBBIE - MOD,,4,Quincy Senior High School
+71,D,1,10,R,28,Run,Rush,8,GOLD/GREEN,HB TAG,R,L,,,OVER,MOD - MEG,WIL,2,Belleville East High School
+51,D,1,10,L,-39,Run,Rush,8,GREEN/GOLD,BUCK SWEEP WAM,L,L,,,OVER,MOD,,2,Triad High School
+30,D,2,10,R,-45,Pass,Complete,8,RIVER/LAKE,RPO IZ BUBBLE,L,L,,1,OVER,STUBBIE - MEG,,1,Belleville West High School
+50,D,4,4,L,18,Pass,Complete,8,RIVER/LAKE,9214 - 4,R,R,,,OVER,MOD,,2,Belleville West High School
+18,D,2,3,L,38,Pass,Complete,8,RIVER/LAKE,RPO IZ HITCH,L,R,,2,UNDER,MOD,WIL BLUFF,1,East St. Louis High School
+80,D,3,2,M,-34,Run,Rush,8,Rita/Lisa,TAG BASH,L,L,,,OVER,MOD,,3,Troy-Buchanan High School
+116,D,2,9,L,31,Run,Rush,8,RED/BLUE (OVER),HB TAG,BAL,L,,,OVER,MEG,SAM SHOW,4,Troy-Buchanan High School
+53,D,3,3,R,-11,Run,Rush,8,Rita/Lisa,QB IZ LEAD,BAL,L,,,OVER,MEG,WAM,2,Francis Howell High School
+104,D,3,5,L,42,Run,Rush,8,RIVER/LAKE,IZ - READ,L,R,,,OVER,MOD,MIKE BLUFF WIL,3,Francis Howell High School
+13,D,2,4,R,43,Run,Rush,8,GREEN/GOLD (YO) (DUAL),HB TOSS SWEEP,L,L,,,UNDER,MOD,,1,Quincy Senior High School
+78,D,1,10,L,-38,Pass,Complete,8,RIVER/LAKE,#2 JAILBREAK,R,R,,3,OVER,STUBBIE - MEG,,2,Quincy Senior High School
+86,D,2,10,R,25,Pass,Complete,8,River/Lake (2/3 Stack),399 -9,R,R,,3,JET - OVER,MOD,,2,Quincy Senior High School
+115,D,1,10,L,-45,Pass,Complete,8,RED/BLUE,NOGO,R,L,,1,UNDER,MOD,,4,Quincy Senior High School
+136,D,2,10,R,29,Pass,Complete,8,GOLD/GREEN,481 - 51,L,R,,3,UNDER,MOD,,4,Quincy Senior High School
+158,D,2,1,L,28,Run,Rush,8,RIVER/LAKE,HB DRAW,L,L,,,OVER,MOD,,4,Quincy Senior High School
+161,D,3,5,L,15,Run,Rush,8,RIVER/LAKE,IZ,L,L,,,OVER,MOD,,4,Quincy Senior High School
+2,D,1,10,L,46,Pass,Complete,7,RIVER/LAKE (BUNCH),,R,R,,,,,,1,Maine South High School
+112,D,2,8,M,-47,Run,Rush,7,RIVER/LAKE,,L,R,,,,,,3,Maine South High School
+116,D,2,9,L,37,Pass,Complete,7,RIVER/LAKE,,R,L,,,,,,3,Maine South High School
+119,D,2,10,L,27,Pass,Complete,7,RIVER/LAKE,,R,R,,,,,,3,Maine South High School
+105,D,1,5,L,-45,Run,Complete,7,GREEN/GOLD (ZO),,R,R,,,OVER,MOD - MEG,,3,Joliet West High School
+107,D,1,5,R,43,Run,Rush,7,GREEN/GOLD (ZO),,L,R,,,OVER,MOD - MEG,,3,Joliet West High School
+120,D,3,29,L,29,Run,Penalty,7,River/Lake (Empty - Four),,R,L,,,JET,STUMP - MEG,,3,Joliet West High School
+43,D,3,1,M,-30,Run,Rush,7,RIVER/LAKE,QB TAG BASH,L,R,,,UNDER,STUBBIE - MEG,WAM,2,Edwardsville High School
+57,D,3,9,R,10,Pass,Complete,7,GREEN/GOLD (YO),75MAX - 2,R,R,,3,OVER,MEG,WIL KNIFE,2,Triad High School
+143,D,2,4,R,-25,Pass,Complete,7,RIVER/LAKE,471 - 2,L,L,,1,JET - OVER,STUMP - MOD,,4,Triad High School
+101,D,1,10,M,-36,Run,Rush,7,GREEN/GOLD (YO),HB TAG,L,L,,,UNDER,MOD,,4,Belleville West High School
+17,D,1,10,L,45,Run,Rush,7,GREEN/GOLD (YO),IZ - SLICE,R,R,,,UNDER,MOD - MEG,WIL,1,East St. Louis High School
+27,D,1,10,M,-46,Pass,Complete,7,RIVER/LAKE (BUNCH),#1 NOW,L,L,,1,UNDER,MOD,MIKE BLUFF,1,East St. Louis High School
+48,D,2,4,R,45,Pass,Complete,7,RIVER/LAKE,954 - 5,L,L,,1,OVER,STUBBIE - MEG,MIKE,2,East St. Louis High School
+77,D,1,10,R,10,Run,"Rush, TD",7,RIVER/LAKE,IZ - READ,,R,,,UNDER,MEG,WAM,2,East St. Louis High School
+82,D,2,10,L,-42,Run,Rush,7,RED/BLUE (SNUG),BUCK SWEEP,BAL,L,,,OVER,MOD,,3,Troy-Buchanan High School
+7,D,2,10,M,28,Run,Rush,7,GREEN/GOLD (YO),IZ - SLICE - READ,,R,,,UNDER,STUBBIE - MEG,,1,Francis Howell High School
+19,D,2,8,L,-40,Run,Rush,7,RIVER/LAKE,QB TAG,R,L,,,UNDER,STUBBIE - MOD,WIL,1,Francis Howell High School
+24,D,2,5,M,26,Run,Rush,7,GREEN/GOLD (YO),IZ - SLICE,L,L,,,UNDER,MOD - MEG,,1,Francis Howell High School
+70,D,1,10,L,-41,Run,Rush,7,River/Lake (Empty),QB DRAW,R,R,,,UNDER,STUMP - MOD,,2,Francis Howell High School
+117,D,1,10,L,44,Pass,Complete,7,RED/BLUE,#1 JAILBREAK,R,L,,1,UNDER,MOD,,4,Quincy Senior High School
+42,D,1,10,R,-36,Run,Rush,6,RIVER/LAKE,,L,R,,,,,,2,Maine South High School
+70,D,1,6,R,6,Pass,"Complete, TD",6,RIVER/LAKE,,L,R,,,,,,2,Maine South High School
+103,D,1,10,M,-20,Run,Rush,6,RIVER/LAKE,,L,L,,,,,,3,Maine South High School
+136,D,3,9,M,-11,Run,Rush,6,RIVER/LAKE,,L,L,,,,,,4,Maine South High School
+35,D,1,10,L,-20,Run,Rush,6,GREEN/GOLD (ZO),HB POWER,R,R,,,OVER,MOD - MEG,,1,Joliet West High School
+48,D,3,8,M,38,Pass,Complete,6,GREEN/GOLD (ZO) (TT),,L,R,,,OVER,MOD - MEG,WIL KNIFE,2,Joliet West High School
+138,D,2,10,L,-23,Run,Rush,6,GREEN/GOLD (YO),,R,L,,,OVER,MOD - MEG,,4,Joliet West High School
+151,D,1,10,R,-33,Pass,Complete,6,River/Lake (Empty - Stack),,L,L,,,OVER,STUMP - MOD,,4,Joliet West High School
+28,D,3,30,L,50,Run,Rush,6,RIVER/LAKE,IZ,R,R,,,JET,STUMP - MOD,,1,Belleville East High School
+51,D,1,10,M,-13,Pass,Scramble,6,RIVER/LAKE,939 - 8,R,R,,,OVER,MOD,,2,Belleville East High School
+149,D,2,10,L,-5,Run,Rush,6,GREEN/GOLD,HB TAG,,L,,,UNDER,MOD,,4,Belleville East High School
+63,D,1,10,M,-20,Pass,Complete,6,RIVER/LAKE,HB SWING SCREEN,L,R,,3,UNDER,OFF MOD,,2,Edwardsville High School
+103,D,1,10,R,49,Run,Rush,6,GREEN/GOLD (YO),QB OGOY,R,L,,,JET - OVER,MOD - MEG,MIKE BLUFF,4,Edwardsville High School
+123,D,3,21,L,-20,Pass,Complete,6,RIVER/LAKE,464 - 47,L,R,,3,OVER,OFF MOD,,4,Edwardsville High School
+126,D,1,10,L,23,Pass,Scramble,6,GREEN/GOLD (ZO),42WHEEL - 47,R,L,,,OVER,MOD - MEG,WIL,4,Edwardsville High School
+129,D,1,6,L,6,Pass,"Complete, TD",6,GREEN/GOLD (YO),29SWING4 - 2,R,R,,2,OVER,MEG,,4,Edwardsville High School
+142,D,1,10,R,-19,Run,Rush,6,RIVER/LAKE,HB SLIP SCREEN,L,R,,3,JET - OVER,STUMP - MOD,MIKE BLUFF,4,Triad High School
+49,D,3,10,L,24,Pass,Complete,6,RIVER/LAKE,RPO OUTSIDE ZONE SLANT,R,L,,1,OVER,MOD,,2,Belleville West High School
+45,D,1,10,R,-26,Run,Rush,6,RIVER/LAKE (BUNCH) (SNUG),HB TOSS SWEEP,L,L,,,UNDER,MOD,,1,East St. Louis High School
+47,D,1,10,L,-49,Run,Rush,6,RIVER/LAKE (BUNCH) (SNUG),HB TOSS SWEEP,R,R,,,OVER,RIP/LIZ,MIKE,2,East St. Louis High School
+76,D,2,9,M,-17,Run,Rush,6,GREEN/GOLD,JET SWEEP LEAD,L,L,,,OVER,AUTO,,3,Troy-Buchanan High School
+130,D,1,10,L,29,Run,Rush,6,RED/BLUE (OVER),HB TAG,BAL,L,,,OVER,MEG,MAS,4,Troy-Buchanan High School
+133,D,4,3,L,22,Pass,Complete,6,Rita/Lisa,RPO TAG 2,BAL,R,,3,OVER,MEG,WAM,4,Troy-Buchanan High School
+21,D,1,10,M,41,Run,Rush,6,RED/BLUE (YO),OUTSIDE ZONE,L,L,,,OVER,MOD,,1,Francis Howell High School
+103,D,2,11,R,48,Pass,Complete,6,RIVER/LAKE,9521 - 9,L,R,,1,OVER,MOD,WIL,3,Francis Howell High School
+12,D,1,10,R,49,Run,Rush,6,RIVER/LAKE,IZ,L,R,,,UNDER,MOD,,1,Quincy Senior High School
+46,D,1,10,R,38,Pass,Complete,6,RIVER/LAKE,#1 TUNNEL,L,L,,2,UNDER,STUBBIE - MEG,,2,Quincy Senior High School
+48,D,3,3,M,31,Run,Rush,6,RIVER/LAKE,HB POWER,L,R,,,OVER,MOD,,2,Quincy Senior High School
+57,D,2,6,L,6,Pass,"Complete, TD",6,River/Lake (Snug),721 - 22,L,R,,3,UNDER,MEG,,2,Quincy Senior High School
+112,D,1,10,R,-35,Run,Rush,6,RIVER/LAKE,IZ,L,L,,,OVER,STUMP - MEG,,3,Quincy Senior High School
+128,D,2,10,M,-24,Run,Rush,6,RIVER/LAKE,QB DRAW,L,R,,,UNDER,MOD,,4,Quincy Senior High School
+137,D,3,2,R,21,Run,Rush,6,RED/BLUE,HB POWER,L,L,,,OVER,MOD,,4,Quincy Senior High School
+52,D,1,20,M,-36,,Penalty,5,RIVER/LAKE,,R,,,,,,,2,Maine South High School
+55,D,2,10,M,44,Run,Rush,5,RIVER/LAKE,,L,R,,,,,,2,Maine South High School
+39,D,1,10,R,-35,Run,Rush,5,GREEN/GOLD (ZO) (TT),,R,R,,,OVER,MOD - MEG,,2,Joliet West High School
+106,D,2,10,M,48,Pass,Complete,5,River/Lake (Empty - Stack),,R,R,,,OVER,STUMP - MOD,,3,Joliet West High School
+113,D,2,9,R,18,Pass,Complete,5,RIVER/LAKE (BUNCH),,R,R,,,UNDER,MOD - MEG,,3,Joliet West High School
+134,D,1,10,M,-8,Pass,Complete,5,RIVER/LAKE,,L,L,,,OVER,MOD - MEG,,4,Joliet West High School
+153,D,3,4,L,-39,Pass,Complete,5,River/Lake (Empty - Stack),,L,L,,,OVER,STUMP - MOD,,4,Joliet West High School
+157,D,1,10,L,33,Pass,Complete,5,River/Lake (2/3 Stack),,R,L,,,OVER,STUMP - MOD,,4,Joliet West High School
+160,D,3,5,M,28,,Penalty,5,River/Lake (2/3 Stack),,R,,,,,,,4,Joliet West High School
+59,D,1,10,R,-39,Run,Penalty,5,RIVER/LAKE,HB TOSS SWEEP,L,L,,,OVER,STUBBIE - MEG,WIL KNIFE,2,Alton High School
+6,D,1,10,M,35,Pass,Complete,5,GOLD/GREEN,PA JET SWEEP #1 JAILBREAK,R,L,,1,OVER,MOD,,1,Belleville East High School
+109,D,2,10,L,-38,Run,Rush,5,GOLD/GREEN,HB TAG,L,R,,,OVER,MOD,,3,Belleville East High School
+161,D,3,10,M,11,Run,Rush,5,GOLD/GREEN,HB TAG,R,L,,,JET,MOD,,4,Belleville East High School
+41,D,1,10,R,-21,Run,Rush,5,River/Lake (2/3 Stack),HB TAG,L,R,,,UNDER,STUBBIE - MEG,,2,Edwardsville High School
+91,D,2,10,R,50,Run,Rush,5,GREEN/GOLD (YO),HB OGOY,R,L,,,UNDER,MOD - MEG,,3,Edwardsville High School
+7,D,3,11,M,43,,Penalty,5,,,BAL,,,,,,,1,Triad High School
+8,D,3,6,M,38,Pass,Scramble,5,RIVER/LAKE,95 - 98,L,L,,,JET - OVER,MOD,,1,Triad High School
+12,D,1,10,L,16,Run,Rush,5,GREEN/GOLD (BUNCH) (SNUG),TRAP,L,R,,,UNDER,RIP/LIZ,MIKE,1,Triad High School
+52,D,2,2,L,-47,Pass,Complete,5,River/Lake (2/3 Stack),471 - 21,R,R,,2,OVER,STUMP - MEG,,2,Triad High School
+72,D,3,10,M,49,Pass,Incomplete,0,RIVER/LAKE,841 - 2,R,L,,5,OVER,STUMP - MOD,,2,Triad High School
+116,D,1,10,L,-4,Run,Rush,5,RED/BLUE,IZ,R,L,,,OVER,MOD,,4,Triad High School
+132,D,3,6,L,43,Pass,Scramble,5,River/Lake (2/3 Stack),865FLARE - 2,R,R,,,UNDER,STUMP - MOD,MIKE BLUFF,4,Triad High School
+146,D,3,6,L,-32,Pass,Penalty,5,RIVER/LAKE,9FLARE - 612,R,L,,7,JET - OVER,STUMP - MOD,,4,Triad High School
+87,D,1,10,M,-23,Pass,Complete,5,RIVER/LAKE,915 - 9,R,R,,3,UNDER,STUMP - MOD,,3,Belleville West High School
+102,D,2,3,M,-43,Pass,Complete,5,GREEN/GOLD,98 - 4,L,R,,3,UNDER,MOD,,4,Belleville West High School
+109,D,1,10,L,30,Pass,Complete,5,RIVER/LAKE,RPO IZ BUBBLE,,L,,1,JET - OVER,MOD,WAM BLUFF,4,East St. Louis High School
+19,D,2,8,L,-3,Run,Rush,5,Rita/Lisa,BUCK SWEEP,L,R,,,OVER,MOD,,1,Troy-Buchanan High School
+49,D,2,8,M,-31,Pass,Scramble,5,Green/Gold (Zo) (Bunch),844 - 4,R,R,,,OVER,MOD,,2,Troy-Buchanan High School
+78,D,1,10,R,-26,Run,Rush,5,RED/BLUE,HB TAG,L,L,,,OVER,MOD,,3,Troy-Buchanan High School
+118,D,4,1,L,22,,Penalty,5,RED/BLUE (OVER),,BAL,,,,,,,4,Troy-Buchanan High School
+132,D,3,8,L,27,Run,Rush,5,RED/BLUE (OVER),BUCK SWEEP,BAL,L,,,,MEG,TAP,4,Troy-Buchanan High School
+23,D,1,10,R,31,Run,Rush,5,GREEN/GOLD (YO),IZ - SLICE,L,L,,,UNDER,CUT - MOD,,1,Francis Howell High School
+27,D,3,7,L,16,Pass,Scramble,5,GREEN/GOLD,388 - 6,R,R,,,UNDER,MOD,MIKE BLUFF,1,Francis Howell High School
+28,D,4,2,R,11,,Penalty,5,GREEN/GOLD (ZO),,R,,,,,,,1,Francis Howell High School
+58,D,3,5,L,34,,Penalty,5,RIVER/LAKE,,R,,,,,,,2,Francis Howell High School
+15,D,1,9,L,9,Run,Rush,5,RED/BLUE,IZ BEND,L,R,,,UNDER,MEG,,1,Quincy Senior High School
+91,D,3,6,M,-38,Pass,Complete,5,River/Lake (2/3 Stack),#2 BUBBLE,L,L,,1,OVER,STUBBIE - MOD,,3,Quincy Senior High School
+94,D,2,10,R,-46,Run,Rush,5,RIVER/LAKE,QB DRAW,L,R,,,UNDER,MOD,,3,Quincy Senior High School
+114,D,3,5,R,-40,Pass,Complete,5,RIVER/LAKE,95 - 95,L,L,,1,OVER,MOD,,4,Quincy Senior High School
+133,D,1,10,R,39,Run,Rush,5,RED/BLUE,HB POWER,L,L,,,UNDER,MOD,,4,Quincy Senior High School
+134,D,2,5,R,34,,Penalty,5,RED/BLUE,,R,,,,,,,4,Quincy Senior High School
+159,D,1,10,L,20,Pass,Penalty,5,Red/Blue (Empty),#1 JAILBREAK,,,,1,,,,4,Quincy Senior High School
+18,D,3,8,M,-22,Pass,Scramble,4,River/Lake (Empty - Four),4WHEEL4MAX - 2,R,R,,,OVER,STUMP - MEG,,1,Joliet West High School
+40,D,2,5,R,-40,Run,Rush,4,GOLD/GREEN,,R,R,,,OVER,MOD,,2,Joliet West High School
+78,D,2,10,L,-18,Run,Rush,4,RIVER/LAKE (DUAL),,R,R,,,JET,MOD - MEG,,2,Joliet West High School
+114,D,3,4,R,13,Run,Rush,4,TITE,,BAL,L,,,UNDER,MEG,WAM,3,Joliet West High School
+162,D,2,10,L,23,Pass,Scramble,4,RIVER/LAKE,,R,R,,,OVER,STUMP - MOD,,4,Joliet West High School
+128,D,1,10,R,-39,Run,Rush,4,RIVER/LAKE,IZ,R,L,,,UNDER,MOD,,4,Alton High School
+138,D,2,8,R,-38,Run,Rush,4,RIVER/LAKE,IZ,L,L,,,OVER,MOD,,4,Alton High School
+35,D,2,7,R,-38,Run,Rush,4,RIVER/LAKE (BUNCH),HB SWING SCREEN,L,L,,1,OVER,STUMP - MOD,,1,Belleville East High School
+58,D,1,10,L,-46,Run,Rush,4,GREEN/GOLD (OVER),HB TAG,L,R,,,UNDER,MOD,,2,Belleville East High School
+59,D,2,6,M,50,Run,Rush,4,RIVER/LAKE (BUNCH) (SNUG),OUTSIDE ZONE PIN AND PULL,R,R,,,OVER,MOD,,2,Belleville East High School
+175,D,1,10,R,-44,Run,Rush,4,GOLD/GREEN,HB TAG,R,L,,,UNDER,MEG,WAM,4,Belleville East High School
+3,D,2,10,L,-32,Run,Rush,4,GREEN/GOLD (YO),QB POWER BASH,L,L,,,OVER,MOD,,1,Edwardsville High School
+13,D,2,12,M,45,Run,Rush,4,River/Lake (Empty),QB POWER,R,L,,,UNDER,STUMP - MOD,,1,Edwardsville High School
+42,D,2,5,R,-26,Run,Rush,4,RIVER/LAKE (BUNCH),HB DART,L,L,,,UNDER,MOD - MEG,,2,Edwardsville High School
+77,D,1,10,R,-29,Run,Rush,4,GREEN/GOLD (YO),QB OGOY,R,L,,,UNDER,MOD,,3,Edwardsville High School
+105,D,1,10,L,30,Run,Rush,4,RIVER/LAKE,HB TAG,R,L,,,JET - OVER,STUBBIE - MEG,MIKE BLUFF,4,Edwardsville High School
+6,D,2,15,M,47,Pass,Complete,4,GREEN/GOLD (YO),HB MIDDLE SCREEN,,L,,2,OVER,MOD - MEG,,1,Triad High School
+9,D,4,1,M,33,Run,Rush,4,Tite (TT),QB SNEAK,L,L,,,UNDER,MEG,,1,Triad High School
+22,D,2,8,R,8,Run,Rush,4,GREEN/GOLD (ZO) (BUNCH) (SNUG),HB STRETCH,L,R,,,UNDER,MEG,WAM,1,Triad High School
+42,D,1,10,M,-16,Run,Rush,4,GREEN/GOLD (YO) (ZO),WR REVERSE GAG,BAL,L,,,UNDER,MOD - MEG,WIL,2,Triad High School
+22,D,2,4,L,35,Run,Rush,4,GREEN/GOLD (YO),OTUSIDE ZONE,R,R,,,OVER,STUBBIE - MEG,,1,Francis Howell High School
+29,D,1,6,R,6,Run,Rush,4,Rita/Lisa,QB ZONE LEAD,L,L,,,UNDER,MEG,SAW,1,Francis Howell High School
+51,D,1,10,R,-4,Run,Rush,4,Rita/Lisa,IZ,BAL,R,,,OVER,MOD,,2,Francis Howell High School
+120,D,1,10,M,-40,Pass,Scramble,4,RIVER/LAKE,85 - 85,L,R,,,OVER,MOD,,4,Francis Howell High School
+140,D,1,10,M,-40,Run,Rush,4,Rita/Lisa,IZ - READ,L,L,,,UNDER,MEG,SAW SHOW,4,Francis Howell High School
+4,D,1,10,L,-25,Run,Rush,4,TRIPS OPEN,JET SWEEP LEAD,R,R,,,UNDER,MOD - MEG,,1,Quincy Senior High School
+9,D,1,10,R,-10,Run,Rush,4,RIVER/LAKE,HB WIDE TRAP,R,L,,,UNDER,MOD,,1,Quincy Senior High School
+16,D,2,4,L,4,Run,"Rush, TD",4,RED/BLUE,HB POWER,L,L,,,UNDER,MEG,,1,Quincy Senior High School
+42,D,2,10,L,-20,Pass,Complete,4,RIVER/LAKE,95 - 95,R,R,,3,UNDER,MOD,,2,Quincy Senior High School
+67,D,1,10,R,-15,Run,Rush,4,RED/BLUE,IZ,L,L,,,OVER,MOD,,2,Quincy Senior High School
+82,D,1,10,M,44,Pass,Complete,4,RIVER/LAKE,#2 JAILBREAK,R,R,,3,JET - OVER,MOD,,2,Quincy Senior High School
+110,D,1,10,M,-20,Run,Rush,4,RED/BLUE,IZ,L,R,,,UNDER,MOD,,3,Quincy Senior High School
+117,D,3,2,L,30,Run,Rush,3,RIVER/LAKE,,R,R,,,,,,3,Maine South High School
+42,D,1,10,R,-45,Run,Rush,3,River/Lake (2/3 Stack),,L,L,,,OVER,STUMP - MEG,,2,Joliet West High School
+44,D,3,7,R,-48,Pass,Scramble,3,RIVER/LAKE,,R,L,,,OVER,MOD - MEG,,2,Joliet West High School
+94,D,2,10,M,-21,Pass,Complete,3,RIVER/LAKE (BUNCH) (SNUG),MESH SPOT,L,L,,1,OVER,CUT - MOD,,3,Alton High School
+9,D,2,10,L,17,Run,Rush,3,GREEN/GOLD (ZO),BUCK SWEEP,R,L,,,OVER,MOD,,1,Belleville East High School
+12,D,1,3,R,3,Run,"Rush, TD",3,RIVER/LAKE (BUNCH) (SNUG),HB TAG,L,R,,,UNDER,MEG,SAW SHOW,1,Belleville East High School
+34,D,1,10,R,-35,Run,Rush,3,GREEN/GOLD (YO),HB ISO,L,L,,,OVER,MOD,,1,Belleville East High School
+61,D,1,10,R,32,Run,Rush,3,RIVER/LAKE (BUNCH) (SNUG),OUTSIDE ZONE PIN AND PULL,L,L,,,OVER,STUMP - MOD,,2,Belleville East High School
+118,D,3,4,L,-10,Run,Rush,3,GREEN/GOLD (YO),HB OGOY,R,R,,,OVER,RIP/LIZ,WAM BLUFF,4,Triad High School
+49,D,2,4,R,45,Run,Rush,3,RIVER/LAKE,HB TAG,L,L,,,UNDER,MOD - MEG,WIL,2,East St. Louis High School
+7,D,2,11,L,-6,Run,Rush,3,Rita/Lisa,HB TAG,L,L,,,OVER,AUTO,,1,Troy-Buchanan High School
+11,D,2,13,R,-36,Run,Rush,3,GREEN/GOLD,HB TAG,L,L,,,OVER,AUTO,,1,Troy-Buchanan High School
+77,D,3,3,L,-23,Run,Rush,3,GREEN/GOLD (ZO),BUCK SWEEP,BAL,R,,,UNDER,MEG,WAM,3,Troy-Buchanan High School
+79,D,2,5,M,-31,Run,Rush,3,RED/BLUE (OVER),HB TAG,L,L,,,OVER,MOD,,3,Troy-Buchanan High School
+112,D,1,10,M,50,Run,Rush,3,RED/BLUE (OVER),JET SWEEP LEAD,L,R,,,OVER,RIP/LIZ,MIKE,4,Troy-Buchanan High School
+113,D,2,7,R,47,Run,Rush,3,RED/BLUE (OVER),BUCK SWEEP,L,L,,,UNDER,MOD,,4,Troy-Buchanan High School
+8,D,3,3,M,21,Run,Rush,3,Rita/Lisa,IZ - READ,BAL,L,,,UNDER,MOD,,1,Francis Howell High School
+52,D,2,6,R,-8,Run,Rush,3,Rita/Lisa,QB POWER LEAD,BAL,R,,,OVER,MOD,,2,Francis Howell High School
+83,D,1,10,R,-35,Run,Rush,3,RIVER/LAKE,IZ - READ,L,R,,,UNDER,MOD,,3,Francis Howell High School
+85,D,2,20,R,-25,Run,Rush,3,RIVER/LAKE,HB DRAW,L,L,,,UNDER,STUBBIE - MOD,WIL,3,Francis Howell High School
+99,D,1,10,L,-41,Run,Rush,3,GREEN/GOLD (YO),IZ - SLICE,R,L,,,OVER,MOD,,3,Francis Howell High School
+124,D,1,5,R,5,Run,Rush,3,Rita/Lisa,IZ - READ,L,L,,,UNDER,,SAW SHOW,4,Francis Howell High School
+5,D,2,6,R,-29,Run,Rush,3,TRIPS OPEN,HB POWER,L,R,,,OVER,MOD,,1,Quincy Senior High School
+44,D,1,10,R,-43,Run,Rush,3,RED/BLUE,HB POWER,L,L,,,UNDER,MOD,,2,Quincy Senior High School
+55,D,1,4,L,4,Run,Rush,3,RED/BLUE,HB POWER,R,L,,,UNDER,MEG,,2,Quincy Senior High School
+90,D,2,9,R,-35,Run,Rush,3,RIVER/LAKE,IZ,L,L,,,UNDER,MOD,,3,Quincy Senior High School
+92,D,4,1,L,-43,Run,Rush,3,RIVER/LAKE,IZ,L,R,,,UNDER,MOD,,3,Quincy Senior High School
+95,D,3,5,R,49,Pass,Complete,3,RIVER/LAKE,#2 JAILBREAK,R,R,,3,OVER,STUMP - MEG,,3,Quincy Senior High School
+116,D,2,2,L,47,Run,Rush,3,RIVER/LAKE,IZ,R,R,,,UNDER,STUMP - MEG,WIL,4,Quincy Senior High School
+139,D,2,10,M,15,Run,Rush,3,RED/BLUE,WING LEAD,R,L,,,UNDER,MOD,,4,Quincy Senior High School
+142,D,1,3,L,3,Run,"Rush, TD",3,RED/BLUE,IZ,L,L,,,UNDER,MEG,,4,Quincy Senior High School
+24,D,1,5,R,5,Run,Rush,2,RIVER/LAKE (DUAL),,L,L,,,,,,1,Maine South High School
+111,D,1,10,M,-45,Run,Rush,2,RIVER/LAKE,,R,R,,,,,,3,Maine South High School
+120,D,3,3,R,20,Pass,Scramble,2,River/Lake (Empty - Four),,L,L,,,,,,3,Maine South High School
+16,D,1,10,M,-20,Run,Rush,2,GREEN/GOLD (YO),2 BACK POWER,L,L,,,UNDER,MOD,,1,Joliet West High School
+94,D,1,15,L,-9,Run,Rush,2,RIVER/LAKE,,L,R,,,OVER,CUT,,3,Joliet West High School
+108,D,1,10,R,36,Run,Rush,2,GREEN/GOLD (ZO),,L,L,,,UNDER,MOD - MEG,,3,Joliet West High School
+12,D,1,10,M,-20,Run,Rush,2,RIVER/LAKE,IZ,R,R,,,UNDER,RIP/LIZ,,1,Alton High School
+62,D,1,10,R,32,Pass,Scramble,2,RIVER/LAKE,49 - 49,L,R,,,OVER,RIP/LIZ,,2,Alton High School
+137,D,1,10,M,-36,Run,Rush,2,RIVER/LAKE,IZ,L,R,,,OVER,MOD,,4,Alton High School
+89,D,1,10,L,-41,Run,Rush,2,GOLD/GREEN,HB TAG,L,R,,,OVER,MOD,,3,Belleville East High School
+96,D,1,10,L,-20,Run,Rush,2,GREEN/GOLD (BUNCH) (SNUG) (OVER),BUCK SWEEP,,R,,,OVER,STUMP - MOD,,3,Belleville East High School
+10,D,1,10,M,-46,Run,Rush,2,RED/BLUE (ZO),HB TAG,R,L,,,UNDER,MOD,,1,Edwardsville High School
+46,D,2,9,L,-48,Run,Rush,2,GREEN/GOLD (ZO),QB POWER BASH,R,R,,,OVER,STUBBIE - MOD,,2,Edwardsville High School
+92,D,3,5,R,45,Run,Rush,2,GREEN/GOLD (ZO),QB POWER BASH,L,L,,,OVER,MOD - BOW,,3,Edwardsville High School
+127,D,2,4,L,17,Pass,Scramble,2,River/Lake (2/3 Stack),9SWING - 229,R,R,,,UNDER,OFF MOD,,4,Edwardsville High School
+10,D,1,10,M,29,Run,Rush,2,RED/BLUE (YO) (ZO),QB SWEEP LEAD,BAL,R,,,OVER,MOD,,1,Triad High School
+21,D,1,10,M,10,Run,Rush,2,GREEN/GOLD (ZO) (BUNCH) (SNUG),HB STRETCH,L,R,,,UNDER,MEG,SAW,1,Triad High School
+58,D,4,2,R,3,Run,Rush,2,Rita/Lisa (Rip/Liz),QB SNEAK,R,L,,,UNDER,MEG,SAW SHOW,2,Triad High School
+88,D,2,10,R,45,Run,Rush,2,GREEN/GOLD,IZ,,L,,,OVER,RIP/LIZ,,2,Triad High School
+71,D,2,19,M,-6,Run,Fumble,,GREEN/GOLD (YO),HB TAG,R,R,,,JET - OVER,MOD,,3,Belleville West High School
+75,D,1,10,R,-39,Run,Rush,2,GREEN/GOLD (Dual),OTUSIDE ZONE,L,L,,,UNDER,MOD - MEG,,3,Belleville West High School
+108,D,3,1,R,2,Pass,"Complete, TD",2,GREEN/GOLD (YO),RPO IZ ARROW,L,L,,1,UNDER,MEG,SAW SHOW,4,Belleville West High School
+40,D,1,10,L,27,Run,Rush,2,GREEN/GOLD (YO),JET SWEEP LEAD,R,L,,,UNDER,MOD,,1,East St. Louis High School
+18,D,1,10,L,-1,Run,Rush,2,Rita/Lisa,HB TAG,L,L,,,OVER,AUTO,,1,Troy-Buchanan High School
+48,D,1,10,R,-29,Run,Rush,2,Green/Gold (Zo) (Bunch),HB TAG,R,L,,,OVER,MOD,,2,Troy-Buchanan High School
+58,D,2,10,R,-39,Pass,Complete,2,GREEN/GOLD,#1 JAILBREAK,L,R,,3,OVER,MOD,,2,Troy-Buchanan High School
+9,D,1,10,L,18,Run,Rush,2,RED/BLUE (ZO),WIDE ZONE,L,R,,,UNDER,MOD,,1,Francis Howell High School
+18,D,1,10,R,-38,Pass,Complete,2,RIVER/LAKE,SHALLOW SCREEN,L,L,,2,UNDER,CUT - MOD,,1,Francis Howell High School
+25,D,1,10,L,19,Run,Rush,2,GREEN/GOLD (YO),IZ - SLICE,L,R,,,UNDER,MOD - MEG,,1,Francis Howell High School
+30,D,2,2,L,2,Run,"Rush, TD",2,RED/BLUE (OVER),IZ,R,L,,,UNDER,MEG,WAM,1,Francis Howell High School
+55,D,1,10,R,39,Run,Rush,2,RIVER/LAKE,HB TAG,L,R,,,OVER,MOD,,2,Francis Howell High School
+125,D,2,2,R,2,Run,"Rush, TD",2,Rita/Lisa,IZ - READ,L,R,,,UNDER,MEG,SAW SHOW,4,Francis Howell High School
+29,D,2,10,R,-40,Run,Rush,2,RED/BLUE,HB OGOH,R,L,,,OVER,MOD,,1,Quincy Senior High School
+53,D,2,12,R,16,Run,Rush,2,River/Lake (Empty),JET SWEEP,R,L,,,OVER,MOD,,2,Quincy Senior High School
+130,D,1,10,L,-40,Run,Rush,2,RED/BLUE,HB POWER,R,R,,,OVER,MOD,,4,Quincy Senior High School
+115,D,1,10,M,38,Pass,Complete,1,River/Lake (Empty - Four),,L,L,,,,,,3,Maine South High School
+135,D,2,10,L,-10,Run,Rush,1,RIVER/LAKE,,L,L,,,,,,4,Maine South High School
+41,D,3,1,R,-44,Run,Rush,1,RIVER/LAKE (Dual) (Pile),,R,R,,,OVER,MEG,,2,Joliet West High School
+46,D,1,10,R,40,Run,Rush,1,GREEN/GOLD (ZO),,L,L,,,OVER,MOD - MEG,MIKE,2,Joliet West High School
+47,D,2,9,M,39,Run,Rush,1,RIVER/LAKE (DUAL),,L,R,,,OVER,MOD,,2,Joliet West High School
+111,D,1,10,R,19,Run,Rush,1,GREEN/GOLD (ZO),,L,R,,,OVER,MOD,,3,Joliet West High School
+2,D,1,10,M,-20,Run,Rush,1,GREEN/GOLD (ZO),HB ISO,R,R,,,OVER,MOD - MEG,,1,Alton High School
+3,D,2,9,R,-21,Pass,Scramble,1,RIVER/LAKE,44 - 44,L,L,,,OVER,MOD,,1,Alton High School
+29,D,1,10,L,-36,Run,Rush,1,RIVER/LAKE,IZ,R,L,,,OVER,RIP/LIZ,,1,Alton High School
+36,D,3,3,L,-42,Run,Rush,1,GOLD/GREEN,HB TAG,L,R,,,UNDER,MOD,,1,Belleville East High School
+52,D,2,4,R,-19,Run,Rush,1,GREEN/GOLD (BUNCH) (SNUG) (OVER),HB TOSS SWEEP,R,L,,,UNDER,MOD,,2,Belleville East High School
+157,D,1,10,L,40,Run,Rush,1,GREEN/GOLD (ZO) (TT),HB WIDE TRAP,R,R,,,UNDER,MOD,,4,Belleville East High School
+45,D,1,10,L,-47,Run,Rush,1,GREEN/GOLD (ZO),HB TAG,R,L,,,UNDER,MOD,,2,Edwardsville High School
+53,D,1,10,M,48,Run,Rush,1,RIVER/LAKE,HB TAG,R,L,,,OVER,MOD,WIL,2,Triad High School
+55,D,1,10,R,11,Run,Rush,1,RED/BLUE (OVER),IZ,L,R,,,UNDER,MEG,SAW SHOW,2,Triad High School
+117,D,2,5,L,-9,Run,Rush,1,Green/Gold (Yo) (Empty-Four),BUCK SWEEP,,R,,,OVER,MOD,,4,Triad High School
+14,D,2,13,M,-24,Pass,Complete,1,River/Lake (2/3 Stack),RPO OUTSIDE ZONE BUBBLE,R,R,,3,OVER,STUBBIE - MEG,,1,Belleville West High School
+15,D,2,10,M,-40,Run,Rush,1,GREEN/GOLD (YO),OUTSIDE ZONE,R,R,,,UNDER,MOD,MIKE BLUFF,1,East St. Louis High School
+110,D,2,5,L,25,Pass,Scramble,1,RIVER/LAKE,41 - 44,,L,,,UNDER,MOD,,4,East St. Louis High School
+26,D,1,10,M,-19,Run,Rush,1,RED/BLUE (ZO),HB OGOH,L,L,,,OVER,MOD,,1,Troy-Buchanan High School
+75,D,1,10,L,-16,Run,Rush,1,RED/BLUE (OVER),BUCK SWEEP,L,R,,,UNDER,MOD,,3,Troy-Buchanan High School
+115,D,1,10,R,32,Run,Rush,1,RED/BLUE (ZO),QB SWEEP LEAD,L,L,,,OVER,MEG,MIKE,4,Troy-Buchanan High School
+117,D,3,1,L,23,Run,Rush,1,RED/BLUE (OVER),BUCK SWEEP,BAL,R,,,UNDER,MEG,SAM,4,Troy-Buchanan High School
+26,D,2,8,L,17,Run,Rush,1,GREEN/GOLD,HB TAG,R,L,,,UNDER,MOD,,1,Francis Howell High School
+142,D,3,8,L,-42,Run,Rush,1,Rita/Lisa,IZ,R,L,,,UNDER,MOD,,4,Francis Howell High School
+47,D,2,4,M,32,Run,Rush,1,RIVER/LAKE,IZ,L,R,,,UNDER,MOD,,2,Quincy Senior High School
+89,D,1,10,M,-34,Run,Rush,1,RED/BLUE,G LEAD,R,R,,,UNDER,MOD,,3,Quincy Senior High School
+35,D,2,11,L,-39,Pass,Dropped,0,River/Lake (Empty),,R,L,,,,,,2,Maine South High School
+44,D,3,6,L,-40,Pass,Dropped,0,River/Lake (Empty),,R,R,,,,,,2,Maine South High School
+54,D,1,10,M,44,Pass,Batted Down,0,River/Lake (Empty),,R,L,,,,,,2,Maine South High School
+57,D,3,15,L,49,Pass,Dropped,0,RIVER/LAKE,,R,L,,,,,,2,Maine South High School
+67,D,1,10,L,27,Pass,Incomplete,0,RIVER/LAKE,,R,L,,,,,,2,Maine South High School
+78,D,1,10,L,44,Pass,Batted Down,0,River/Lake (Empty),,R,L,,,,,,2,Maine South High School
+80,D,1,10,L,34,Pass,Dropped,0,River/Lake (Empty),,R,L,,,,,,2,Maine South High School
+88,D,1,10,L,-34,Pass,Batted Down,0,River/Lake (Empty),,R,L,,,,,,2,Maine South High School
+118,D,1,10,L,27,Run,Rush,0,RIVER/LAKE (BUNCH),,R,L,,,,,,3,Maine South High School
+134,D,1,10,M,-10,Run,Rush,0,RIVER/LAKE,,L,L,,,,,,4,Maine South High School
+17,D,2,8,M,-22,Pass,Incomplete,0,GREEN/GOLD,4WHEEL4 - 4,R,R,,6,OVER,MOD - MEG,,1,Joliet West High School
+36,D,2,4,M,-26,Run,Rush,0,GREEN/GOLD (ZO),HB POWER,R,R,,,UNDER,MOD - MEG,,1,Joliet West High School
+43,D,2,7,M,-48,Pass,Incomplete,0,River/Lake (2/3 Stack),,L,R,,,OVER,STUMP - MEG,,2,Joliet West High School
+65,D,1,10,R,-13,Run,Rush,0,GREEN/GOLD (ZO) (TT),,L,L,,,OVER,MOD,,2,Joliet West High School
+66,D,2,10,M,-13,Run,Incomplete,0,River/Lake (2/3 Stack),,L,R,,,OVER,STUMP - MEG,,2,Joliet West High School
+67,D,3,10,R,-13,Pass,Incomplete,0,River/Lake (2/3 Stack),,R,L,,,OVER,STUMP - MEG,,2,Joliet West High School
+77,D,1,10,L,-18,Pass,Incomplete,0,River/Lake (Empty - Four),,R,R,,,OVER,STUMP - MOD,,2,Joliet West High School
+80,D,1,10,R,-20,Pass,Incomplete,0,RIVER/LAKE,,R,L,,,OVER,MOD,MIKE BLUFF,3,Joliet West High School
+82,D,3,14,M,-16,Pass,Incomplete,0,River/Lake (2/3 Stack),,R,R,,,OVER,STUMP - MEG,,3,Joliet West High School
+95,D,2,13,R,-11,Pass,Incomplete,0,RIVER/LAKE,,R,L,,,JET,CUT,,3,Joliet West High School
+96,D,3,13,R,-11,Pass,Incomplete,0,River/Lake (Empty),,L,L,,,JET,OFF MOD,,3,Joliet West High School
+116,D,1,14,M,14,Run,Rush,0,TITE,,BAL,L,,,UNDER,MEG,,3,Joliet West High School
+118,D,2,24,L,24,Pass,Incomplete,0,River/Lake (2/3 Stack),,R,R,,,JET,STUMP - MEG,,3,Joliet West High School
+135,D,2,5,L,-13,Pass,Batted Down,0,RIVER/LAKE,,L,R,,,OVER,MOD - MEG,,4,Joliet West High School
+137,D,1,10,L,-23,Pass,Incomplete,0,River/Lake (Stack),,L,L,,,OVER,STUMP - MEG,,4,Joliet West High School
+139,D,3,4,L,-29,Pass,Batted Down,0,GREEN/GOLD (ZO) (TT),,R,L,,,OVER,MOD,,4,Joliet West High School
+140,D,4,4,L,-29,Pass,Incomplete,0,RIVER/LAKE,,R,R,,,OVER,MOD - MEG,,4,Joliet West High School
+152,D,2,4,L,-39,Pass,Incomplete,0,River/Lake (2/3 Stack),,R,R,,,OVER,STUMP - MOD,,4,Joliet West High School
+159,D,2,5,L,28,Pass,Incomplete,0,River/Lake (Empty - Stack),,L,R,,,OVER,STUMP - MOD,,4,Joliet West High School
+161,D,1,10,L,23,Pass,Incomplete,0,River/Lake (2/3 Stack),,R,L,,,OVER,STUMP - MOD,,4,Joliet West High School
+4,D,3,8,L,-22,Pass,Incomplete,0,RIVER/LAKE,9 - 999,R,L,,7,JET,STUBBIE - MEG,1 MUG,1,Alton High School
+13,D,2,8,M,-22,Pass,Incomplete,0,RIVER/LAKE,45 - 45,L,R,,3,OVER,MOD,,1,Alton High School
+14,D,3,8,M,-22,Pass,Incomplete,0,RIVER/LAKE,4WHEEL - 2WHEEL,L,L,,4,OVER,MOD,,1,Alton High School
+30,D,2,9,L,-37,Pass,Incomplete,0,GREEN/GOLD (ZO) (TT),95MAX - 9,R,R,,3,OVER,MOD - MEG,,1,Alton High School
+60,D,1,5,M,-44,Pass,Incomplete,0,RIVER/LAKE,99 - 49,L,R,,7,OVER,MOD,,2,Alton High School
+64,D,3,12,R,34,Pass,Penalty,0,RIVER/LAKE (DUAL),47SWING - 8SWING,L,L,,,OVER,MOD,,2,Alton High School
+76,D,1,10,L,-23,Pass,Incomplete,0,RIVER/LAKE,95SWING - 95,L,R,,3,OVER,MOD,,2,Alton High School
+77,D,2,10,L,-23,Pass,Penalty,0,GREEN/GOLD (ZO),97 - 4,R,L,,7,OVER,MOD,MIKE BLUFF,2,Alton High School
+93,D,1,10,M,-21,Pass,Incomplete,0,RIVER/LAKE,84 - 44,L,R,,3,OVER,MOD - MEG,WIL KNIFE,3,Alton High School
+95,D,3,7,L,-24,Pass,Batted Down,0,RIVER/LAKE,222 - 9,L,L,,1,OVER,RIP/LIZ,,3,Alton High School
+113,D,1,10,L,-26,Pass,Batted Down,0,GREEN/GOLD (ZO),292SWING - 9,R,R,,3,OVER,MOD - MEG,,3,Alton High School
+114,D,2,10,L,-26,Run,Rush,0,RIVER/LAKE,JET SWEEP LEAD,R,R,,,UNDER,MOD,,3,Alton High School
+115,D,3,10,M,-26,Pass,Incomplete,0,River/Lake (Empty),98 - 9,R,L,,7,OVER,MOD,,3,Alton High School
+140,D,1,10,L,40,Run,Penalty,0,RIVER/LAKE,IZ,R,R,,,OVER,MOD,,4,Alton High School
+8,D,1,10,L,17,Pass,Incomplete,0,GREEN/GOLD (YO),951 - 9,L,R,,3,OVER,MOD,,1,Belleville East High School
+24,D,1,15,L,35,Pass,Incomplete,0,RIVER/LAKE,999SWITCH - 9,R,R,,8,OVER,STUBBIE - MOD,,1,Belleville East High School
+27,D,2,30,L,50,Pass,Incomplete,0,RIVER/LAKE,#1 NOW,R,R,,3,OVER,MOD,,1,Belleville East High School
+74,D,2,2,R,30,Pass,Sack,0,GOLD/GREEN,99WHEEL - 9,R,R,,,JET,MOD,,2,Belleville East High School
+83,D,1,10,L,50,Pass,Incomplete,0,RIVER/LAKE,861 - 9,R,R,,8,UNDER,STUMP - MOD,,2,Belleville East High School
+85,D,1,10,R,34,Pass,Incomplete,0,RIVER/LAKE (BUNCH),SPIKE,R,,,,OVER,MOD,,2,Belleville East High School
+86,D,2,10,R,34,Pass,Incomplete,0,RIVER/LAKE,99WHEEL - 9,L,L,,7,JET,MOD,,2,Belleville East High School
+87,D,3,10,R,34,Pass,Incomplete,0,River/Lake (Empty),487 - 49,L,L,,7,,MEG,,2,Belleville East High School
+90,D,2,8,L,-43,Pass,Incomplete,0,GREEN/GOLD (ZO),481 - MAX,R,L,,1,OVER,STUMP - MOD,,3,Belleville East High School
+97,D,2,8,M,-22,Pass,Incomplete,0,RIVER/LAKE,HB TAG 95,,L,,1,OVER,MOD,MIKE BLUFF,3,Belleville East High School
+108,D,1,10,L,-38,Pass,Incomplete,0,RIVER/LAKE,#1 JAILBREAK,R,L,,1,OVER,STUMP - MOD,,3,Belleville East High School
+123,D,2,10,M,10,Pass,Incomplete,0,RIVER/LAKE (BUNCH) (SNUG),5 - 492,R,L,,1,UNDER,MEG,WAM,4,Belleville East High School
+148,D,1,10,M,-5,Run,Rush,0,GOLD/GREEN,HB STRETCH,R,R,,,UNDER,MOD,,4,Belleville East High School
+159,D,1,10,R,11,Run,Rush,0,RIVER/LAKE (BUNCH) (SNUG),HB TAG,R,L,,,UNDER,MEG,SAW,4,Belleville East High School
+160,D,2,10,M,11,Pass,Incomplete,0,GREEN/GOLD (YO),RPO IZ SLANTS,L,R,,3,UNDER,MOD - MEG,WIL,4,Belleville East High School
+177,D,3,7,M,-47,Run,Rush,0,GREEN/GOLD (ZO) (TT),HB TAG,L,R,,,UNDER,MEG,,4,Belleville East High School
+2,D,1,10,L,-32,Pass,Incomplete,0,GREEN/GOLD (YO),2WHEEL - 444,R,L,,4,UNDER,MEG,WAM,1,Edwardsville High School
+4,D,3,6,L,-36,Pass,Incomplete,0,RIVER/LAKE,91 - 494,R,L,,7,OVER,STUBBIE - MEG,WIL,1,Edwardsville High School
+26,D,1,10,M,-11,Run,Rush,0,GREEN/GOLD (YO),QB OGOY BASH,L,R,,,UNDER,MOD,,1,Edwardsville High School
+39,D,1,10,R,-7,Pass,Incomplete,0,GREEN/GOLD (YO),HB SWING SCREEN,R,L,,1,OVER,MOD - MEG,WIL,2,Edwardsville High School
+50,D,2,11,L,33,Run,Rush,0,GREEN/GOLD (YO) (ZO),QB POWER BASH,R,L,,,OVER,OFF MOD,WIL BLUFF MIKE,2,Edwardsville High School
+51,D,3,11,L,33,Run,Rush,0,River/Lake (Empty),QB POWER,R,L,,,OVER,STUMP - MOD,,2,Edwardsville High School
+80,D,2,24,L,-28,Pass,Incomplete,0,RIVER/LAKE (BUNCH),9 - 999FLARE,R,L,,7,UNDER,OFF MOD - BOW,,3,Edwardsville High School
+90,D,1,10,L,50,Run,Rush,0,RIVER/LAKE,SPEED OPTION,R,L,,,JET - OVER,MOD - MEG,,3,Edwardsville High School
+94,D,4,3,R,43,Pass,Incomplete,0,RIVER/LAKE,,L,,,,,,,3,Edwardsville High School
+118,D,1,20,R,-10,Pass,Incomplete,0,RIVER/LAKE (BUNCH),91 - 681,L,R,,3,OVER,MOD,,4,Edwardsville High School
+119,D,2,20,R,-10,Pass,Incomplete,0,RIVER/LAKE (BUNCH),986FLARE - 9,L,R,,3,JET - OVER,OFF MOD,,4,Edwardsville High School
+2,D,1,10,L,-27,Run,Rush,0,GREEN/GOLD (YO),HB TAG,L,R,,,UNDER,MOD,,1,Triad High School
+13,D,2,10,L,16,Pass,Sack,0,Green/Gold (Zo) (Bunch),951 - 6,L,R,,,UNDER,MOD - MEG,WILL,1,Triad High School
+14,D,3,20,R,26,Pass,Batted Down,0,GREEN/GOLD (BUNCH) (SNUG),FRAIL 1 - 9MAX,L,L,,5,JET - OVER,STUMP - MOD,,1,Triad High School
+23,D,3,4,R,4,Pass,Batted Down,0,RED/BLUE,95 - 2MAX,L,L,,1,OVER,MEG,SAW,1,Triad High School
+32,D,1,10,L,49,Pass,Incomplete,0,RED/BLUE (ZO),271 - MAX,R,R,,6,OVER,MOD - MEG,WILL,1,Triad High School
+35,D,3,19,R,-42,Pass,Incomplete,0,RIVER/LAKE,WE SHALLOW SCREEN,BAL,L,,2,OVER,MOD - MEG,WIL WHIP,2,Triad High School
+56,D,2,9,R,10,Pass,Batted Down,0,GREEN/GOLD (ZO) (BUNCH) (SNUG),MESH SPOT,R,R,,3,OVER,MEG,WIL,2,Triad High School
+60,D,1,6,M,6,Pass,Incomplete,0,River/Lake (2/3 Stack),221 - 21,L,L,,2,OVER,MEG,,2,Triad High School
+61,D,2,6,M,6,Pass,Incomplete,0,Green/Gold (Zo) (Bunch),MESH SPOT,R,L,,1,OVER,MEG,WAM BLUFF,2,Triad High School
+62,D,3,6,M,6,Pass,Incomplete,0,GREEN/GOLD,951 - MAX,R,L,,,JET - OVER,MEG,MIKE,2,Triad High School
+70,D,1,10,L,49,Pass,Batted Down,0,RIVER/LAKE,HB SLIP SCREEN,R,L,,1,UNDER,RIP/LIZ,,2,Triad High School
+71,D,2,10,L,49,Pass,Incomplete,0,River/Lake (Empty),951 - 29,R,R,,,OVER,STUBBIE - MOD,,2,Triad High School
+73,D,4,5,L,44,Run,Rush,0,RIVER/LAKE,HB TAG,,,,,JET - OVER,STUMP - MOD,,2,Triad High School
+87,D,1,10,R,45,Pass,Incomplete,0,RED/BLUE,99FSEAM - 9,R,R,,6,UNDER,MOD,,2,Triad High School
+89,D,3,8,M,43,Pass,Incomplete,0,RIVER/LAKE,99 - 65,L,R,,2,,MOD,,2,Triad High School
+105,D,1,10,R,-20,Run,Rush,0,RED/BLUE (OVER),HB STRETCH,L,R,,,OVER,MOD,MIKE BLUFF,3,Triad High School
+106,D,2,10,R,-20,Pass,Incomplete,0,RED/BLUE (DUAL),RPO 2WHEEL,R,L,,3,OVER,MOD - MEG,MIKE BLUFF CAT,3,Triad High School
+130,D,3,10,M,38,Pass,Scramble,6,GREEN/GOLD (YO),,L,R,,,JET - OVER,MOD,MIKE BLUFF,4,Triad High School
+144,D,1,10,L,-32,Pass,Incomplete,0,River/Lake (Stack),95 - 62,L,L,,1,OVER,MOD,,4,Triad High School
+145,D,2,10,L,-32,Pass,Incomplete,0,River/Lake (Stack),95 - 62,L,L,,1,OVER,MOD,,4,Triad High School
+147,D,3,6,,-37,Pass,Incomplete,0,RIVER/LAKE,9FLARE - 612,,,,7,JET - OVER,STUMP - MOD,,4,Triad High School
+148,D,4,5,L,-37,Pass,"Sack, Fumble",,River/Lake (2/3 Stack),86WHEEL - 9,R,R,,,JET - OVER,STUMP - MOD,,4,Triad High School
+29,D,1,10,R,-45,Run,Rush,0,RIVER/LAKE,IZ,L,L,,,UNDER,MOD,,1,Belleville West High School
+32,D,3,11,M,-44,Pass,Incomplete,0,RIVER/LAKE,4984 - 4,L,R,,8,OVER,STUMP - MEG,,1,Belleville West High School
+47,D,1,10,L,24,Pass,Incomplete,0,RIVER/LAKE,9 - 914,R,L,,7,OVER,STUBBIE - MEG,,2,Belleville West High School
+48,D,2,10,L,24,Pass,Incomplete,0,RIVER/LAKE,RPO OUTSIDE ZONE BUBBLE,R,R,,3,OVER,STUBBIE - MEG,,2,Belleville West High School
+51,D,1,10,M,10,Pass,Incomplete,0,RIVER/LAKE,2 - 9614,L,R,,3,UNDER,MEG,MIKE,2,Belleville West High School
+53,D,3,14,L,14,Pass,Incomplete,0,RIVER/LAKE,986 - 4,R,R,,,JET - OVER,MOD,,2,Belleville West High School
+76,D,2,12,M,-37,Pass,Incomplete,0,GREEN/GOLD (Dual),RPO OUTSIDE ZONE SLANT,L,L,,2,UNDER,MOD,,3,Belleville West High School
+91,D,1,10,R,11,Pass,Incomplete,0,RIVER/LAKE,959 - 9,L,L,,5,UNDER,MEG,SAW SHOW,3,Belleville West High School
+92,D,2,10,R,11,Pass,Incomplete,0,RIVER/LAKE (BUNCH),959 - 9,L,L,,4,,MEG,WAM,3,Belleville West High School
+107,D,2,1,R,2,,Penalty,0,GREEN/GOLD (YO),HB TAG,L,R,,,UNDER,MEG,SAW SHOW,4,Belleville West High School
+14,D,1,10,M,-40,Pass,Incomplete,0,RIVER/LAKE (BUNCH) (SNUG),544 - 4,R,R,,,UNDER,MOD,,1,East St. Louis High School
+19,D,1,10,R,30,Pass,Incomplete,0,RIVER/LAKE (BUNCH) (SNUG),444 - 5,R,R,,3,UNDER,STUBBIE - MEG,,1,East St. Louis High School
+21,D,1,10,R,11,Pass,Incomplete,0,RIVER/LAKE (BUNCH) (SNUG),9 - 444,R,L,,4,OVER,MEG,SAM,1,East St. Louis High School
+22,D,2,10,R,11,Run,Fumble,,GREEN/GOLD (YO),OUTSIDE ZONE,R,R,,,UNDER,MEG,WAM,1,East St. Louis High School
+29,D,1,10,L,35,Pass,Incomplete,0,GREEN/GOLD (YO),4&GO9 - 9,R,R,,9,UNDER,MOD,,1,East St. Louis High School
+41,D,2,8,L,25,Pass,Incomplete,0,RIVER/LAKE,9SWING - 222,R,L,,7,UNDER,STUBBIE - MEG,,1,East St. Louis High School
+60,D,1,10,L,42,Pass,Incomplete,0,GREEN/GOLD (YO),44WHEEL - 2SWING,L,R,,2,OVER,MOD,,2,East St. Louis High School
+95,D,1,10,R,23,Pass,Incomplete,0,RIVER/LAKE (BUNCH) (SNUG),#1 NOW,,L,,1,UNDER,MOD,,3,East St. Louis High School
+104,D,1,10,L,43,Pass,Fumble,,RIVER/LAKE,RPO IZ HITCHES,L,L,,1,OVER,MOD,WAM BLUFF,3,East St. Louis High School
+29,D,1,20,L,-26,Run,Rush,0,RED/BLUE (ZO) (SNUG),HB TAG,BAL,L,,,OVER,MOD,,2,Troy-Buchanan High School
+30,D,2,20,L,-26,Pass,Incomplete,0,GREEN/GOLD,ROLLOUT 37 - 2,L,R,,3,OVER,AUTO,,2,Troy-Buchanan High School
+31,D,3,20,L,-26,Pass,Incomplete,0,GREEN/GOLD,861 - MAX,R,R,,,OVER,STUMP - MOD,,2,Troy-Buchanan High School
+50,D,3,3,R,-36,Pass,Incomplete,0,RED/BLUE (OVER),951 - 2,BAL,L,,1,UNDER,MEG,WAM,2,Troy-Buchanan High School
+57,D,1,10,M,-39,Pass,Batted Down,0,GREEN/GOLD,479 - MAX,R,R,,3,OVER,STUMP - MEG,CAT,2,Troy-Buchanan High School
+59,D,3,8,R,-41,Pass,Incomplete,0,GREEN/GOLD,951 - MAX,L,L,,,UNDER,STUMP - MEG,,2,Troy-Buchanan High School
+81,D,1,10,L,-42,Pass,Incomplete,0,RED/BLUE (OVER),951 - 2,BAL,R,,,OVER,MOD,,3,Troy-Buchanan High School
+90,D,1,10,R,35,Run,Rush,0,RED/BLUE,BUCK SWEEP,L,L,,,UNDER,MOD,,3,Troy-Buchanan High School
+91,D,2,10,R,35,Pass,Incomplete,0,GREEN/GOLD,HB SLIP SCREEN,L,R,,2,OVER,MOD,,3,Troy-Buchanan High School
+105,D,2,3,L,3,Pass,Batted Down,0,Rita/Lisa,211 - MAX,L,R,,,UNDER,MEG,SAW,4,Troy-Buchanan High School
+119,D,1,10,L,17,Run,Rush,0,RED/BLUE (OVER),OTUSIDE ZONE,BAL,R,,,UNDER,MEG,MAS,4,Troy-Buchanan High School
+3,D,1,10,M,31,Pass,Incomplete,0,RIVER/LAKE,944 - 4,L,L,,2,OVER,STUBBIE - MEG,,1,Francis Howell High School
+4,D,2,10,M,31,Run,Fumble,,GOLD/GREEN (STACK),HB TAG,R,L,,,UNDER,MOD,,1,Francis Howell High School
+6,D,1,10,M,28,Pass,Complete,0,GREEN/GOLD (ZO),22 MESH T OUT,R,R,,2,UNDER,MOD - MEG,WIL,1,Francis Howell High School
+10,D,2,8,R,16,Run,Rush,0,Rita/Lisa,IZ - READ,L,R,,,UNDER,CUT - MOD,,1,Francis Howell High School
+11,D,3,8,R,16,Pass,Incomplete,0,Rita/Lisa,PA 371,L,L,,1,UNDER,MOD - MEG,CAT,1,Francis Howell High School
+12,D,4,8,R,16,Pass,Incomplete,0,River/Lake (Snug),MESH SPOT,L,R,,2,JET - OVER,MOD,,1,Francis Howell High School
+71,D,2,3,M,-48,Pass,Incomplete,0,RIVER/LAKE,95 - 95,L,R,,9,OVER,MOD,,2,Francis Howell High School
+100,D,2,7,L,-44,Pass,Penalty,0,GREEN/GOLD (YO),RPO OGOY BUBBLE,,R,,3,OVER,MOD - MEG,CAT,3,Francis Howell High School
+121,D,2,6,R,-44,Pass,Batted Down,0,RIVER/LAKE,371 - 6,L,L,,4,OVER,CUT - MEG,,4,Francis Howell High School
+6,D,3,3,R,-32,Pass,Incomplete,0,RIVER/LAKE,271 - 44,L,L,,2,UNDER,MOD,,1,Quincy Senior High School
+10,D,2,6,R,-14,Pass,Incomplete,0,RIVER/LAKE,29 - 21,L,R,,6,UNDER,MOD,,1,Quincy Senior High School
+28,D,1,10,R,-40,Pass,Incomplete,0,RIVER/LAKE,22SWING - 22,L,R,,3,OVER,MOD,,1,Quincy Senior High School
+30,D,3,8,R,-42,Pass,Incomplete,0,GREEN/GOLD (YO),TE SLIP SCREEN,R,L,,2,JET - OVER,STUBBIE - MEG,,1,Quincy Senior High School
+41,D,1,10,L,-20,Pass,Batted Down,0,RIVER/LAKE,HB SLIP SCREEN,R,R,,2,OVER,MOD,,2,Quincy Senior High School
+50,D,1,15,R,30,Pass,Incomplete,0,RIVER/LAKE,92ANGLE - 95,R,R,,9,OVER,MOD,,2,Quincy Senior High School
+68,D,2,6,R,-19,Pass,Batted Down,0,RED/BLUE,TE MIDDLE SCREEN,L,L,,2,UNDER,MOD,,2,Quincy Senior High School
+69,D,3,6,R,-19,Pass,Batted Down,0,RED/BLUE,951 - 8,L,L,,1,JET - OVER,MOD,,2,Quincy Senior High School
+79,D,2,2,R,-46,Pass,Batted Down,0,RIVER (EMPTY) (BUNCH),85WHEEL - 95,R,R,,6,OVER,STUBBIE - MOD,,2,Quincy Senior High School
+80,D,3,2,R,-46,Pass,Incomplete,0,River/Lake (2/3 Stack),2SWING - 222,R,L,,2,UNDER,MOD - MEG,,2,Quincy Senior High School
+83,D,2,6,R,40,Pass,Incomplete,0,River/Lake (Empty),999 - 98,L,L,,5,JET - OVER,STUBBIE - MOD,,2,Quincy Senior High School
+85,D,1,10,R,25,Pass,Incomplete,0,RIVER/LAKE (BUNCH) (SNUG),28WHEEL - 9,R,R,,9,JET - OVER,MOD,,2,Quincy Senior High School
+87,D,3,2,R,17,Pass,Incomplete,0,River/Lake (Empty),88WHEEL - 95,R,R,,6,JET - OVER,STUBBIE - MOD,,2,Quincy Senior High School
+93,D,1,10,M,-46,Run,Rush,0,RIVER/LAKE,JET SWEEP LEAD,L,R,,,UNDER,MOD,,3,Quincy Senior High School
+119,D,2,13,L,47,Pass,Incomplete,0,RED/BLUE (ZO),98SWING - 1,L,L,,1,OVER,MOD,,4,Quincy Senior High School
+127,D,1,10,M,-24,Pass,Batted Down,0,RIVER/LAKE,HB MIDDLE SCREEN,L,R,,2,OVER,MOD,,4,Quincy Senior High School
+131,D,2,8,L,-42,Pass,Incomplete,0,RED/BLUE,#1 JAILBREAK,R,L,,1,UNDER,MOD,,4,Quincy Senior High School
+135,D,1,10,R,29,Pass,Batted Down,0,RIVER/LAKE,29 - 21,L,R,,3,OVER,MOD,,4,Quincy Senior High School
+138,D,1,10,M,15,Run,Rush,0,RED/BLUE,HB OGOH,R,L,,,OVER,MOD,,4,Quincy Senior High School
+160,D,2,5,L,15,Pass,Batted Down,0,GOLD/GREEN,99WHEEL - 47,L,L,,1,OVER,MOD,,4,Quincy Senior High School
+162,D,1,7,L,7,Run,Rush,0,RED/BLUE,HB POWER,L,L,,,UNDER,MEG,SAW,4,Quincy Senior High School
+25,D,2,3,R,3,Run,Rush,-1,GREEN/GOLD (ZO) (TT),,L,R,,,,,,1,Maine South High School
+34,D,1,10,M,-40,Run,Rush,-1,RIVER/LAKE (BUNCH),,R,L,,,,,,1,Maine South High School
+36,D,3,11,L,-39,Run,Rush,-1,RIVER/LAKE,,L,R,,,,,,2,Maine South High School
+49,D,4,2,R,32,Run,Rush,-1,TITE,,BAL,R,,,UNDER,MEG,SAW SHOW,2,Joliet West High School
+163,D,3,6,R,19,Pass,Complete,-1,RIVER/LAKE,,R,L,,,OVER,STUMP - MOD,,4,Joliet West High School
+16,D,1,10,M,-45,Pass,Sack,-1,RIVER/LAKE,95 - 25,L,R,,,OVER,MOD,,1,Alton High School
+47,D,2,13,R,-16,Run,Rush,-1,GREEN/GOLD (ZO),HB ISO,R,R,,,OVER,MOD,,2,Alton High School
+66,D,4,2,L,24,Run,Rush,-1,RIVER/LAKE,QB SWEEP LEAD,L,R,,,UNDER,MEG,SAW,2,Alton High School
+62,D,2,7,M,29,Pass,Scramble,6,RIVER/LAKE (BUNCH),388 - 3,L,R,,,UNDER,MOD,,2,Belleville East High School
+176,D,2,6,M,-48,Run,Rush,-1,GOLD/GREEN,HB TAG,R,L,,,UNDER,MEG,,4,Belleville East High School
+49,D,1,10,R,32,Pass,Complete,-1,GOLD/GREEN,RPO HB TAG BUBBLE,R,L,,1,OVER,MOD - MEG,WIL,2,Edwardsville High School
+121,D,1,10,L,-31,Pass,Sack,-1,RIVER/LAKE,499SWING - 9,R,L,,,OVER,STUMP - MOD,,4,Edwardsville High School
+107,D,3,10,R,-20,Pass,Sack,-1,RIVER/LAKE (BUNCH),619 - 9,L,R,,,JET - OVER,STUMP - MEG,MIKE BLUFF,3,Triad High School
+15,D,3,12,R,-25,Pass,Incomplete,0,RIVER/LAKE,95 - 95,L,L,,1,JET - OVER,,,1,Belleville West High School
+88,D,2,5,R,-28,Pass,Incomplete,0,RIVER/LAKE,941 - 4,L,L,,2,OVER,STUBBIE - MEG,,3,Belleville West High School
+6,D,1,10,L,-7,Run,Rush,-1,Rita/Lisa,HB TAG,L,R,,,OVER,MOD,,1,Troy-Buchanan High School
+13,D,4,1,L,-48,Run,Rush,-1,RED/BLUE (ZO),HB OGOY,L,R,,,UNDER,MEG,SAW,1,Troy-Buchanan High School
+120,D,2,5,R,17,Run,Rush,-1,RED/BLUE (OVER),HB TAG,BAL,R,,,OVER,MEG,MAS,4,Troy-Buchanan High School
+86,D,3,17,L,-28,Run,Rush,-1,RIVER/LAKE,HB TAG,R,R,,,JET - OVER,STUMP - MOD,,3,Francis Howell High School
+102,D,1,10,L,47,Run,Rush,-1,GREEN/GOLD (YO),QB SWEEP LEAD,,R,,,OVER,STUBBIE - MEG,,3,Francis Howell High School
+113,D,2,4,L,-41,Run,Rush,-1,RIVER/LAKE,HB WIDE TRAP,R,R,,,OVER,STUBBIE - MEG,,3,Quincy Senior High School
+43,D,2,4,R,-42,Pass,Complete,-2,RIVER/LAKE,,L,L,,,,,,2,Maine South High School
+111,D,1,10,M,-4,Run,Rush,-2,RIVER/LAKE,IZ,L,R,,,UNDER,MOD,,3,Alton High School
+142,D,1,2,L,2,Run,Safety,-2,GREEN/GOLD (YO),,R,L,,,UNDER,MOD - MEG,WIL,4,Belleville East High School
+12,D,1,10,M,43,Run,Rush,-2,RIVER/LAKE,QB POWER BASH,L,L,,,OVER,MOD,WAM BLUFF,1,Edwardsville High School
+104,D,1,1,M,1,Run,Rush,-2,RED/BLUE (ZO) (SNUG),BUCK SWEEP,BAL,L,,,UNDER,MEG,SAW,3,Troy-Buchanan High School
+141,D,2,6,R,-44,Run,Rush,-2,RED/BLUE,JET SWEEP LEAD,R,L,,,UNDER,MEG,PSYCHO SHOW,4,Francis Howell High School
+52,D,1,10,R,14,Run,Rush,-2,RED/BLUE,BUCK SWEEP,R,R,,,UNDER,MOD - MEG,,2,Quincy Senior High School
+17,D,2,11,R,-44,Run,Penalty,-3,RIVER/LAKE,HB TOSS SWEEP,L,L,,,OVER,STUBBIE - MEG,,1,Alton High School
+46,D,1,10,L,-19,Pass,Complete,-3,River/Lake (Empty),#3 BUBBLE,R,R,,3,OVER,STUBBIE - MEG,MIKE,2,Alton High School
+48,D,3,14,R,-15,Run,Rush,-3,GREEN/GOLD (ZO),HB ISO,R,R,,,OVER,MOD,,2,Alton High School
+14,D,3,8,L,41,Pass,Sack,-3,River/Lake (Empty),955 - 61,R,L,,,OVER,STUBBIE - MEG,,1,Edwardsville High School
+134,D,4,10,L,38,Pass,Sack,-3,River/Lake (Stack),75 - 62,R,L,,,UNDER,MOD,WIL BLUFF,4,Triad High School
+13,D,1,10,M,-27,Run,Rush,-3,GREEN/GOLD (YO),HB TAG,R,L,,,UNDER,MOD,,1,Belleville West High School
+10,D,1,10,L,-39,Run,Rush,-3,RED/BLUE,HB TAG,R,R,,,OVER,MOD,,1,Troy-Buchanan High School
+83,D,3,3,L,-49,Run,Rush,-3,RED/BLUE (ZO),BUCK SWEEP,L,R,,,OVER,MOD,MIKE,3,Troy-Buchanan High School
+59,D,1,10,L,29,Run,Rush,-3,RIVER/LAKE,HB TAG,R,L,,,UNDER,MOD,,2,Francis Howell High School
+81,D,2,10,R,-20,Run,Rush,-4,RIVER/LAKE,,L,L,,,OVER,MOD,,3,Joliet West High School
+63,D,2,8,R,30,Pass,Sack,-4,RIVER/LAKE,29 - 49,L,R,,,OVER,MOD,MIKE BLUFF,2,Alton High School
+29,D,3,1,L,-20,Run,Rush,-4,GREEN/GOLD (YO),QB POWER BASH,L,L,,,UNDER,MEG,SAW,1,Edwardsville High School
+33,D,2,10,L,49,Run,Rush,-4,GREEN/GOLD (YO),OUTSIDE ZONE LEAD,,R,,,OVER,MOD - MEG,WIL,1,Triad High School
+52,D,2,10,R,10,Run,Rush,-4,RIVER/LAKE,OUTSIDE ZONE,L,L,,,JET - OVER,MOD,,2,Belleville West High School
+70,D,1,15,L,-10,Run,Penalty,-4,GREEN/GOLD (YO),HB TAG,R,R,,,JET - OVER,MOD,,3,Belleville West High School
+106,D,3,3,L,3,Run,Rush,-4,RED/BLUE (ZO) (SNUG),WING OGOH,BAL,L,,,UNDER,MEG,MAS,4,Troy-Buchanan High School
+131,D,2,4,L,23,Run,Rush,-4,RED/BLUE (OVER),HB TAG,BAL,R,,,OVER,MEG,MAS,4,Troy-Buchanan High School
+113,D,3,1,M,46,,Penalty,-5,RIVER/LAKE,,L,,,,,,,3,Maine South High School
+121,D,4,1,M,18,,Penalty,-5,River/Lake (Empty - Four),,L,,,,,,,3,Maine South High School
+93,D,1,10,L,-14,,Penalty,-5,GREEN/GOLD (ZO) (TT),,L,,,,OVER,CUT,,3,Joliet West High School
+109,D,2,8,R,34,,Penalty,-5,RIVER/LAKE,,R,,,,,,,3,Joliet West High School
+115,D,1,9,M,9,,Penalty,-5,TITE,,BAL,R,,,,,,3,Joliet West High School
+154,D,1,10,L,-44,Pass,Penalty,-5,River/Lake (2/3 Stack),,R,R,,,OVER,STUMP - MOD,,4,Joliet West High School
+23,D,1,10,L,30,,Penalty,-5,,,,,,,OVER,,,1,Belleville East High School
+25,D,2,15,L,35,Pass,Penalty,-5,GOLD/GREEN,RPO TAG 95,L,R,,3,OVER,MOD,,1,Belleville East High School
+38,D,4,2,M,-43,,Penalty,-5,GREEN/GOLD (YO),,R,,,,UNDER,MEG,SAW,1,Belleville East High School
+72,D,2,2,R,20,,Penalty,-5,,,,,,,UNDER,MOD,,2,Belleville East High School
+73,D,2,7,R,25,Pass,Penalty,-5,GOLD/GREEN,99WHEEL - 9,R,L,,8,UNDER,MOD,,2,Belleville East High School
+109,D,2,10,L,12,,Penalty,-5,River/Lake (Empty),,R,,,,,,,4,Edwardsville High School
+5,D,1,10,L,42,Run,Rush,-5,RED/BLUE,BUCK SWEEP,R,R,,,UNDER,MOD,,1,Triad High School
+34,D,3,14,R,-47,,Penalty,-5,River/Lake (Stack),,L,,,,,,,2,Triad High School
+59,D,1,1,M,1,,Penalty,-5,Rita/Lisa (Rip/Liz),,R,,,,UNDER,MEG,SAW SHOW,2,Triad High School
+74,D,4,5,L,44,,Penalty,-5,Rita/Lisa (Rip/Liz),,R,,,,UNDER,MEG,SAW SHOW,2,Triad High School
+131,D,3,1,R,38,Pass,Penalty,-5,River/Lake (2/3 Stack),471 - 21,L,L,,1,UNDER,MEG,,4,Triad High School
+69,D,1,10,L,-15,,Penalty,-5,,,,,,,,,,3,Belleville West High School
+111,D,3,5,L,25,,Penalty,-5,GREEN/GOLD,RPO IZ ARROW,,,,,,,,4,East St. Louis High School
+20,D,3,3,L,-8,Pass,Penalty,-5,Rita/Lisa,95 - MAX,L,L,,,OVER,MEG,WAM,1,Troy-Buchanan High School
+92,D,3,10,R,35,Pass,Sack,-5,GREEN/GOLD,271 - MAX,L,L,,,OVER,STUMP - MEG,WIL,3,Troy-Buchanan High School
+122,D,3,6,R,-44,,Penalty,-5,RIVER/LAKE,,L,,,,,,,4,Francis Howell High School
+49,D,1,10,R,25,Pass,Penalty,-5,River/Lake (Empty),29 -212,L,R,,6,OVER,STUBBIE - MOD,,2,Quincy Senior High School
+56,D,2,1,L,1,,Penalty,-5,,,,,,,,,,2,Quincy Senior High School
+140,D,3,7,L,12,,Penalty,-5,RIVER/LAKE,,R,,,,,,,4,Quincy Senior High School
+150,D,3,4,L,-11,Run,Rush,-6,RIVER/LAKE (BUNCH) (SNUG),JET SWEEP LEAD,R,R,,,UNDER,MEG,SAW,4,Belleville East High School
+43,D,2,6,L,-20,Pass,Complete,-6,RIVER/LAKE (DUAL),PA #1 NOW,R,R,,3,OVER,MOD,,2,Triad High School
+44,D,3,12,M,-14,Pass,Sack,-7,RIVER/LAKE (BUNCH),951 - 9FRAIL,L,R,,,JET - OVER,STUMP - MOD,,2,Triad High School
+77,D,3,12,M,-37,Pass,Sack,-8,RIVER/LAKE,961 - 8,R,R,,,OVER,STUBBIE - MOD,,3,Belleville West High School
+98,D,3,8,M,-22,Pass,Penalty,-9,RIVER/LAKE,954 - 4,R,R,,,JET,STUMP - MOD,,3,Belleville East High School
+128,D,1,10,M,38,Run,Penalty,-9,RED/BLUE,HB TOSS SWEEP,L,L,,,UNDER,MOD,,4,Triad High School
+31,D,3,2,L,47,Pass,Penalty,-9,GREEN/GOLD (YO),RPO HB TAG BUBBLE,R,R,,,UNDER,MEG,WAM,1,Belleville West High School
+26,D,3,4,R,4,Pass,Penalty,-10,River/Lake (Empty - Stack),,R,L,,,,,,1,Maine South High School
+51,D,1,10,M,-46,Pass,Penalty,-10,RIVER/LAKE,,L,R,,,,,,2,Maine South High School
+56,D,3,5,M,39,Run,Penalty,-10,River/Lake (Empty),,R,L,,,,,,2,Maine South High School
+117,D,2,14,M,14,Run,Penalty,-10,TITE,,BAL,L,,,UNDER,MEG,,3,Joliet West High School
+18,D,3,14,L,-41,Pass,Penalty,-10,RIVER/LAKE,41 - 25,L,L,,,OVER,MOD,MIKE,1,Alton High School
+26,D,2,20,L,40,Pass,Penalty,-10,RIVER/LAKE,968 - 4,R,L,,,OVER,MOD,,1,Belleville East High School
+76,D,3,2,M,30,Run,Sack,-10,RIVER/LAKE,87 - 87,L,L,,,OVER,MOD,,2,Belleville East High School
+107,D,1,10,L,12,Pass,Penalty,-10,GREEN/GOLD (YO),9WHEEL - 49,L,L,,,UNDER,MEG,WIL,4,Edwardsville High School
+117,D,1,10,R,-20,Pass,Penalty,-10,RIVER/LAKE,9 - 989FLARE,L,R,,9,OVER,MOD - MEG,,4,Edwardsville High School
+122,D,2,11,L,-30,Pass,Sack,-10,RIVER/LAKE,45&UP - 6,R,L,,,OVER,OFF MOD,MIKE,4,Edwardsville High School
+3,D,2,10,L,-27,Run,Penalty,-10,,,R,R,,,OVER,AUTO,,1,Triad High School
+51,D,1,10,L,25,Pass,Penalty,-10,River/Lake (Empty),999 - 98,,R,,,OVER,AUTO,,2,East St. Louis High School
+28,D,1,10,M,-36,Run,Penalty,-10,RED/BLUE (SNUG),BUCK SWEEP,BAL,L,,,OVER,MOD,,2,Troy-Buchanan High School
+118,D,2,3,L,37,Pass,Fumble,,RED/BLUE,RPO POWER BUBBLE,R,L,,1,UNDER,MOD,,4,Quincy Senior High School
+110,D,3,5,M,-43,Pass,Sack,-11,RIVER/LAKE,82BUBBLE - 6,L,R,,,JET,STUMP - MOD,,3,Belleville East High School
+10,D,3,7,L,14,Pass,Sack,-12,River/Lake (2/3 Stack),275 - 9,R,L,,,OVER,STUMP - MOD,MIKE BLUFF,1,Belleville East High School
+56,D,2,8,R,37,Pass,Penalty,-12,RIVER/LAKE,#1 TUNNEL SCREEN,L,L,,3,OVER,MOD,,2,Francis Howell High School
+53,D,3,3,L,-20,Run,Fumble,,RIVER/LAKE,955 - 4,R,L,,,UNDER,MEG,SAW,2,Belleville East High School
+84,D,2,7,R,-38,Run,Penalty,-13,River/Lake (2/3 Stack),QB WIDE TRAP,L,L,,,UNDER,MOD - MEG,,3,Francis Howell High School
+79,D,1,10,M,-42,Pass,Sack,-14,GREEN/GOLD (YO),RPO IZ ARROW,R,L,,1,OVER,MOD - MEG,,3,Edwardsville High School
+32,D,1,10,L,41,Run,Penalty,-16,RIVER/LAKE,IZ,R,L,,,OVER,MOD - MEG,WIL KNIFE,1,Alton High School
