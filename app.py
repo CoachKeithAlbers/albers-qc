@@ -33,6 +33,7 @@ def ensure_albers_logo():
         ax.set_facecolor('#0B1120')
         ax.set_xlim(-1.3, 1.3); ax.set_ylim(-1.3, 1.3); ax.axis('off')
 
+        # Tactical Outer Ring & Perimeter Dials
         theta = np.linspace(0, 2*np.pi, 300)
         ax.plot(np.cos(theta)*1.18, np.sin(theta)*1.18, color='#1E293B', linewidth=5)
         ax.plot(np.cos(theta)*1.12, np.sin(theta)*1.12, color='#38BDF8', linewidth=1.5, alpha=0.8)
@@ -44,6 +45,7 @@ def ensure_albers_logo():
             col = '#FBBF24' if deg % 90 == 0 else ('#38BDF8' if deg % 30 == 0 else '#475569')
             ax.plot([np.cos(rad)*r1, np.cos(rad)*1.16], [np.sin(rad)*r1, np.sin(rad)*1.16], color=col, linewidth=lw)
 
+        # Armored Football Shield
         shield_x = [0, 0.82, 0.82, 0, -0.82, -0.82, 0]
         shield_y = [1.02, 0.68, -0.42, -1.02, -0.42, 0.68, 1.02]
         shield_poly = patches.Polygon(xy=list(zip(shield_x, shield_y)), closed=True, 
@@ -58,6 +60,7 @@ def ensure_albers_logo():
         for y_pos in np.linspace(-0.6, 0.6, 9):
             ax.plot([-0.6, 0.6], [y_pos, y_pos], color='#1E293B', linewidth=1, alpha=0.6, zorder=3)
 
+        # Monogram "A" with Gold Border & Black Football Laces
         a_outer_x = [0, 0.52, 0.32, 0, -0.32, -0.52, 0]
         a_outer_y = [0.72, -0.38, -0.38, 0.35, -0.38, -0.38, 0.72]
         a_poly = patches.Polygon(xy=list(zip(a_outer_x, a_outer_y)), closed=True, 
@@ -93,6 +96,7 @@ st.markdown("""
 <style>
     .stApp { background-color: #0A0F1D !important; }
     
+    /* Global Pure White High-Contrast Typography */
     .stApp, .stApp p, .stApp span, .stApp label, .stMarkdown {
         color: #F8FAFC !important;
         font-size: 15px;
@@ -104,6 +108,7 @@ st.markdown("""
         letter-spacing: 0.5px;
     }
 
+    /* Top HUD Banner */
     .albers-header-card {
         background: linear-gradient(135deg, #111C30 0%, #1E293B 100%);
         border: 2px solid #38BDF8;
@@ -183,6 +188,7 @@ st.markdown("""
         color: #0B1120 !important;
     }
 
+    /* Drill-Down Dossier Card */
     .dossier-box {
         background: linear-gradient(135deg, #111C30 0%, #172033 100%);
         border: 2px solid #FDE047;
@@ -199,6 +205,7 @@ st.markdown("""
         margin-bottom: 8px;
     }
 
+    /* Oracle Predictor Box */
     .oracle-box {
         background: linear-gradient(135deg, #111C30 0%, #1E293B 100%);
         border: 2px solid #38BDF8;
@@ -215,6 +222,7 @@ st.markdown("""
         margin-bottom: 6px;
     }
 
+    /* Multiselect Tags */
     div[data-baseweb="tag"] {
         background-color: #1E293B !important;
         border: 1.5px solid #38BDF8 !important;
@@ -223,6 +231,7 @@ st.markdown("""
     div[data-baseweb="tag"] span { color: #FFFFFF !important; font-weight: 700 !important; font-size: 13.5px !important; }
     div[data-baseweb="tag"] svg { fill: #38BDF8 !important; }
 
+    /* Dropdowns */
     div[data-baseweb="select"] > div {
         background-color: #111C30 !important;
         border: 1.5px solid #334155 !important;
@@ -477,6 +486,14 @@ def process_master_dataframe(raw_df, default_source_name="Game Data"):
     else:
         df_clean['AFTER_1ST_DOWN'] = False
 
+    # Normalization Aliases (prevents SQL missing column errors)
+    if 'OFF FORM' in df_clean.columns: df_clean['OFF_FORM'] = df_clean['OFF FORM']
+    if 'OFF PLAY' in df_clean.columns: df_clean['OFF_PLAY'] = df_clean['OFF PLAY']
+    if 'DEF FRONT' in df_clean.columns: df_clean['DEF_FRONT'] = df_clean['DEF FRONT']
+    if 'PASS ZONE' in df_clean.columns: df_clean['PASS_ZONE'] = df_clean['PASS ZONE']
+    if 'PLAY TYPE' in df_clean.columns: df_clean['PLAY_TYPE'] = df_clean['PLAY TYPE']
+    if 'GN/LS' in df_clean.columns: df_clean['GN_LS'] = df_clean['GN/LS']
+
     return df_clean
 
 # --- SIDEBAR BRANDING & HIGH-PROFILE COORDINATOR SWITCHER ---
@@ -501,7 +518,7 @@ coordinator_mode = st.sidebar.radio(
 )
 st.sidebar.markdown("</div>", unsafe_allow_html=True)
 
-# --- UNIFIED MASTER DATA INTAKE (ACCEPTS ALL FORMS OF DATA) ---
+# --- UNIFIED MASTER DATA INTAKE ---
 st.sidebar.markdown("##### 📥 Master Data Intake (Drag & Drop)")
 uploaded_master_files = st.sidebar.file_uploader(
     "Drop Game Cutups / Master CSVs Here:",
@@ -565,20 +582,17 @@ with col_banner:
     </div>
     """, unsafe_allow_html=True)
 
-# Check data existence
 if master_df is None:
     st.info("👋 **Welcome to Albers QC!**\n\nPlease drag and drop your master game CSV into the sidebar on the left.")
     st.stop()
 
-# --- FILTER DATA FOR ACTIVE COORDINATOR ROOM ---
+# Filter Data for Active Coordinator Room
 if "DEFENSE" in coordinator_mode:
-    # Look for Defense (ODK = 'D') or use full dataset if all are charted as defense
     df = master_df[master_df['ODK_CLEAN'] == 'D']
     if len(df) == 0: df = master_df
 elif "OFFENSE" in coordinator_mode:
     df = master_df[master_df['ODK_CLEAN'] == 'O']
 else:
-    # Special Teams
     df = master_df[(master_df['ODK_CLEAN'] == 'K') | (master_df['ST_PHASE'] != 'General ST')]
 
 # SQLite Connection
@@ -742,6 +756,7 @@ if "DEFENSE" in coordinator_mode:
                     st.session_state['self_pass_zone'] = None
                     st.rerun()
 
+            # PASSING ZONE DOSSIER
             if st.session_state['self_pass_zone']:
                 pz = st.session_state['self_pass_zone']
                 pz_df = filtered_df[filtered_df['PASS ZONE'] == pz]
@@ -816,11 +831,11 @@ if "DEFENSE" in coordinator_mode:
                     st.text_area(f"{fz} Video Cutup Playlist ({len(fz_playlist)} plays):", ", ".join(fz_playlist), height=70)
                 st.markdown("</div>", unsafe_allow_html=True)
 
-    # --- TAB 2: OPPONENT RECON WITH PREDICTOR & 12 QUICK QUERIES ---
+    # --- TAB 2: OPPONENT RECON WITH SAFE PANDAS PREDICTOR & 12 QUICK QUERIES ---
     with tab_2:
         st.subheader(f"🎯 Albers QC // Opponent Advance Reconnaissance: {selected_opp}")
 
-        # ORACLE PREDICTOR
+        # ORACLE PREDICTOR (CRASH-PROOF PANDAS FILTERING)
         st.markdown("""
         <div class="oracle-box">
             <div class="oracle-title">🔮 REAL-TIME PLAY-CALL PREDICTOR & TENDENCY ORACLE</div>
@@ -847,31 +862,41 @@ if "DEFENSE" in coordinator_mode:
                                 ["Standard Snap", "After 1st Down Conversion", "After Penalty"], 
                                 horizontal=True)
 
-        p_where = []
-        if pred_dn_dist == "1st & 10": p_where.append("DN = 1")
-        elif pred_dn_dist == "2nd & Short (1-3 yds)": p_where.append("DN = 2 AND DIST <= 3")
-        elif pred_dn_dist == "2nd & Medium (4-6 yds)": p_where.append("DN = 2 AND DIST BETWEEN 4 AND 6")
-        elif pred_dn_dist == "2nd & Long (7+ yds)": p_where.append("DN = 2 AND DIST >= 7")
-        elif pred_dn_dist == "3rd & Short (1-2 yds)": p_where.append("DN = 3 AND DIST <= 2")
-        elif pred_dn_dist == "3rd & Medium (3-6 yds)": p_where.append("DN = 3 AND DIST BETWEEN 3 AND 6")
-        elif pred_dn_dist == "3rd & Long (7+ yds)": p_where.append("DN = 3 AND DIST >= 7")
-        elif pred_dn_dist == "4th Down": p_where.append("DN = 4")
-
-        if pred_zone != "Any Territory": p_where.append(f"FIELD_ZONE = '{pred_zone}'")
-        if pred_form != "Any Formation": p_where.append(f"OFF_FORM = '{pred_form}'")
-        if "Left" in pred_hash: p_where.append("HASH = 'L'")
-        elif "Right" in pred_hash: p_where.append("HASH = 'R'")
-        elif "Middle" in pred_hash: p_where.append("HASH = 'M'")
-
-        if pred_trigger == "After Penalty": p_where.append("AFTER_PENALTY = 1")
-        elif pred_trigger == "After 1st Down Conversion": p_where.append("AFTER_1ST_DOWN = 1")
-
-        p_sql_where = " AND ".join(p_where) if p_where else "1=1"
-        pred_sub = pd.read_sql_query(f"SELECT * FROM snaps WHERE {p_sql_where}", conn)
-
+        # SAFE PANDAS-BASED FILTERING (ELIMINATES SQL DATABASE ERRORS)
+        pred_sub = scoped_df.copy()
         is_widened = False
-        if len(pred_sub) < 3 and len(p_where) > 1:
-            pred_sub = pd.read_sql_query(f"SELECT * FROM snaps WHERE {p_where[0]}", conn)
+
+        if pred_dn_dist == "1st & 10": pred_sub = pred_sub[pred_sub['DN'] == 1]
+        elif pred_dn_dist == "2nd & Short (1-3 yds)": pred_sub = pred_sub[(pred_sub['DN'] == 2) & (pred_sub['DIST'] <= 3)]
+        elif pred_dn_dist == "2nd & Medium (4-6 yds)": pred_sub = pred_sub[(pred_sub['DN'] == 2) & (pred_sub['DIST'].between(4, 6))]
+        elif pred_dn_dist == "2nd & Long (7+ yds)": pred_sub = pred_sub[(pred_sub['DN'] == 2) & (pred_sub['DIST'] >= 7)]
+        elif pred_dn_dist == "3rd & Short (1-2 yds)": pred_sub = pred_sub[(pred_sub['DN'] == 3) & (pred_sub['DIST'] <= 2)]
+        elif pred_dn_dist == "3rd & Medium (3-6 yds)": pred_sub = pred_sub[(pred_sub['DN'] == 3) & (pred_sub['DIST'].between(3, 6))]
+        elif pred_dn_dist == "3rd & Long (7+ yds)": pred_sub = pred_sub[(pred_sub['DN'] == 3) & (pred_sub['DIST'] >= 7)]
+        elif pred_dn_dist == "4th Down": pred_sub = pred_sub[pred_sub['DN'] == 4]
+
+        # Snapshot for widening
+        dn_snapshot = pred_sub.copy()
+
+        if pred_zone != "Any Territory" and 'FIELD_ZONE' in pred_sub.columns:
+            pred_sub = pred_sub[pred_sub['FIELD_ZONE'] == pred_zone]
+        if pred_form != "Any Formation" and 'OFF FORM' in pred_sub.columns:
+            pred_sub = pred_sub[pred_sub['OFF FORM'] == pred_form]
+        if "Left" in pred_hash and 'HASH' in pred_sub.columns:
+            pred_sub = pred_sub[pred_sub['HASH'] == 'L']
+        elif "Right" in pred_hash and 'HASH' in pred_sub.columns:
+            pred_sub = pred_sub[pred_sub['HASH'] == 'R']
+        elif "Middle" in pred_hash and 'HASH' in pred_sub.columns:
+            pred_sub = pred_sub[pred_sub['HASH'] == 'M']
+
+        if pred_trigger == "After Penalty" and 'AFTER_PENALTY' in pred_sub.columns:
+            pred_sub = pred_sub[pred_sub['AFTER_PENALTY'] == True]
+        elif pred_trigger == "After 1st Down Conversion" and 'AFTER_1ST_DOWN' in pred_sub.columns:
+            pred_sub = pred_sub[pred_sub['AFTER_1ST_DOWN'] == True]
+
+        # Intelligent widening if sample is too tight
+        if len(pred_sub) < 3 and len(dn_snapshot) >= 3:
+            pred_sub = dn_snapshot
             is_widened = True
 
         st.markdown("---")
@@ -958,9 +983,9 @@ if "DEFENSE" in coordinator_mode:
             elif 'fringe' in q_rc: w_rc.append("FIELD_ZONE LIKE '%Fringe%'")
             if 'left hash' in q_rc: w_rc.append("HASH = 'L'")
             elif 'right hash' in q_rc: w_rc.append("HASH = 'R'")
-            if 'empty' in q_rc: w_rc.append("OFF_FORM LIKE '%Empty%'")
-            elif 'bunch' in q_rc or 'stack' in q_rc: w_rc.append("(OFF_FORM LIKE '%Bunch%' OR OFF_FORM LIKE '%Stack%')")
-            if 'rpo' in q_rc: w_rc.append("OFF_PLAY LIKE '%RPO%'")
+            if 'empty' in q_rc: w_rc.append('("OFF FORM" LIKE "%Empty%" OR "OFF_FORM" LIKE "%Empty%")')
+            elif 'bunch' in q_rc or 'stack' in q_rc: w_rc.append('("OFF FORM" LIKE "%Bunch%" OR "OFF FORM" LIKE "%Stack%" OR "OFF_FORM" LIKE "%Bunch%")')
+            if 'rpo' in q_rc: w_rc.append('("OFF PLAY" LIKE "%RPO%" OR "OFF_PLAY" LIKE "%RPO%")')
             if '3rd & med' in q_rc: w_rc.append("DN = 3 AND DIST BETWEEN 3 AND 6")
             elif '3rd & long' in q_rc: w_rc.append("DN = 3 AND DIST >= 7")
             elif '4th' in q_rc: w_rc.append("DN = 4")
@@ -988,7 +1013,7 @@ if "DEFENSE" in coordinator_mode:
                     st.text_area("Filtered Recon Plays String:", ", ".join(list(dict.fromkeys(p_all_rc))), height=70)
 
         st.markdown("---")
-        # 8-Zone Tendency Table
+        # 8-Zone Tendency Table (Fixed High-Contrast)
         st.subheader("1. 8-Zone Field Tendency Cards")
         zone_card_data = []
         for z in ZONE_ORDER:
@@ -1088,9 +1113,9 @@ if "DEFENSE" in coordinator_mode:
             elif 'fringe' in q_def_lower: w_def.append("FIELD_ZONE LIKE '%Fringe%'")
             if 'left hash' in q_def_lower: w_def.append("HASH = 'L'")
             elif 'right hash' in q_def_lower: w_def.append("HASH = 'R'")
-            if 'empty' in q_def_lower: w_def.append("OFF_FORM LIKE '%Empty%'")
-            elif 'bunch' in q_def_lower or 'stack' in q_def_lower: w_def.append("(OFF_FORM LIKE '%Bunch%' OR OFF_FORM LIKE '%Stack%')")
-            if 'rpo' in q_def_lower: w_def.append("OFF_PLAY LIKE '%RPO%'")
+            if 'empty' in q_def_lower: w_def.append('("OFF FORM" LIKE "%Empty%" OR "OFF_FORM" LIKE "%Empty%")')
+            elif 'bunch' in q_def_lower or 'stack' in q_def_lower: w_def.append('("OFF FORM" LIKE "%Bunch%" OR "OFF FORM" LIKE "%Stack%" OR "OFF_FORM" LIKE "%Bunch%")')
+            if 'rpo' in q_def_lower: w_def.append('("OFF PLAY" LIKE "%RPO%" OR "OFF_PLAY" LIKE "%RPO%")')
             if '3rd & medium' in q_def_lower: w_def.append("DN = 3 AND DIST BETWEEN 3 AND 6")
             elif '3rd & long' in q_def_lower: w_def.append("DN = 3 AND DIST >= 7")
             elif '4th' in q_def_lower: w_def.append("DN = 4")
@@ -1188,7 +1213,7 @@ elif "OFFENSE" in coordinator_mode:
             st.info("Offensive QC inquiry registered. Processing concepts against active data.")
 
 # =========================================================================
-# COORDINATOR SUITE 3: SPECIAL TEAMS (STC MODE - NFL & POWER 4 STANDARDS)
+# COORDINATOR SUITE 3: SPECIAL TEAMS (STC MODE)
 # =========================================================================
 else:
     tab_1, tab_2, tab_3 = st.tabs([
