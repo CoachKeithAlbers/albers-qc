@@ -88,11 +88,12 @@ def ensure_albers_logo():
 
 ensure_albers_logo()
 
-# --- HIGH-CONTRAST WAR ROOM CSS ---
+# --- HIGH-CONTRAST WAR ROOM CSS (AUDITED FOR READABILITY) ---
 st.markdown("""
 <style>
     .stApp { background-color: #0A0F1D !important; }
     
+    /* Global Pure White High-Contrast Typography */
     .stApp, .stApp p, .stApp span, .stApp label, .stMarkdown {
         color: #F8FAFC !important;
         font-size: 15px;
@@ -104,6 +105,7 @@ st.markdown("""
         letter-spacing: 0.5px;
     }
 
+    /* Top HUD Banner */
     .albers-header-card {
         background: linear-gradient(135deg, #111C30 0%, #1E293B 100%);
         border: 2px solid #38BDF8;
@@ -118,7 +120,7 @@ st.markdown("""
     
     .albers-brand-title {
         color: #FFFFFF !important;
-        font-size: 30px;
+        font-size: 28px;
         font-weight: 900;
         letter-spacing: 1.5px;
         margin: 0;
@@ -144,7 +146,17 @@ st.markdown("""
         letter-spacing: 0.5px;
     }
 
-    div.stButton > button {
+    /* Prominent Coordinator Mode Box */
+    .coordinator-switch-box {
+        background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+        border: 2px solid #FDE047;
+        border-radius: 10px;
+        padding: 12px 16px;
+        margin-bottom: 15px;
+    }
+
+    /* High-Contrast Interactive Buttons */
+    div.stButton > button, button[kind="secondary"] {
         background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%) !important;
         border: 2px solid #38BDF8 !important;
         border-radius: 8px !important;
@@ -175,6 +187,7 @@ st.markdown("""
         color: #0B1120 !important;
     }
 
+    /* Drill-Down Dossier Card */
     .dossier-box {
         background: linear-gradient(135deg, #111C30 0%, #172033 100%);
         border: 2px solid #FDE047;
@@ -191,6 +204,24 @@ st.markdown("""
         margin-bottom: 8px;
     }
 
+    /* Oracle Predictor Box */
+    .oracle-box {
+        background: linear-gradient(135deg, #111C30 0%, #1E293B 100%);
+        border: 2px solid #38BDF8;
+        border-radius: 10px;
+        padding: 20px 24px;
+        margin: 15px 0 25px 0;
+        box-shadow: 0 4px 25px rgba(56, 189, 248, 0.2);
+    }
+    .oracle-title {
+        color: #38BDF8 !important;
+        font-size: 19px;
+        font-weight: 900;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+    }
+
+    /* Multiselect Tags */
     div[data-baseweb="tag"] {
         background-color: #1E293B !important;
         border: 1.5px solid #38BDF8 !important;
@@ -199,6 +230,7 @@ st.markdown("""
     div[data-baseweb="tag"] span { color: #FFFFFF !important; font-weight: 700 !important; font-size: 13.5px !important; }
     div[data-baseweb="tag"] svg { fill: #38BDF8 !important; }
 
+    /* Dropdowns */
     div[data-baseweb="select"] > div {
         background-color: #111C30 !important;
         border: 1.5px solid #334155 !important;
@@ -220,6 +252,25 @@ st.markdown("""
         color: #FFFFFF !important;
     }
 
+    /* ALL TABLES & TABLE CELLS - FIXES LIGHT TEXT ON LIGHT BACKGROUND */
+    .stTable, table, tbody, tr, td, th {
+        background-color: #111C30 !important;
+        color: #FFFFFF !important;
+        border: 1px solid #1E293B !important;
+    }
+    th {
+        background-color: #1E293B !important;
+        color: #FFFFFF !important;
+        font-weight: 800 !important;
+        font-size: 14px !important;
+        border-bottom: 2px solid #38BDF8 !important;
+    }
+    td {
+        color: #F8FAFC !important;
+        font-size: 13.5px !important;
+    }
+
+    /* File Uploader Dropzone */
     section[data-testid="stFileUploaderDropzone"] {
         background-color: #111C30 !important;
         border: 2px dashed #38BDF8 !important;
@@ -248,25 +299,6 @@ st.markdown("""
         color: #E2E8F0 !important;
         font-size: 13.5px !important;
         font-weight: 700 !important;
-    }
-
-    .stTable, table {
-        background-color: #111C30 !important;
-        color: #FFFFFF !important;
-        border: 1px solid #334155 !important;
-        border-radius: 8px !important;
-    }
-    th {
-        background-color: #1E293B !important;
-        color: #FFFFFF !important;
-        font-weight: 800 !important;
-        font-size: 14px !important;
-        border-bottom: 2px solid #38BDF8 !important;
-    }
-    td {
-        color: #F8FAFC !important;
-        border-bottom: 1px solid #1E293B !important;
-        font-size: 13.5px !important;
     }
 
     .coach-notes-box {
@@ -355,7 +387,7 @@ def get_field_x(yl):
     elif yl == 50: return 50
     else: return 100 - yl
 
-# --- DATA PROCESSOR ---
+# --- DATA PROCESSOR (COMPUTES ADVANCED SITUATIONAL CONTEXT) ---
 def process_dataframe(raw_df, default_source_name="Game Data"):
     df_clean = raw_df.copy()
 
@@ -394,9 +426,16 @@ def process_dataframe(raw_df, default_source_name="Game Data"):
     df_clean['OFF_SUCCESS'] = df_clean.apply(compute_off_success, axis=1)
     df_clean['PLAY_TYPE_CLEAN'] = df_clean['PLAY TYPE'].fillna('Other')
     df_clean['BLITZ_CLEAN'] = df_clean['BLITZ'].fillna('BASE (NO BLITZ)')
+
+    # Sequence Detection for Predictor
+    df_clean['PREV_RESULT'] = df_clean['RESULT'].shift(1).fillna('')
+    df_clean['PREV_DN'] = df_clean['DN'].shift(1).fillna(0)
+    df_clean['AFTER_PENALTY'] = df_clean['PREV_RESULT'].str.contains('Penalty', case=False, na=False)
+    df_clean['AFTER_1ST_DOWN'] = (df_clean['PREV_DN'] == 1)
+
     return df_clean
 
-# --- SIDEBAR BRANDING & COORDINATOR MODE ---
+# --- SIDEBAR BRANDING & PROMINENT COORDINATOR MODE ---
 if os.path.exists(LOGO_FILE):
     st.sidebar.image(LOGO_FILE, width=170)
 
@@ -404,15 +443,19 @@ st.sidebar.markdown("### **ALBERS QC**")
 st.sidebar.markdown("<span style='color: #FDE047; font-weight:700;'>Your Personalized QC Coach</span>", unsafe_allow_html=True)
 st.sidebar.markdown("---")
 
-# 🏈 COORDINATOR UNIT TOGGLE
-st.sidebar.markdown("##### 🏈 Coordinator Mode")
-coordinator_mode = st.sidebar.radio(
-    "Active Play-Caller Suite:",
-    ["🛡️ DEFENSE (DC Mode)", "⚔️ OFFENSE (OC Mode)"],
-    index=0
-)
+# PROMINENT COORDINATOR COMMAND DECK
+st.sidebar.markdown("""
+<div class="coordinator-switch-box">
+    <div style="font-size: 11px; font-weight: 800; color: #FDE047; letter-spacing: 1px; margin-bottom: 4px;">ACTIVE COORDINATOR ROOM</div>
+""", unsafe_allow_html=True)
 
-st.sidebar.markdown("---")
+coordinator_mode = st.sidebar.radio(
+    label="Select Active Play-Caller Room:",
+    options=["🛡️ DEFENSE (DC Mode)", "⚔️ OFFENSE (OC Mode)"],
+    index=0,
+    label_visibility="collapsed"
+)
+st.sidebar.markdown("</div>", unsafe_allow_html=True)
 
 # --- SEPARATE DATA INTAKE PIPELINES ---
 if "DEFENSE" in coordinator_mode:
@@ -448,13 +491,13 @@ if "DEFENSE" in coordinator_mode:
         if csv_file and os.path.exists(csv_file):
             raw = pd.read_csv(csv_file)
             df = process_dataframe(raw, default_source_name="Opponent")
-            status_msg = f"● DEFENSE ACTIVE | {len(df)} SNAPS INDEXED"
+            status_msg = f"● DC WAR ROOM ACTIVE | {len(df)} SNAPS INDEXED"
         else:
             df = None
             status_msg = "● AWAITING DEFENSIVE DATA"
 
 else:
-    # ⚔️ OFFENSE MODE PIPELINE (EXCLUSIVELY OFFENSIVE DATA)
+    # ⚔️ OFFENSE MODE PIPELINE
     st.sidebar.markdown("##### 📥 Offensive Data Intake")
     uploaded_off_files = st.sidebar.file_uploader(
         "Drop Our Offensive CSVs Here:",
@@ -487,7 +530,7 @@ else:
         if off_file and os.path.exists(off_file):
             raw = pd.read_csv(off_file)
             df = process_dataframe(raw, default_source_name="Our Offense")
-            status_msg = f"● OFFENSE ACTIVE | {len(df)} SNAPS INDEXED"
+            status_msg = f"● OC STUDIO ACTIVE | {len(df)} SNAPS INDEXED"
         else:
             df = None
             status_msg = "● AWAITING OFFENSIVE DATA"
@@ -498,7 +541,7 @@ with col_logo:
     if os.path.exists(LOGO_FILE):
         st.image(LOGO_FILE, width=125)
 
-unit_label = "DEFENSIVE QC" if "DEFENSE" in coordinator_mode else "OFFENSIVE QC"
+unit_label = "DEFENSIVE WAR ROOM (DC MODE)" if "DEFENSE" in coordinator_mode else "OFFENSIVE PLAY-CALLER STUDIO (OC MODE)"
 with col_banner:
     st.markdown(f"""
     <div class="albers-header-card">
@@ -638,7 +681,7 @@ else:
     ])
 
 # =========================================================================
-# UNIT 1: OFFENSIVE SUITE (EXCLUSIVELY RUNS ON OFFENSIVE DATA)
+# UNIT 1: OFFENSIVE SUITE (OC MODE)
 # =========================================================================
 if "OFFENSE" in coordinator_mode:
     with tab_1:
@@ -658,7 +701,7 @@ if "OFFENSE" in coordinator_mode:
             c4.metric("Explosives (10r/15p)", f"{exp_off} ({(exp_off/snaps_off)*100:.1f}%)")
 
             st.markdown("---")
-            st.subheader("📍 Albers QC // QB Passing Spray Chart & Sector Production")
+            st.subheader("📍 Albers QC // Our QB Passing Spray Chart & Sector Production")
 
             col_radar_chart, col_radar_click = st.columns([3, 1])
 
@@ -749,7 +792,7 @@ if "OFFENSE" in coordinator_mode:
             if f_cols[2].button("3. Open Field", key="off_f3"): st.session_state['off_field_zone'] = "3. Open Field (Own 21 - Opp 41)"
             if f_cols[3].button("4. Fringe Zone", key="off_f4"): st.session_state['off_field_zone'] = "4. Fringe Zone (Opp 40-30)"
             if f_cols[5].button("5. Scoring Zone", key="off_f5"): st.session_state['off_field_zone'] = "5. Scoring Zone (Opp 29-21)"
-            if f_cols[5].button("6. High Red", key="off_f6"): st.session_state['off_field_zone'] = "6. High Red Zone (20-11)"
+            if f_cols[6].button("6. High Red", key="off_f6"): st.session_state['off_field_zone'] = "6. High Red Zone (20-11)"
             if f_cols[7].button("7. Low Red", key="off_f7"): st.session_state['off_field_zone'] = "7. Low Red Zone (10-6)"
             if f_cols[8].button("8. Goal Line", key="off_f8"): st.session_state['off_field_zone'] = "8. Goal Line (5 & In)"
             if f_cols[8].button("🔄 Show All", key="off_fall"): 
@@ -805,8 +848,6 @@ if "OFFENSE" in coordinator_mode:
 
     with tab_2:
         st.subheader(f"🛡️ Albers QC // Opponent Defense Reconnaissance: {selected_opp}")
-        st.write("Audits how opposing defenses align against our offensive scheme:")
-
         d_col1, d_col2 = st.columns(2)
         with d_col1:
             st.markdown("##### Opponent Defensive Fronts Faced & Our Success")
@@ -876,9 +917,10 @@ if "OFFENSE" in coordinator_mode:
                     st.text_area("Filtered Offensive Play Numbers:", ", ".join(list(dict.fromkeys(p_all))), height=75)
 
 # =========================================================================
-# UNIT 2: DEFENSIVE SUITE (DC MODE - FULL 24-QUERY ARSENAL RESTORED)
+# UNIT 2: DEFENSIVE SUITE (DC MODE - WITH PREDICTOR & FULL ARSENAL)
 # =========================================================================
 else:
+    # --- TAB 1: DEFENSIVE SELF-SCOUT ---
     with tab_1:
         st.subheader(f"🛡️ Albers QC // Defensive Self-Scout Audit: {selected_opp}")
         if 'self_pass_zone' not in st.session_state: st.session_state['self_pass_zone'] = None
@@ -933,115 +975,225 @@ else:
                     ax_pass.text(gx + 0.5, gy + 0.22, f"Explosives: {exp}", ha='center', color='#FCA5A5' if exp > 1 else '#94A3B8', fontsize=9.5, fontweight='bold')
                     ax_pass.text(gx + 0.5, gy + 0.08, badge, ha='center', color='#FDE047', fontsize=8.5, fontweight='heavy')
 
-                ax_pass.set_title(f"ALBERS QC // Passing Radar vs {selected_opp}", color='#FFFFFF', fontsize=13, fontweight='heavy', pad=12)
-                st.pyplot(fig_self)
+            ax_pass.set_title(f"ALBERS QC // Passing Radar vs {selected_opp}", color='#FFFFFF', fontsize=13, fontweight='heavy', pad=12)
+            st.pyplot(fig_self)
 
-            with col_radar_click:
-                st.markdown("##### 🎯 Click to Inspect Zone:")
-                k_c1, k_c2, k_c3 = st.columns(3)
-                if k_c1.button("Zone 7", key="btn_s7"): st.session_state['self_pass_zone'] = 7
-                if k_c2.button("Zone 8", key="btn_s8"): st.session_state['self_pass_zone'] = 8
-                if k_c3.button("Zone 9", key="btn_s9"): st.session_state['self_pass_zone'] = 9
+        with col_radar_click:
+            st.markdown("##### 🎯 Click to Inspect Zone:")
+            k_c1, k_c2, k_c3 = st.columns(3)
+            if k_c1.button("Zone 7", key="btn_s7"): st.session_state['self_pass_zone'] = 7
+            if k_c2.button("Zone 8", key="btn_s8"): st.session_state['self_pass_zone'] = 8
+            if k_c3.button("Zone 9", key="btn_s9"): st.session_state['self_pass_zone'] = 9
 
-                if k_c1.button("Zone 4", key="btn_s4"): st.session_state['self_pass_zone'] = 4
-                if k_c2.button("Zone 5", key="btn_s5"): st.session_state['self_pass_zone'] = 5
-                if k_c3.button("Zone 6", key="btn_s6"): st.session_state['self_pass_zone'] = 6
+            if k_c1.button("Zone 4", key="btn_s4"): st.session_state['self_pass_zone'] = 4
+            if k_c2.button("Zone 5", key="btn_s5"): st.session_state['self_pass_zone'] = 5
+            if k_c3.button("Zone 6", key="btn_s6"): st.session_state['self_pass_zone'] = 6
 
-                if k_c1.button("Zone 1", key="btn_s1"): st.session_state['self_pass_zone'] = 1
-                if k_c2.button("Zone 2", key="btn_s2"): st.session_state['self_pass_zone'] = 2
-                if k_c3.button("Zone 3", key="btn_s3"): st.session_state['self_pass_zone'] = 3
+            if k_c1.button("Zone 1", key="btn_s1"): st.session_state['self_pass_zone'] = 1
+            if k_c2.button("Zone 2", key="btn_s2"): st.session_state['self_pass_zone'] = 2
+            if k_c3.button("Zone 3", key="btn_s3"): st.session_state['self_pass_zone'] = 3
 
-                if st.button("🔄 Clear Zone Selection", key="btn_clear_spass"):
-                    st.session_state['self_pass_zone'] = None
-                    st.rerun()
-
-            if st.session_state['self_pass_zone']:
-                pz = st.session_state['self_pass_zone']
-                pz_df = filtered_df[filtered_df['PASS ZONE'] == pz]
-                st.markdown(f"""
-                <div class="dossier-box">
-                    <div class="dossier-title">🎯 TELEMETRY DOSSIER: ZONE {pz} PASS DEFENSE</div>
-                """, unsafe_allow_html=True)
-                if len(pz_df) > 0:
-                    p_c1, p_c2, p_c3, p_c4 = st.columns(4)
-                    p_c1.metric(f"Zone {pz} Targets", len(pz_df))
-                    p_c2.metric("Comp % Allowed", f"{(pz_df['RESULT'].str.contains('Complete', case=False, na=False).mean())*100:.1f}%")
-                    p_c3.metric("Def Win Rate", f"{pz_df['DEF_SUCCESS'].mean()*100:.1f}%")
-                    p_c4.metric("Avg Yards Allowed", f"{pz_df['GN/LS'].mean():.1f} yds")
-                    st.dataframe(pz_df[['PLAY #', 'DN', 'DIST', 'OFF FORM', 'OFF PLAY', 'DEF FRONT', 'COVERAGE', 'GN/LS', 'RESULT', 'DEF_SUCCESS']], use_container_width=True)
-                    pz_playlist = pz_df['PLAY #'].astype(str).tolist()
-                    st.text_area(f"Zone {pz} Video Cutup Playlist ({len(pz_playlist)} plays):", ", ".join(pz_playlist), height=70)
-                st.markdown("</div>", unsafe_allow_html=True)
-
-            st.markdown("---")
-
-            # 100-Yard Field & Territory Selector
-            st.subheader("📍 100-Yard Field & Interactive Territory Selector")
-            f_cols = st.columns(9)
-            if f_cols[0].button("1. Coming Out", key="fbtn_s1"): st.session_state['self_field_zone'] = "1. Coming Out (-1 to -10)"
-            if f_cols[1].button("2. Backed Up", key="fbtn_s2"): st.session_state['self_field_zone'] = "2. Backed Up (-11 to -20)"
-            if f_cols[2].button("3. Open Field", key="fbtn_s3"): st.session_state['self_field_zone'] = "3. Open Field (Own 21 - Opp 41)"
-            if f_cols[3].button("4. Fringe Zone", key="fbtn_s4"): st.session_state['self_field_zone'] = "4. Fringe Zone (Opp 40-30)"
-            if f_cols[4].button("5. Scoring Zone", key="fbtn_s5"): st.session_state['self_field_zone'] = "5. Scoring Zone (Opp 29-21)"
-            if f_cols[5].button("6. High Red", key="fbtn_s6"): st.session_state['self_field_zone'] = "6. High Red Zone (20-11)"
-            if f_cols[7].button("7. Low Red", key="fbtn_s7"): st.session_state['self_field_zone'] = "7. Low Red Zone (10-6)"
-            if f_cols[8].button("8. Goal Line", key="fbtn_s8"): st.session_state['self_field_zone'] = "8. Goal Line (5 & In)"
-            if f_cols[8].button("🔄 Show All", key="fbtn_s_all"): 
-                st.session_state['self_field_zone'] = None
+            if st.button("🔄 Clear Zone Selection", key="btn_clear_spass"):
+                st.session_state['self_pass_zone'] = None
                 st.rerun()
 
-            fig_field = plt.figure(figsize=(16, 5), dpi=150, facecolor='#0B1120')
-            ax_field = fig_field.add_axes([0.05, 0.12, 0.90, 0.78])
-            render_8_zone_field(ax_field, f"ALBERS QC // 100-Yard Field: Explosives (★) vs. Havoc/Turnovers (◆)", 
-                                highlight_zone=st.session_state['self_field_zone'])
-
-            np.random.seed(42)
-            def calc_y(h, d):
-                base = 20.0 if h == 'L' else (33.3 if h == 'R' else 26.65)
-                offset = -4 if d == 'L' else (4 if d == 'R' else 0)
-                return base + offset + np.random.uniform(-2, 2)
-
-            field_plot_df = filtered_df
-            if st.session_state['self_field_zone']:
-                field_plot_df = filtered_df[filtered_df['FIELD_ZONE'] == st.session_state['self_field_zone']]
-
-            for _, row in field_plot_df[field_plot_df['GN/LS'] >= 20].iterrows():
-                ax_field.scatter(row['FIELD_X'], calc_y(row['HASH'], row['PLAY DIR']), s=140, color='#EF4444', marker='*', edgecolors='yellow', zorder=5)
-            for _, row in field_plot_df[field_plot_df['RESULT'].str.contains('Interception|Fumble|Sack|Safety', case=False, na=False)].iterrows():
-                ax_field.scatter(row['FIELD_X'], calc_y(row['HASH'], row['PLAY DIR']), s=80, color='#38BDF8', marker='D', edgecolors='white', zorder=4)
-
-            st.pyplot(fig_field)
-
-            if st.session_state['self_field_zone']:
-                fz = st.session_state['self_field_zone']
-                fz_df = filtered_df[filtered_df['FIELD_ZONE'] == fz]
-                st.markdown(f"""
-                <div class="dossier-box">
-                    <div class="dossier-title">📍 TERRITORY DOSSIER: {fz}</div>
-                """, unsafe_allow_html=True)
-                if len(fz_df) > 0:
-                    fz_c1, fz_c2, fz_c3, fz_c4 = st.columns(4)
-                    fz_c1.metric("Snaps in Territory", len(fz_df))
-                    fz_c2.metric("Defensive Win Rate", f"{fz_df['DEF_SUCCESS'].mean()*100:.1f}%")
-                    fz_c3.metric("Avg Yards Allowed", f"{fz_df['GN/LS'].mean():.2f} yds")
-                    fz_c4.metric("Explosives Conceded", (fz_df['GN/LS'] >= 15).sum())
-                    st.dataframe(fz_df[['PLAY #', 'DN', 'DIST', 'OFF FORM', 'OFF PLAY', 'DEF FRONT', 'COVERAGE', 'GN/LS', 'RESULT', 'DEF_SUCCESS']], use_container_width=True)
-                    fz_playlist = fz_df['PLAY #'].astype(str).tolist()
-                    st.text_area(f"{fz} Video Cutup Playlist ({len(fz_playlist)} plays):", ", ".join(fz_playlist), height=70)
-                st.markdown("</div>", unsafe_allow_html=True)
-
-    with tab_2:
-        st.subheader(f"🎯 Albers QC // Opponent Advance Reconnaissance: {selected_opp}")
-        o1, o2, o3, o4 = st.columns(4)
-        total_opp = len(scoped_df)
-        run_opp = (scoped_df['PLAY TYPE'] == 'Run').sum()
-        pass_opp = (scoped_df['PLAY TYPE'] == 'Pass').sum()
-        o1.metric("Total Snaps Scouted", total_opp)
-        o2.metric("Run / Pass Ratio", f"{(run_opp/total_opp)*100:.1f}% Run / {(pass_opp/total_opp)*100:.1f}% Pass" if total_opp>0 else "0%")
-        o3.metric("Opponent Offensive Success", f"{scoped_df['OFF_SUCCESS'].mean()*100:.1f}%")
-        o4.metric("Avg Yards Gained", f"{scoped_df['GN/LS'].mean():.2f} yds")
+        # PASSING ZONE DOSSIER
+        if st.session_state['self_pass_zone']:
+            pz = st.session_state['self_pass_zone']
+            pz_df = filtered_df[filtered_df['PASS ZONE'] == pz]
+            st.markdown(f"""
+            <div class="dossier-box">
+                <div class="dossier-title">🎯 TELEMETRY DOSSIER: ZONE {pz} PASS DEFENSE</div>
+            """, unsafe_allow_html=True)
+            if len(pz_df) > 0:
+                p_c1, p_c2, p_c3, p_c4 = st.columns(4)
+                p_c1.metric(f"Zone {pz} Targets", len(pz_df))
+                p_c2.metric("Comp % Allowed", f"{(pz_df['RESULT'].str.contains('Complete', case=False, na=False).mean())*100:.1f}%")
+                p_c3.metric("Def Win Rate", f"{pz_df['DEF_SUCCESS'].mean()*100:.1f}%")
+                p_c4.metric("Avg Yards Allowed", f"{pz_df['GN/LS'].mean():.1f} yds")
+                st.dataframe(pz_df[['PLAY #', 'DN', 'DIST', 'OFF FORM', 'OFF PLAY', 'DEF FRONT', 'COVERAGE', 'GN/LS', 'RESULT', 'DEF_SUCCESS']], use_container_width=True)
+                pz_playlist = pz_df['PLAY #'].astype(str).tolist()
+                st.text_area(f"Zone {pz} Video Cutup Playlist ({len(pz_playlist)} plays):", ", ".join(pz_playlist), height=70)
+            st.markdown("</div>", unsafe_allow_html=True)
 
         st.markdown("---")
+
+        # 100-YARD FIELD & INTERACTIVE STRIP
+        st.subheader("📍 100-Yard Field & Interactive Territory Selector")
+        f_cols = st.columns(9)
+        if f_cols[0].button("1. Coming Out", key="fbtn_s1"): st.session_state['self_field_zone'] = "1. Coming Out (-1 to -10)"
+        if f_cols[1].button("2. Backed Up", key="fbtn_s2"): st.session_state['self_field_zone'] = "2. Backed Up (-11 to -20)"
+        if f_cols[2].button("3. Open Field", key="fbtn_s3"): st.session_state['self_field_zone'] = "3. Open Field (Own 21 - Opp 41)"
+        if f_cols[3].button("4. Fringe Zone", key="fbtn_s4"): st.session_state['self_field_zone'] = "4. Fringe Zone (Opp 40-30)"
+        if f_cols[4].button("5. Scoring Zone", key="fbtn_s5"): st.session_state['self_field_zone'] = "5. Scoring Zone (Opp 29-21)"
+        if f_cols[5].button("6. High Red", key="fbtn_s6"): st.session_state['self_field_zone'] = "6. High Red Zone (20-11)"
+        if f_cols[7].button("7. Low Red", key="fbtn_s7"): st.session_state['self_field_zone'] = "7. Low Red Zone (10-6)"
+        if f_cols[8].button("8. Goal Line", key="fbtn_s8"): st.session_state['self_field_zone'] = "8. Goal Line (5 & In)"
+        if f_cols[8].button("🔄 Show All", key="fbtn_s_all"): 
+            st.session_state['self_field_zone'] = None
+            st.rerun()
+
+        fig_field = plt.figure(figsize=(16, 5), dpi=150, facecolor='#0B1120')
+        ax_field = fig_field.add_axes([0.05, 0.12, 0.90, 0.78])
+        render_8_zone_field(ax_field, f"ALBERS QC // 100-Yard Field: Explosives (★) vs. Havoc/Turnovers (◆)", 
+                            highlight_zone=st.session_state['self_field_zone'])
+
+        np.random.seed(42)
+        def calc_y(h, d):
+            base = 20.0 if h == 'L' else (33.3 if h == 'R' else 26.65)
+            offset = -4 if d == 'L' else (4 if d == 'R' else 0)
+            return base + offset + np.random.uniform(-2, 2)
+
+        field_plot_df = filtered_df
+        if st.session_state['self_field_zone']:
+            field_plot_df = filtered_df[filtered_df['FIELD_ZONE'] == st.session_state['self_field_zone']]
+
+        for _, row in field_plot_df[field_plot_df['GN/LS'] >= 20].iterrows():
+            ax_field.scatter(row['FIELD_X'], calc_y(row['HASH'], row['PLAY DIR']), s=140, color='#EF4444', marker='*', edgecolors='yellow', zorder=5)
+        for _, row in field_plot_df[field_plot_df['RESULT'].str.contains('Interception|Fumble|Sack|Safety', case=False, na=False)].iterrows():
+            ax_field.scatter(row['FIELD_X'], calc_y(row['HASH'], row['PLAY DIR']), s=80, color='#38BDF8', marker='D', edgecolors='white', zorder=4)
+
+        st.pyplot(fig_field)
+
+        if st.session_state['self_field_zone']:
+            fz = st.session_state['self_field_zone']
+            fz_df = filtered_df[filtered_df['FIELD_ZONE'] == fz]
+            st.markdown(f"""
+            <div class="dossier-box">
+                <div class="dossier-title">📍 TERRITORY DOSSIER: {fz}</div>
+            """, unsafe_allow_html=True)
+            if len(fz_df) > 0:
+                fz_c1, fz_c2, fz_c3, fz_c4 = st.columns(4)
+                fz_c1.metric("Snaps in Territory", len(fz_df))
+                fz_c2.metric("Defensive Win Rate", f"{fz_df['DEF_SUCCESS'].mean()*100:.1f}%")
+                fz_c3.metric("Avg Yards Allowed", f"{fz_df['GN/LS'].mean():.2f} yds")
+                fz_c4.metric("Explosives Conceded", (fz_df['GN/LS'] >= 15).sum())
+                st.dataframe(fz_df[['PLAY #', 'DN', 'DIST', 'OFF FORM', 'OFF PLAY', 'DEF FRONT', 'COVERAGE', 'GN/LS', 'RESULT', 'DEF_SUCCESS']], use_container_width=True)
+                fz_playlist = fz_df['PLAY #'].astype(str).tolist()
+                st.text_area(f"{fz} Video Cutup Playlist ({len(fz_playlist)} plays):", ", ".join(fz_playlist), height=70)
+            st.markdown("</div>", unsafe_allow_html=True)
+
+        st.markdown("---")
+        st.subheader("🎬 Coach Albers' Full Filtered Cutup Playlist")
+        playlist_self = filtered_df['PLAY #'].astype(str).tolist()
+        st.text_area(f"Play Numbers ({len(playlist_self)} plays):", ", ".join(playlist_self), height=80)
+
+    # --- TAB 2: OPPONENT ADVANCE RECON WITH PLAY CALL PREDICTOR ---
+    with tab_2:
+        st.subheader(f"🎯 Albers QC // Opponent Advance Reconnaissance: {selected_opp}")
+
+        # =========================================================================
+        # 🔮 REAL-TIME PLAY CALL PREDICTOR & TENDENCY ORACLE
+        # =========================================================================
+        st.markdown("""
+        <div class="oracle-box">
+            <div class="oracle-title">🔮 REAL-TIME PLAY-CALL PREDICTOR & TENDENCY ORACLE</div>
+            <div style="color: #CBD5E1; font-size: 13.5px; margin-bottom: 12px;">
+                Input the opponent's pre-snap personnel, alignment, field location, and situational trigger to predict what play is coming next:
+            </div>
+        """, unsafe_allow_html=True)
+
+        pred_c1, pred_c2, pred_c3, pred_c4 = st.columns(4)
+        with pred_c1:
+            pred_dn_dist = st.selectbox("Down & Distance Situation:", [
+                "1st & 10", "2nd & Short (1-3 yds)", "2nd & Medium (4-6 yds)", "2nd & Long (7+ yds)",
+                "3rd & Short (1-2 yds)", "3rd & Medium (3-6 yds)", "3rd & Long (7+ yds)", "4th Down"
+            ])
+        with pred_c2:
+            pred_zone = st.selectbox("Field Territory:", ["Any Territory"] + ZONE_ORDER)
+        with pred_c3:
+            all_opp_forms = ["Any Formation"] + sorted(scoped_df['OFF FORM'].dropna().unique().tolist())
+            pred_form = st.selectbox("Opponent Formation / Look:", all_opp_forms)
+        with pred_c4:
+            pred_hash = st.selectbox("Ball on Hash:", ["Any Hash", "Left Hash (L)", "Middle (M)", "Right Hash (R)"])
+
+        pred_trigger = st.radio("Situational Context / Sequence:", 
+                                ["Standard Snap", "After 1st Down Conversion", "After Penalty"], 
+                                horizontal=True)
+
+        # Build Predictor Filter Query
+        p_where = []
+        if pred_dn_dist == "1st & 10": p_where.append("DN = 1")
+        elif pred_dn_dist == "2nd & Short (1-3 yds)": p_where.append("DN = 2 AND DIST <= 3")
+        elif pred_dn_dist == "2nd & Medium (4-6 yds)": p_where.append("DN = 2 AND DIST BETWEEN 4 AND 6")
+        elif pred_dn_dist == "2nd & Long (7+ yds)": p_where.append("DN = 2 AND DIST >= 7")
+        elif pred_dn_dist == "3rd & Short (1-2 yds)": p_where.append("DN = 3 AND DIST <= 2")
+        elif pred_dn_dist == "3rd & Medium (3-6 yds)": p_where.append("DN = 3 AND DIST BETWEEN 3 AND 6")
+        elif pred_dn_dist == "3rd & Long (7+ yds)": p_where.append("DN = 3 AND DIST >= 7")
+        elif pred_dn_dist == "4th Down": p_where.append("DN = 4")
+
+        if pred_zone != "Any Territory": p_where.append(f"FIELD_ZONE = '{pred_zone}'")
+        if pred_form != "Any Formation": p_where.append(f"OFF_FORM = '{pred_form}'")
+        if "Left" in pred_hash: p_where.append("HASH = 'L'")
+        elif "Right" in pred_hash: p_where.append("HASH = 'R'")
+        elif "Middle" in pred_hash: p_where.append("HASH = 'M'")
+
+        if pred_trigger == "After Penalty": p_where.append("AFTER_PENALTY = 1")
+        elif pred_trigger == "After 1st Down Conversion": p_where.append("AFTER_1ST_DOWN = 1")
+
+        p_sql_where = " AND ".join(p_where) if p_where else "1=1"
+        pred_sub = pd.read_sql_query(f"SELECT * FROM snaps WHERE {p_sql_where}", conn)
+
+        # Fallback if too specific
+        is_widened = False
+        if len(pred_sub) < 3 and len(p_where) > 1:
+            fallback_where = p_where[0] # Fallback to down & distance
+            pred_sub = pd.read_sql_query(f"SELECT * FROM snaps WHERE {fallback_where}", conn)
+            is_widened = True
+
+        st.markdown("---")
+        if len(pred_sub) > 0:
+            tot_p = len(pred_sub)
+            r_cnt = (pred_sub['PLAY TYPE'] == 'Run').sum()
+            p_cnt = (pred_sub['PLAY TYPE'] == 'Pass').sum()
+            r_pct = (r_cnt / tot_p) * 100
+            p_pct = (p_cnt / tot_p) * 100
+
+            # Telemetry Meter
+            m_col1, m_col2, m_col3, m_col4 = st.columns(4)
+            m_col1.metric("Historical Snaps", f"{tot_p} Plays" + (" (Widened)" if is_widened else ""))
+            m_col2.metric("Run Tendency", f"{r_pct:.1f}% Run")
+            m_col3.metric("Pass Tendency", f"{p_pct:.1f}% Pass")
+            m_col4.metric("Avg Gain Conceded", f"{pred_sub['GN/LS'].mean():.1f} yds")
+
+            # Prediction Card
+            pred_card1, pred_card2 = st.columns(2)
+            with pred_card1:
+                st.markdown("##### 🚨 Top 3 Predicted Offensive Schemes:")
+                top_schemes = pred_sub.groupby(['PLAY TYPE', 'OFF PLAY']).agg(
+                    Snaps=('PLAY #', 'count'),
+                    Avg_Gain=('GN/LS', 'mean'),
+                    Explosive=('GN/LS', lambda x: (x >= 15).sum())
+                ).reset_index().sort_values(by='Snaps', ascending=False).head(3)
+                top_schemes['Share_%'] = (top_schemes['Snaps'] / tot_p) * 100
+                st.dataframe(top_schemes[['PLAY TYPE', 'OFF PLAY', 'Snaps', 'Share_%', 'Avg_Gain']], use_container_width=True)
+
+            with pred_card2:
+                # Top Counter-Call
+                top_counter_front = pred_sub.groupby('DEF FRONT')['DEF_SUCCESS'].agg(['count', 'mean']).sort_values(by='mean', ascending=False)
+                best_front_name = top_counter_front.index[0] if len(top_counter_front) > 0 else "Base OVER"
+                best_front_win = top_counter_front.iloc[0]['mean'] * 100 if len(top_counter_front) > 0 else 55.0
+
+                top_counter_cov = pred_sub.groupby('COVERAGE')['DEF_SUCCESS'].agg(['count', 'mean']).sort_values(by='mean', ascending=False)
+                best_cov_name = top_counter_cov.index[0] if len(top_counter_cov) > 0 else "MOD"
+                best_cov_win = top_counter_cov.iloc[0]['mean'] * 100 if len(top_counter_cov) > 0 else 55.0
+
+                st.markdown("##### 🛡️ Albers QC Recommended Counter-Call:")
+                st.success(f"""
+                * **Lockdown Front:** `{best_front_name}` (Historical Win Rate: **{best_front_win:.1f}%**)
+                * **Lockdown Coverage:** `{best_cov_name}` (Historical Win Rate: **{best_cov_win:.1f}%**)
+                * **Tactical Tell:** Offense leans **{"HEAVY RUN" if r_pct>=60 else ("HEAVY PASS" if p_pct>=60 else "BALANCED")}** in this situation.
+                """)
+
+            pred_playlist = pred_sub['PLAY #'].astype(str).tolist()
+            st.text_area(f"Historical Cutup String for this Exact Situation ({len(pred_playlist)} plays):", ", ".join(pred_playlist), height=60)
+        else:
+            st.info("No matching historical snaps found for this combination. Try selecting 'Any Territory' or 'Any Formation'.")
+
+        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("---")
+
+        # 8-Zone Tendency Table (Fixed High-Contrast)
         st.subheader("1. 8-Zone Field Tendency Cards")
         zone_card_data = []
         for z in ZONE_ORDER:
@@ -1055,14 +1207,36 @@ else:
                     "Snaps": tot,
                     "Run %": f"{(r_c/tot)*100:.1f}%",
                     "Pass %": f"{(p_c/tot)*100:.1f}%",
-                    "Off Success %": f"{z_sub['OFF_SUCCESS'].mean()*100:.1f}%",
+                    "Opp Success %": f"{z_sub['OFF_SUCCESS'].mean()*100:.1f}%",
                     "Avg Gain": f"{z_sub['GN/LS'].mean():.2f} yds",
                     "Top Run Concept": get_top_concept(z_sub, 'Run'),
                     "Top Pass Concept": get_top_concept(z_sub, 'Pass')
                 })
-        if zone_card_data: st.dataframe(pd.DataFrame(zone_card_data), use_container_width=True)
+        if zone_card_data: 
+            st.dataframe(pd.DataFrame(zone_card_data), use_container_width=True)
 
-    # --- TAB 3: THE COMPLETE 24-QUERY DEFENSIVE ARSENAL RESTORED ---
+        st.markdown("---")
+        st.subheader("2. Down & Distance Tendencies")
+        down_data = []
+        for d in [1, 2, 3, 4]:
+            d_sub = scoped_df[scoped_df['DN'] == d]
+            tot = len(d_sub)
+            if tot > 0:
+                r_c = (d_sub['PLAY TYPE'] == 'Run').sum()
+                p_c = (d_sub['PLAY TYPE'] == 'Pass').sum()
+                down_data.append({
+                    "Down": f"Down {d}",
+                    "Snaps": tot,
+                    "Run %": f"{(r_c/tot)*100:.1f}%",
+                    "Pass %": f"{(p_c/tot)*100:.1f}%",
+                    "Opp Success %": f"{d_sub['OFF_SUCCESS'].mean()*100:.1f}%",
+                    "Avg Gain": f"{d_sub['GN/LS'].mean():.2f} yds",
+                    "Primary Tell": "🚨 RUN HEAVY" if (r_c/tot) >= 0.55 else ("🎯 PASS HEAVY" if (p_c/tot) >= 0.60 else "⚖️ BALANCED")
+                })
+        if down_data:
+            st.dataframe(pd.DataFrame(down_data), use_container_width=True)
+
+    # --- TAB 3: THE COMPLETE 24-QUERY DEFENSIVE ARSENAL ---
     with tab_3:
         st.subheader("💬 Ask Coach Albers // Defensive QC Assistant")
         st.markdown("Direct tactical inquiries across your defense, opponents, 8 field zones, hash marks, formations, and down/distance situations.")
@@ -1181,22 +1355,14 @@ else:
                 zone_label += " | Right Hash"
 
             # Formation Parsing
-            if 'empty' in q:
-                where_clauses.append("OFF_FORM LIKE '%Empty%'")
-            elif 'bunch' in q or 'stack' in q:
-                where_clauses.append("(OFF_FORM LIKE '%Bunch%' OR OFF_FORM LIKE '%Stack%')")
-            elif 'red/blue' in q or '2-back' in q:
-                where_clauses.append("OFF_FORM LIKE '%RED/BLUE%'")
-            elif '3x1' in q or 'trips' in q:
-                where_clauses.append("(OFF_FORM LIKE '%Rita/Lisa%' OR OFF_FORM LIKE '%GREEN/GOLD%' OR OFF_FORM LIKE '%Trip%')")
-            elif 'green/gold' in q:
-                where_clauses.append("OFF_FORM LIKE '%GREEN/GOLD%'")
+            if 'empty' in q: where_clauses.append("OFF_FORM LIKE '%Empty%'")
+            elif 'bunch' in q or 'stack' in q: where_clauses.append("(OFF_FORM LIKE '%Bunch%' OR OFF_FORM LIKE '%Stack%')")
+            elif 'red/blue' in q or '2-back' in q: where_clauses.append("OFF_FORM LIKE '%RED/BLUE%'")
+            elif '3x1' in q or 'trips' in q: where_clauses.append("(OFF_FORM LIKE '%Rita/Lisa%' OR OFF_FORM LIKE '%GREEN/GOLD%' OR OFF_FORM LIKE '%Trip%')")
+            elif 'green/gold' in q: where_clauses.append("OFF_FORM LIKE '%GREEN/GOLD%'")
 
-            # Play Concept / Scheme Parsing
-            if 'rpo' in q:
-                where_clauses.append("OFF_PLAY LIKE '%RPO%'")
-            elif 'rip/liz' in q:
-                where_clauses.append("COVERAGE LIKE '%RIP/LIZ%'")
+            if 'rpo' in q: where_clauses.append("OFF_PLAY LIKE '%RPO%'")
+            elif 'rip/liz' in q: where_clauses.append("COVERAGE LIKE '%RIP/LIZ%'")
 
             # Down & Distance Parsing
             sit_label = "All Downs"
@@ -1234,79 +1400,27 @@ else:
             where_sql = " AND ".join(where_clauses) if where_clauses else "1=1"
 
             if 'front' in q or '4th down' in q:
-                sql = f"""
-                    SELECT "DEF FRONT" as Front, count(*) as Snaps, 
-                           round(avg(DEF_SUCCESS)*100, 1) as "Def_Win_%", 
-                           round(avg("GN/LS"), 2) as "Avg_Yds_Allowed",
-                           group_concat("PLAY #", ', ') as Play_List
-                    FROM snaps 
-                    WHERE {where_sql} AND "DEF FRONT" IS NOT NULL
-                    GROUP BY "DEF FRONT" 
-                    ORDER BY "Def_Win_%" DESC, Snaps DESC
-                """
+                sql = f"""SELECT "DEF FRONT" as Front, count(*) as Snaps, round(avg(DEF_SUCCESS)*100, 1) as "Def_Win_%", round(avg("GN/LS"), 2) as "Avg_Yds_Allowed", group_concat("PLAY #", ', ') as Play_List FROM snaps WHERE {where_sql} AND "DEF FRONT" IS NOT NULL GROUP BY "DEF FRONT" ORDER BY "Def_Win_%" DESC, Snaps DESC"""
                 title = f"Defensive Front Performance ({zone_label} | {sit_label})"
                 mode = "front"
-
             elif 'coverage' in q:
-                sql = f"""
-                    SELECT "COVERAGE" as Coverage, count(*) as Snaps, 
-                       round(avg(DEF_SUCCESS)*100, 1) as "Def_Win_%", 
-                       round(avg("GN/LS"), 2) as "Avg_Yds_Allowed",
-                       group_concat("PLAY #", ', ') as Play_List
-                    FROM snaps 
-                    WHERE {where_sql} AND "COVERAGE" IS NOT NULL
-                    GROUP BY "COVERAGE" 
-                    ORDER BY "Def_Win_%" DESC, Snaps DESC
-                """
+                sql = f"""SELECT "COVERAGE" as Coverage, count(*) as Snaps, round(avg(DEF_SUCCESS)*100, 1) as "Def_Win_%", round(avg("GN/LS"), 2) as "Avg_Yds_Allowed", group_concat("PLAY #", ', ') as Play_List FROM snaps WHERE {where_sql} AND "COVERAGE" IS NOT NULL GROUP BY "COVERAGE" ORDER BY "Def_Win_%" DESC, Snaps DESC"""
                 title = f"Coverage Efficiency ({zone_label} | {sit_label})"
                 mode = "coverage"
-
             elif 'blitz' in q or 'pressure' in q:
-                sql = f"""
-                    SELECT BLITZ_CLEAN as Pressure, count(*) as Snaps, 
-                       round(avg(DEF_SUCCESS)*100, 1) as "Def_Win_%", 
-                       round(avg("GN/LS"), 2) as "Avg_Yds_Allowed",
-                       group_concat("PLAY #", ', ') as Play_List
-                    FROM snaps 
-                    WHERE {where_sql}
-                    GROUP BY BLITZ_CLEAN 
-                    ORDER BY "Def_Win_%" DESC, Snaps DESC
-                """
+                sql = f"""SELECT BLITZ_CLEAN as Pressure, count(*) as Snaps, round(avg(DEF_SUCCESS)*100, 1) as "Def_Win_%", round(avg("GN/LS"), 2) as "Avg_Yds_Allowed", group_concat("PLAY #", ', ') as Play_List FROM snaps WHERE {where_sql} GROUP BY BLITZ_CLEAN ORDER BY "Def_Win_%" DESC, Snaps DESC"""
                 title = f"Pressure & Blitz Efficiency ({zone_label} | {sit_label})"
                 mode = "pressure"
-
             elif 'explosive' in q:
-                sql = f"""
-                    SELECT "PLAY #", "DN", "DIST", "FIELD_ZONE", "PLAY TYPE", coalesce("OFF PLAY", 'Unspecified') as Concept, 
-                           "DEF FRONT", "COVERAGE", "GN/LS" as Yards_Gained
-                    FROM snaps 
-                    WHERE {where_sql} AND "GN/LS" >= 15
-                    ORDER BY "GN/LS" DESC
-                """
+                sql = f"""SELECT "PLAY #", "DN", "DIST", "FIELD_ZONE", "PLAY TYPE", coalesce("OFF PLAY", 'Unspecified') as Concept, "DEF FRONT", "COVERAGE", "GN/LS" as Yards_Gained FROM snaps WHERE {where_sql} AND "GN/LS" >= 15 ORDER BY "GN/LS" DESC"""
                 title = f"Explosive Plays Allowed ({zone_label} | {sit_label})"
                 mode = "explosive"
-
             elif 'turnover' in q or 'sack' in q:
-                sql = f"""
-                    SELECT "PLAY #", "DN", "DIST", "FIELD_ZONE", "PLAY TYPE", "RESULT", "DEF FRONT", "COVERAGE", "BLITZ_CLEAN", "GN/LS"
-                    FROM snaps 
-                    WHERE {where_sql} AND (RESULT LIKE '%Sack%' OR RESULT LIKE '%Interception%' OR RESULT LIKE '%Fumble%' OR RESULT LIKE '%Safety%')
-                    ORDER BY "DN" ASC
-                """
+                sql = f"""SELECT "PLAY #", "DN", "DIST", "FIELD_ZONE", "PLAY TYPE", "RESULT", "DEF FRONT", "COVERAGE", "BLITZ_CLEAN", "GN/LS" FROM snaps WHERE {where_sql} AND (RESULT LIKE '%Sack%' OR RESULT LIKE '%Interception%' OR RESULT LIKE '%Fumble%' OR RESULT LIKE '%Safety%') ORDER BY "DN" ASC"""
                 title = f"Havoc, Sacks & Turnovers Created ({zone_label} | {sit_label})"
                 mode = "havoc"
-
             else:
-                sql = f"""
-                    SELECT "PLAY TYPE", coalesce("OFF PLAY", 'Unspecified Concept') as Concept, 
-                           count(*) as Snaps, 
-                           round(avg("GN/LS"), 1) as "Avg_Gain",
-                           group_concat("PLAY #", ', ') as Play_List
-                    FROM snaps 
-                    WHERE {where_sql}
-                    GROUP BY "PLAY TYPE", Concept 
-                    ORDER BY Snaps DESC
-                """
+                sql = f"""SELECT "PLAY TYPE", coalesce("OFF PLAY", 'Unspecified Concept') as Concept, count(*) as Snaps, round(avg("GN/LS"), 1) as "Avg_Gain", group_concat("PLAY #", ', ') as Play_List FROM snaps WHERE {where_sql} GROUP BY "PLAY TYPE", Concept ORDER BY Snaps DESC"""
                 title = f"Tactical Scheme Breakdown ({opp_context} | {zone_label} | {sit_label})"
                 mode = "scheme"
 
@@ -1315,7 +1429,6 @@ else:
 
         if user_def_query:
             title, mode, opp_ctx, z_lbl, s_lbl, result_df = execute_qc_agent(user_def_query, selected_opp)
-            
             st.markdown("---")
             st.subheader(f"📋 Coach Albers' Report: {title}")
 
@@ -1329,42 +1442,31 @@ else:
                 display_cols = [c for c in result_df.columns if c != 'Play_List']
                 st.dataframe(result_df[display_cols], use_container_width=True)
 
-                st.markdown("""
-                <div class="coach-notes-box">
-                    <div class="coach-notes-title">🧠 COACH ALBERS' FIELD NOTES & GAMEPLAN DIRECTIVE:</div>
-                """, unsafe_allow_html=True)
+                st.markdown("""<div class="coach-notes-box"><div class="coach-notes-title">🧠 COACH ALBERS' FIELD NOTES & GAMEPLAN DIRECTIVE:</div>""", unsafe_allow_html=True)
 
                 if mode == "front":
                     top_front = result_df.iloc[0]['Front']
                     top_win = result_df.iloc[0]['Def_Win_%']
                     avg_yds = result_df.iloc[0]['Avg_Yds_Allowed']
-                    st.markdown(f"""
-                    * **Primary Call:** `{top_front}` is your highest-performing front in this situation (**{top_win}% defensive win rate**, holding the offense to **{avg_yds} yards**).
-                    * **QC Recommendation:** Green-light `{top_front}` on your wristband / call sheet for {z_lbl}.
-                    """)
+                    st.markdown(f"* **Primary Call:** `{top_front}` is your highest-performing front in this situation (**{top_win}% defensive win rate**, holding the offense to **{avg_yds} yards**).")
+                    st.markdown(f"* **QC Recommendation:** Green-light `{top_front}` on your wristband / call sheet for {z_lbl}.")
                 elif mode == "coverage":
                     top_cov = result_df.iloc[0]['Coverage']
                     top_win = result_df.iloc[0]['Def_Win_%']
-                    st.markdown(f"""
-                    * **Lockdown Look:** `{top_cov}` ranks #1 with a **{top_win}% defensive win rate**.
-                    * **Assignment Note:** Ensure boundary safety communication and cutback lane fits are reviewed during Friday walk-through.
-                    """)
+                    st.markdown(f"* **Lockdown Look:** `{top_cov}` ranks #1 with a **{top_win}% defensive win rate**.")
+                    st.markdown(f"* **Assignment Note:** Ensure boundary safety communication and cutback lane fits are reviewed during Friday walk-through.")
                 elif mode == "pressure":
                     top_press = result_df.iloc[0]['Pressure']
                     top_win = result_df.iloc[0]['Def_Win_%']
-                    st.markdown(f"""
-                    * **Optimal Pressure:** `{top_press}` leads the unit with a **{top_win}% win rate**.
-                    * **Self-Scout Alert:** Mix in simulated pressure (Bluffs) to freeze the quarterback and prevent offensive line slide adjustments.
-                    """)
+                    st.markdown(f"* **Optimal Pressure:** `{top_press}` leads the unit with a **{top_win}% win rate**.")
+                    st.markdown(f"* **Self-Scout Alert:** Mix in simulated pressure (Bluffs) to freeze the quarterback and prevent offensive line slide adjustments.")
                 elif mode == "scheme":
                     runs = result_df[result_df['PLAY TYPE'] == 'Run']['Snaps'].sum()
                     passes = result_df[result_df['PLAY TYPE'] == 'Pass']['Snaps'].sum()
                     top_concept = result_df.iloc[0]['Concept']
-                    st.markdown(f"""
-                    * **Run / Pass Ratio:** Offense leans **{runs} Runs vs. {passes} Passes** in this situation.
-                    * **Primary Concept Alert:** Offense heavily favors **`{top_concept}`** as their go-to call.
-                    * **Practice Installation:** Drill defensive ends and overhangs against this concept during Tuesday/Wednesday practice.
-                    """)
+                    st.markdown(f"* **Run / Pass Ratio:** Offense leans **{runs} Runs vs. {passes} Passes** in this situation.")
+                    st.markdown(f"* **Primary Concept Alert:** Offense heavily favors **`{top_concept}`** as their go-to call.")
+                    st.markdown(f"* **Practice Installation:** Drill defensive ends and overhangs against this concept during Tuesday/Wednesday practice.")
                 elif mode == "havoc":
                     st.markdown(f"* Created **{len(result_df)} game-changing negative plays / turnovers** in this situation. Review tape to reinforce player execution.")
                 else:
@@ -1382,9 +1484,8 @@ else:
                 elif 'PLAY #' in result_df.columns:
                     p_list = result_df['PLAY #'].astype(str).tolist()
                     st.text_area("Filtered Play Numbers (Copy & paste directly into Hudl/Catapult):", ", ".join(p_list), height=80)
-
             else:
-                st.warning(f"No snaps in the dataset match '{user_def_query}' under the current scope. Try widening the situation or selecting 'ALL OPPONENTS'.")
+                st.warning(f"No snaps match '{user_def_query}' under current filters.")
 
 # --- FOOTER SIGNATURE ---
 st.markdown("---")
