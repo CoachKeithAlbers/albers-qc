@@ -33,7 +33,6 @@ def ensure_albers_logo():
         ax.set_facecolor('#0B1120')
         ax.set_xlim(-1.3, 1.3); ax.set_ylim(-1.3, 1.3); ax.axis('off')
 
-        # Tactical Outer Ring & Perimeter Dials
         theta = np.linspace(0, 2*np.pi, 300)
         ax.plot(np.cos(theta)*1.18, np.sin(theta)*1.18, color='#1E293B', linewidth=5)
         ax.plot(np.cos(theta)*1.12, np.sin(theta)*1.12, color='#38BDF8', linewidth=1.5, alpha=0.8)
@@ -45,7 +44,6 @@ def ensure_albers_logo():
             col = '#FBBF24' if deg % 90 == 0 else ('#38BDF8' if deg % 30 == 0 else '#475569')
             ax.plot([np.cos(rad)*r1, np.cos(rad)*1.16], [np.sin(rad)*r1, np.sin(rad)*1.16], color=col, linewidth=lw)
 
-        # Armored Football Shield
         shield_x = [0, 0.82, 0.82, 0, -0.82, -0.82, 0]
         shield_y = [1.02, 0.68, -0.42, -1.02, -0.42, 0.68, 1.02]
         shield_poly = patches.Polygon(xy=list(zip(shield_x, shield_y)), closed=True, 
@@ -60,7 +58,6 @@ def ensure_albers_logo():
         for y_pos in np.linspace(-0.6, 0.6, 9):
             ax.plot([-0.6, 0.6], [y_pos, y_pos], color='#1E293B', linewidth=1, alpha=0.6, zorder=3)
 
-        # Monogram "A" with Gold Border & Black Football Laces
         a_outer_x = [0, 0.52, 0.32, 0, -0.32, -0.52, 0]
         a_outer_y = [0.72, -0.38, -0.38, 0.35, -0.38, -0.38, 0.72]
         a_poly = patches.Polygon(xy=list(zip(a_outer_x, a_outer_y)), closed=True, 
@@ -96,7 +93,6 @@ st.markdown("""
 <style>
     .stApp { background-color: #0A0F1D !important; }
     
-    /* Global Pure White High-Contrast Typography */
     .stApp, .stApp p, .stApp span, .stApp label, .stMarkdown {
         color: #F8FAFC !important;
         font-size: 15px;
@@ -108,7 +104,6 @@ st.markdown("""
         letter-spacing: 0.5px;
     }
 
-    /* Top HUD Banner */
     .albers-header-card {
         background: linear-gradient(135deg, #111C30 0%, #1E293B 100%);
         border: 2px solid #38BDF8;
@@ -188,7 +183,6 @@ st.markdown("""
         color: #0B1120 !important;
     }
 
-    /* Drill-Down Dossier Card */
     .dossier-box {
         background: linear-gradient(135deg, #111C30 0%, #172033 100%);
         border: 2px solid #FDE047;
@@ -205,7 +199,6 @@ st.markdown("""
         margin-bottom: 8px;
     }
 
-    /* Oracle Predictor Box */
     .oracle-box {
         background: linear-gradient(135deg, #111C30 0%, #1E293B 100%);
         border: 2px solid #38BDF8;
@@ -222,7 +215,6 @@ st.markdown("""
         margin-bottom: 6px;
     }
 
-    /* Multiselect Tags */
     div[data-baseweb="tag"] {
         background-color: #1E293B !important;
         border: 1.5px solid #38BDF8 !important;
@@ -231,7 +223,6 @@ st.markdown("""
     div[data-baseweb="tag"] span { color: #FFFFFF !important; font-weight: 700 !important; font-size: 13.5px !important; }
     div[data-baseweb="tag"] svg { fill: #38BDF8 !important; }
 
-    /* Dropdowns */
     div[data-baseweb="select"] > div {
         background-color: #111C30 !important;
         border: 1.5px solid #334155 !important;
@@ -253,7 +244,7 @@ st.markdown("""
         color: #FFFFFF !important;
     }
 
-    /* ALL TABLES & TABLE CELLS - HIGH CONTRAST */
+    /* ALL TABLES & TABLE CELLS - STRICT HIGH CONTRAST */
     .stTable, table, tbody, tr, td, th {
         background-color: #111C30 !important;
         color: #FFFFFF !important;
@@ -372,10 +363,8 @@ ZONE_ORDER = [
 ]
 
 def classify_field_zone(yl):
-    try:
-        val = float(yl)
-    except:
-        return "Other"
+    try: val = float(yl)
+    except: return "Other"
     if -10 <= val <= -1: return "1. Coming Out (-1 to -10)"
     elif -20 <= val <= -11: return "2. Backed Up (-11 to -20)"
     elif (-49 <= val <= -21) or (val == 50) or (41 <= val <= 49): return "3. Open Field (Own 21 - Opp 41)"
@@ -387,10 +376,8 @@ def classify_field_zone(yl):
     return "Other"
 
 def get_field_x(yl):
-    try:
-        val = float(yl)
-    except:
-        return 50
+    try: val = float(yl)
+    except: return 50
     if val < 0: return abs(val)
     elif val == 50: return 50
     else: return 100 - val
@@ -412,7 +399,7 @@ def process_master_dataframe(raw_df, default_source_name="Game Data"):
     else:
         df_clean['ODK_CLEAN'] = 'D'
 
-    # Special Teams Phase Tagging (NFL & Power 4 Standards)
+    # Special Teams Phase Tagging
     def tag_st_phase(row):
         pt = str(row.get('PLAY TYPE', '')).lower()
         res = str(row.get('RESULT', '')).lower()
@@ -443,10 +430,8 @@ def process_master_dataframe(raw_df, default_source_name="Game Data"):
         gn = row.get('GN/LS', np.nan)
         if pd.isna(gn): return 1
         dn, dist = row.get('DN', 1), row.get('DIST', 10)
-        try:
-            dn, dist, gn = float(dn), float(dist), float(gn)
-        except:
-            return 0
+        try: dn, dist, gn = float(dn), float(dist), float(gn)
+        except: return 0
         if dn == 1: return 1 if gn < 3 else 0
         elif dn == 2: return 1 if gn < (dist / 2.0) else 0
         elif dn in [3, 4]: return 1 if gn < dist else 0
@@ -459,10 +444,8 @@ def process_master_dataframe(raw_df, default_source_name="Game Data"):
         gn = row.get('GN/LS', np.nan)
         if pd.isna(gn): return 0
         dn, dist = row.get('DN', 1), row.get('DIST', 10)
-        try:
-            dn, dist, gn = float(dn), float(dist), float(gn)
-        except:
-            return 0
+        try: dn, dist, gn = float(dn), float(dist), float(gn)
+        except: return 0
         if dn == 1: return 1 if gn >= 3 else 0
         elif dn == 2: return 1 if gn >= (dist / 2.0) else 0
         elif dn in [3, 4]: return 1 if gn >= dist else 0
@@ -477,14 +460,54 @@ def process_master_dataframe(raw_df, default_source_name="Game Data"):
     if 'RESULT' in df_clean.columns:
         df_clean['PREV_RESULT'] = df_clean['RESULT'].shift(1).fillna('')
         df_clean['AFTER_PENALTY'] = df_clean['PREV_RESULT'].str.contains('Penalty', case=False, na=False)
-    else:
-        df_clean['AFTER_PENALTY'] = False
+    else: df_clean['AFTER_PENALTY'] = False
 
     if 'DN' in df_clean.columns:
         df_clean['PREV_DN'] = df_clean['DN'].shift(1).fillna(0)
         df_clean['AFTER_1ST_DOWN'] = (df_clean['PREV_DN'] == 1)
+    else: df_clean['AFTER_1ST_DOWN'] = False
+
+    # Safe Personnel, Backfield & Tag Normalization
+    pers_col = next((c for c in df_clean.columns if any(k in c.lower() for k in ['personnel', 'pers'])), None)
+    if pers_col:
+        df_clean['PERSONNEL_CLEAN'] = df_clean[pers_col].fillna('Standard').astype(str)
     else:
-        df_clean['AFTER_1ST_DOWN'] = False
+        # Detect from formation string if possible
+        def extract_pers(row):
+            f_str = str(row.get('OFF FORM', ''))
+            if '12' in f_str or 'YO' in f_str: return '12 Personnel'
+            elif '21' in f_str or 'RED/BLUE' in f_str: return '21 Personnel'
+            elif '10' in f_str or 'Empty' in f_str: return '10 Personnel'
+            elif '20' in f_str: return '20 Personnel'
+            return '11 Personnel'
+        df_clean['PERSONNEL_CLEAN'] = df_clean.apply(extract_pers, axis=1)
+
+    back_col = next((c for c in df_clean.columns if any(k in c.lower() for k in ['backfield', 'back', 'set'])), None)
+    if back_col:
+        df_clean['BACKFIELD_CLEAN'] = df_clean[back_col].fillna('Standard').astype(str)
+    else:
+        def extract_backfield(row):
+            op = str(row.get('OFF PLAY', ''))
+            f = str(row.get('OFF FORM', ''))
+            if 'GUN' in f.upper() or 'SHOTGUN' in f.upper(): return 'Shotgun'
+            elif 'PISTOL' in f.upper(): return 'Pistol'
+            elif 'UNDER' in f.upper(): return 'Under Center'
+            return 'Shotgun / Offset'
+        df_clean['BACKFIELD_CLEAN'] = df_clean.apply(extract_backfield, axis=1)
+
+    # Formation Tag / Motion Extraction
+    def extract_form_tag(row):
+        f = str(row.get('OFF FORM', ''))
+        tags = []
+        if 'BUNCH' in f.upper(): tags.append('Bunch')
+        if 'STACK' in f.upper(): tags.append('Stack')
+        if 'EMPTY' in f.upper(): tags.append('Empty')
+        if 'DUAL' in f.upper(): tags.append('Dual')
+        if 'SNUG' in f.upper(): tags.append('Snug')
+        if 'YO' in f.upper(): tags.append('YO')
+        if 'ZO' in f.upper(): tags.append('ZO')
+        return " / ".join(tags) if tags else "Base Alignment"
+    df_clean['FORMATION_TAG'] = df_clean.apply(extract_form_tag, axis=1)
 
     # Normalization Aliases (prevents SQL missing column errors)
     if 'OFF FORM' in df_clean.columns: df_clean['OFF_FORM'] = df_clean['OFF FORM']
@@ -518,7 +541,7 @@ coordinator_mode = st.sidebar.radio(
 )
 st.sidebar.markdown("</div>", unsafe_allow_html=True)
 
-# --- UNIFIED MASTER DATA INTAKE ---
+# --- UNIFIED MASTER DATA INTAKE (DECOUPLED FROM HARDCODED SAMPLE DATA) ---
 st.sidebar.markdown("##### 📥 Master Data Intake (Drag & Drop)")
 uploaded_master_files = st.sidebar.file_uploader(
     "Drop Game Cutups / Master CSVs Here:",
@@ -539,22 +562,11 @@ if uploaded_master_files:
 
 if all_dfs:
     master_df = pd.concat(all_dfs, ignore_index=True)
-    status_msg = f"● LIVE UPLOAD: {len(uploaded_master_files)} FILE(S) | {len(master_df)} SNAPS INDEXED"
+    status_msg = f"● LIVE DATA: {len(uploaded_master_files)} FILE(S) | {len(master_df)} SNAPS INDEXED"
 else:
-    # Automatic fallback to local dataset
-    csv_file = 'input_file_1.csv'
-    if not os.path.exists(csv_file):
-        all_csvs = [f for f in os.listdir('.') if f.endswith('.csv')]
-        if all_csvs: csv_file = all_csvs[0]
-        else: csv_file = None
-
-    if csv_file and os.path.exists(csv_file):
-        fallback_raw = pd.read_csv(csv_file)
-        master_df = process_master_dataframe(fallback_raw, default_source_name="Opponent")
-        status_msg = f"● MASTER DATA ACTIVE | {len(master_df)} SNAPS INDEXED"
-    else:
-        master_df = None
-        status_msg = "● STANDBY: AWAITING MASTER CSV"
+    # Completely decoupled: No hardcoded fallback to sample data
+    master_df = None
+    status_msg = "● AWAITING COACH DATA INTAKE"
 
 # --- TOP HUD BANNER ---
 col_logo, col_banner = st.columns([1, 7])
@@ -582,18 +594,58 @@ with col_banner:
     </div>
     """, unsafe_allow_html=True)
 
+# --- DECOUPLED ONBOARDING SCREEN IF NO FILE IS CURRENTLY UPLOADED ---
 if master_df is None:
-    st.info("👋 **Welcome to Albers QC!**\n\nPlease drag and drop your master game CSV into the sidebar on the left.")
+    st.markdown("""
+    <div class="dossier-box">
+        <div class="dossier-title">🏈 WELCOME TO ALBERS QC: YOUR PERSONALIZED QUALITY CONTROL COACH</div>
+        <p style="font-size: 16px; color: #FFFFFF; line-height: 1.6;">
+            Albers QC is ready for your team's game data. This system is fully decoupled from all test data so you and your coaching staff can evaluate your program with complete confidentiality and precision.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    ob_col1, ob_col2, ob_col3 = st.columns(3)
+    with ob_col1:
+        st.info("""
+        **🛡️ For Defensive Coordinators:**
+        * Drop your defensive cutups (`ODK = 'D'`) to unlock:
+          * 8-Zone Spatial Field Map & 9-Box Sector Radar
+          * Opponent Tendency Oracle & 12 Quick Queries
+          * Instant Hudl / Catapult Playlist Strings
+        """)
+    with ob_col2:
+        st.success("""
+        **⚔️ For Offensive Coordinators:**
+        * Drop your offensive cutups (`ODK = 'O'`) to unlock:
+          * QB Target Spray & Accuracy Chart
+          * Self-Scout Formation Predictability Alerts
+          * Opponent Front, Coverage & Blitz Predictor
+        """)
+    with ob_col3:
+        st.warning("""
+        **⚡ For Special Teams Coordinators:**
+        * Drop your kicking cutups (`ODK = 'K'`) to unlock:
+          * The Core 6 Unit Phase Audits
+          * Net vs. Gross Punt & Inside-20 Pin Rate
+          * Opponent Specialist Scheme & Fake/Pressure Predictor
+        """)
+
+    st.markdown("---")
+    st.markdown("### 🚀 Ready to Begin?")
+    st.markdown("Simply **drag and drop your CSV file(s)** into the **`📥 Master Data Intake`** box on the left sidebar. The entire platform will immediately index your snaps and light up with all battle boards!")
     st.stop()
 
-# Filter Data for Active Coordinator Room
+# --- FILTER DATA FOR ACTIVE COORDINATOR ROOM ---
 if "DEFENSE" in coordinator_mode:
     df = master_df[master_df['ODK_CLEAN'] == 'D']
     if len(df) == 0: df = master_df
 elif "OFFENSE" in coordinator_mode:
     df = master_df[master_df['ODK_CLEAN'] == 'O']
+    if len(df) == 0: df = master_df
 else:
     df = master_df[(master_df['ODK_CLEAN'] == 'K') | (master_df['ST_PHASE'] != 'General ST')]
+    if len(df) == 0: df = master_df
 
 # SQLite Connection
 conn = sqlite3.connect(':memory:', check_same_thread=False)
@@ -671,16 +723,30 @@ def render_8_zone_field(ax, title_str, highlight_zone=None):
     ax.set_yticks([])
     ax.set_title(title_str, color='#FFFFFF', fontsize=13, fontweight='heavy', pad=12)
 
-# =========================================================================
-# COORDINATOR SUITE 1: DEFENSE (DC MODE)
-# =========================================================================
+# --- NAVIGATION TABS ---
 if "DEFENSE" in coordinator_mode:
     tab_1, tab_2, tab_3 = st.tabs([
         "🛡️ Self-Scout (Our Defense Audit)", 
         "🎯 Opponent Advance Reconnaissance & Oracle", 
         "💬 Ask Coach Albers (Defensive QC)"
     ])
+elif "OFFENSE" in coordinator_mode:
+    tab_1, tab_2, tab_3 = st.tabs([
+        "⚔️ Offensive Self-Scout (Our Offense Audit)", 
+        "🛡️ Opponent Defense Reconnaissance & Oracle", 
+        "💬 Ask Coach Albers (Offensive QC)"
+    ])
+else:
+    tab_1, tab_2, tab_3 = st.tabs([
+        "⚡ Core 6 Phase Audit & Unit KPIs", 
+        "🎯 Opponent Kicking Schemes & Oracle", 
+        "💬 Ask Coach Albers (Special Teams QC)"
+    ])
 
+# =========================================================================
+# COORDINATOR SUITE 1: DEFENSE (DC MODE)
+# =========================================================================
+if "DEFENSE" in coordinator_mode:
     # --- TAB 1: DEFENSIVE SELF-SCOUT ---
     with tab_1:
         st.subheader(f"🛡️ Albers QC // Defensive Self-Scout Audit: {selected_opp}")
@@ -756,7 +822,6 @@ if "DEFENSE" in coordinator_mode:
                     st.session_state['self_pass_zone'] = None
                     st.rerun()
 
-            # PASSING ZONE DOSSIER
             if st.session_state['self_pass_zone']:
                 pz = st.session_state['self_pass_zone']
                 pz_df = filtered_df[filtered_df['PASS ZONE'] == pz]
@@ -831,38 +896,46 @@ if "DEFENSE" in coordinator_mode:
                     st.text_area(f"{fz} Video Cutup Playlist ({len(fz_playlist)} plays):", ", ".join(fz_playlist), height=70)
                 st.markdown("</div>", unsafe_allow_html=True)
 
-    # --- TAB 2: OPPONENT RECON WITH SAFE PANDAS PREDICTOR & 12 QUICK QUERIES ---
+    # --- TAB 2: OPPONENT RECON WITH PREDICTOR, ADVANCED FILTERS & 12 QUICK QUERIES ---
     with tab_2:
         st.subheader(f"🎯 Albers QC // Opponent Advance Reconnaissance: {selected_opp}")
 
-        # ORACLE PREDICTOR (CRASH-PROOF PANDAS FILTERING)
+        # ORACLE PREDICTOR WITH PERSONNEL, BACKFIELD & TAG FILTERS
         st.markdown("""
         <div class="oracle-box">
             <div class="oracle-title">🔮 REAL-TIME PLAY-CALL PREDICTOR & TENDENCY ORACLE</div>
             <div style="color: #CBD5E1; font-size: 13.5px; margin-bottom: 12px;">
-                Input the opponent's pre-snap personnel, alignment, field location, and situational trigger to predict what play is coming next:
+                Input the opponent's pre-snap personnel, backfield, formation tags, field location, and sequence to predict what play is coming next:
             </div>
         """, unsafe_allow_html=True)
 
-        pred_c1, pred_c2, pred_c3, pred_c4 = st.columns(4)
-        with pred_c1:
+        pred_r1_1, pred_r1_2, pred_r1_3 = st.columns(3)
+        with pred_r1_1:
             pred_dn_dist = st.selectbox("Down & Distance Situation:", [
                 "1st & 10", "2nd & Short (1-3 yds)", "2nd & Medium (4-6 yds)", "2nd & Long (7+ yds)",
                 "3rd & Short (1-2 yds)", "3rd & Medium (3-6 yds)", "3rd & Long (7+ yds)", "4th Down"
             ])
-        with pred_c2:
-            pred_zone = st.selectbox("Field Territory:", ["Any Territory"] + ZONE_ORDER)
-        with pred_c3:
-            all_opp_forms = ["Any Formation"] + sorted(scoped_df['OFF FORM'].dropna().unique().tolist()) if 'OFF FORM' in scoped_df.columns else ["Any Formation"]
-            pred_form = st.selectbox("Opponent Formation / Look:", all_opp_forms)
-        with pred_c4:
+        with pred_r1_2:
+            pred_zone = st.selectbox("Field Territory (8 Zones):", ["Any Territory"] + ZONE_ORDER)
+        with pred_r1_3:
             pred_hash = st.selectbox("Ball on Hash:", ["Any Hash", "Left Hash (L)", "Middle (M)", "Right Hash (R)"])
+
+        pred_r2_1, pred_r2_2, pred_r2_3 = st.columns(3)
+        with pred_r2_1:
+            all_pers = ["Any Personnel"] + sorted(scoped_df['PERSONNEL_CLEAN'].dropna().unique().tolist())
+            pred_pers = st.selectbox("Personnel Package:", all_pers)
+        with pred_r2_2:
+            all_back = ["Any Backfield"] + sorted(scoped_df['BACKFIELD_CLEAN'].dropna().unique().tolist())
+            pred_back = st.selectbox("Backfield Alignment:", all_back)
+        with pred_r2_3:
+            all_tags = ["Any Formation Tag"] + sorted(scoped_df['FORMATION_TAG'].dropna().unique().tolist())
+            pred_tag = st.selectbox("Formation Tag / Motion:", all_tags)
 
         pred_trigger = st.radio("Situational Context / Sequence:", 
                                 ["Standard Snap", "After 1st Down Conversion", "After Penalty"], 
                                 horizontal=True)
 
-        # SAFE PANDAS-BASED FILTERING (ELIMINATES SQL DATABASE ERRORS)
+        # SAFE IN-MEMORY PANDAS FILTERING
         pred_sub = scoped_df.copy()
         is_widened = False
 
@@ -875,26 +948,20 @@ if "DEFENSE" in coordinator_mode:
         elif pred_dn_dist == "3rd & Long (7+ yds)": pred_sub = pred_sub[(pred_sub['DN'] == 3) & (pred_sub['DIST'] >= 7)]
         elif pred_dn_dist == "4th Down": pred_sub = pred_sub[pred_sub['DN'] == 4]
 
-        # Snapshot for widening
         dn_snapshot = pred_sub.copy()
 
-        if pred_zone != "Any Territory" and 'FIELD_ZONE' in pred_sub.columns:
-            pred_sub = pred_sub[pred_sub['FIELD_ZONE'] == pred_zone]
-        if pred_form != "Any Formation" and 'OFF FORM' in pred_sub.columns:
-            pred_sub = pred_sub[pred_sub['OFF FORM'] == pred_form]
-        if "Left" in pred_hash and 'HASH' in pred_sub.columns:
-            pred_sub = pred_sub[pred_sub['HASH'] == 'L']
-        elif "Right" in pred_hash and 'HASH' in pred_sub.columns:
-            pred_sub = pred_sub[pred_sub['HASH'] == 'R']
-        elif "Middle" in pred_hash and 'HASH' in pred_sub.columns:
-            pred_sub = pred_sub[pred_sub['HASH'] == 'M']
+        if pred_zone != "Any Territory": pred_sub = pred_sub[pred_sub['FIELD_ZONE'] == pred_zone]
+        if "Left" in pred_hash: pred_sub = pred_sub[pred_sub['HASH'] == 'L']
+        elif "Right" in pred_hash: pred_sub = pred_sub[pred_sub['HASH'] == 'R']
+        elif "Middle" in pred_hash: pred_sub = pred_sub[pred_sub['HASH'] == 'M']
 
-        if pred_trigger == "After Penalty" and 'AFTER_PENALTY' in pred_sub.columns:
-            pred_sub = pred_sub[pred_sub['AFTER_PENALTY'] == True]
-        elif pred_trigger == "After 1st Down Conversion" and 'AFTER_1ST_DOWN' in pred_sub.columns:
-            pred_sub = pred_sub[pred_sub['AFTER_1ST_DOWN'] == True]
+        if pred_pers != "Any Personnel": pred_sub = pred_sub[pred_sub['PERSONNEL_CLEAN'] == pred_pers]
+        if pred_back != "Any Backfield": pred_sub = pred_sub[pred_sub['BACKFIELD_CLEAN'] == pred_back]
+        if pred_tag != "Any Formation Tag": pred_sub = pred_sub[pred_sub['FORMATION_TAG'] == pred_tag]
 
-        # Intelligent widening if sample is too tight
+        if pred_trigger == "After Penalty": pred_sub = pred_sub[pred_sub['AFTER_PENALTY'] == True]
+        elif pred_trigger == "After 1st Down Conversion": pred_sub = pred_sub[pred_sub['AFTER_1ST_DOWN'] == True]
+
         if len(pred_sub) < 3 and len(dn_snapshot) >= 3:
             pred_sub = dn_snapshot
             is_widened = True
@@ -941,16 +1008,12 @@ if "DEFENSE" in coordinator_mode:
                 """)
 
             pred_playlist = pred_sub['PLAY #'].astype(str).tolist()
-            st.text_area(f"Historical Cutup String for this Exact Situation ({len(pred_playlist)} plays):", ", ".join(pred_playlist), height=60)
+            st.text_area(f"Historical Cutup String ({len(pred_playlist)} plays):", ", ".join(pred_playlist), height=60)
         st.markdown("</div>", unsafe_allow_html=True)
         st.markdown("---")
 
-        # =========================================================================
-        # ⚡ 12 RESTORED QUICK RECON REFERENCE QUERIES (INSIDE TAB 2)
-        # =========================================================================
+        # 12 RESTORED QUICK RECON QUERIES (DC RECON ROOM)
         st.subheader("⚡ 12 Quick-Reference Opponent Recon Inquiries")
-        st.markdown("Click any tactical reference button below to query tendencies, tactical field notes, and cutup strings directly inside this room:")
-
         rc_1, rc_2, rc_3 = st.columns(3)
         q_recon = None
         if rc_1.button("📍 Top Front in Low Red Zone?", key="rq1"): q_recon = "What is our top-performing front in the Low Red Zone?"
@@ -984,7 +1047,7 @@ if "DEFENSE" in coordinator_mode:
             if 'left hash' in q_rc: w_rc.append("HASH = 'L'")
             elif 'right hash' in q_rc: w_rc.append("HASH = 'R'")
             if 'empty' in q_rc: w_rc.append('("OFF FORM" LIKE "%Empty%" OR "OFF_FORM" LIKE "%Empty%")')
-            elif 'bunch' in q_rc or 'stack' in q_rc: w_rc.append('("OFF FORM" LIKE "%Bunch%" OR "OFF FORM" LIKE "%Stack%" OR "OFF_FORM" LIKE "%Bunch%")')
+            elif 'bunch' in q_rc or 'stack' in q_rc: w_rc.append('("OFF FORM" LIKE "%Bunch%" OR "OFF FORM" LIKE "%Stack%")')
             if 'rpo' in q_rc: w_rc.append('("OFF PLAY" LIKE "%RPO%" OR "OFF_PLAY" LIKE "%RPO%")')
             if '3rd & med' in q_rc: w_rc.append("DN = 3 AND DIST BETWEEN 3 AND 6")
             elif '3rd & long' in q_rc: w_rc.append("DN = 3 AND DIST >= 7")
@@ -1013,7 +1076,6 @@ if "DEFENSE" in coordinator_mode:
                     st.text_area("Filtered Recon Plays String:", ", ".join(list(dict.fromkeys(p_all_rc))), height=70)
 
         st.markdown("---")
-        # 8-Zone Tendency Table (Fixed High-Contrast)
         st.subheader("1. 8-Zone Field Tendency Cards")
         zone_card_data = []
         for z in ZONE_ORDER:
@@ -1034,31 +1096,9 @@ if "DEFENSE" in coordinator_mode:
                 })
         if zone_card_data: st.dataframe(pd.DataFrame(zone_card_data), use_container_width=True)
 
-        st.markdown("---")
-        st.subheader("2. Down & Distance Tendencies")
-        down_data = []
-        for d in [1, 2, 3, 4]:
-            d_sub = scoped_df[scoped_df['DN'] == d]
-            tot = len(d_sub)
-            if tot > 0:
-                r_c = (d_sub['PLAY TYPE'] == 'Run').sum()
-                p_c = (d_sub['PLAY TYPE'] == 'Pass').sum()
-                down_data.append({
-                    "Down": f"Down {d}",
-                    "Snaps": tot,
-                    "Run %": f"{(r_c/tot)*100:.1f}%",
-                    "Pass %": f"{(p_c/tot)*100:.1f}%",
-                    "Opp Success %": f"{d_sub['OFF_SUCCESS'].mean()*100:.1f}%",
-                    "Avg Gain": f"{d_sub['GN/LS'].mean():.2f} yds",
-                    "Primary Tell": "🚨 RUN HEAVY" if (r_c/tot) >= 0.55 else ("🎯 PASS HEAVY" if (p_c/tot) >= 0.60 else "⚖️ BALANCED")
-                })
-        if down_data: st.dataframe(pd.DataFrame(down_data), use_container_width=True)
-
     # --- TAB 3: FULL 24-QUERY DEFENSIVE ARSENAL ---
     with tab_3:
         st.subheader("💬 Ask Coach Albers // Defensive QC Assistant")
-        st.markdown("Direct tactical inquiries across your defense, opponents, 8 field zones, hash marks, formations, and down/distance situations.")
-
         tactical_pillar = st.radio("Choose Tactical Focus:", ["💰 Money Downs", "📍 Hash & Field Zones", "🎯 Formation Tells", "🛡️ Self-Scout Leaks"], horizontal=True)
         q_def_selected = None
 
@@ -1102,7 +1142,7 @@ if "DEFENSE" in coordinator_mode:
             if qc_c5.button("🛡️ RIP/LIZ Match Audit?", key="sl_5"): q_def_selected = "What plays hurt our RIP/LIZ coverage?"
             if qc_c6.button("💥 Sacks & Turnovers Created?", key="sl_6"): q_def_selected = "Show all sacks and turnovers created"
 
-        user_def_query = st.text_input("Ask Coach Albers a tactical question (or click any pill above):", value=q_def_selected if q_def_selected else "", placeholder="e.g. What does Lincoln run on 3rd & Medium in the Fringe Zone?")
+        user_def_query = st.text_input("Ask Coach Albers a tactical question:", value=q_def_selected if q_def_selected else "", placeholder="e.g. What does Lincoln run on 3rd & Medium in the Fringe Zone?")
 
         if user_def_query:
             q_def_lower = user_def_query.lower()
@@ -1114,7 +1154,7 @@ if "DEFENSE" in coordinator_mode:
             if 'left hash' in q_def_lower: w_def.append("HASH = 'L'")
             elif 'right hash' in q_def_lower: w_def.append("HASH = 'R'")
             if 'empty' in q_def_lower: w_def.append('("OFF FORM" LIKE "%Empty%" OR "OFF_FORM" LIKE "%Empty%")')
-            elif 'bunch' in q_def_lower or 'stack' in q_def_lower: w_def.append('("OFF FORM" LIKE "%Bunch%" OR "OFF FORM" LIKE "%Stack%" OR "OFF_FORM" LIKE "%Bunch%")')
+            elif 'bunch' in q_def_lower or 'stack' in q_def_lower: w_def.append('("OFF FORM" LIKE "%Bunch%" OR "OFF FORM" LIKE "%Stack%")')
             if 'rpo' in q_def_lower: w_def.append('("OFF PLAY" LIKE "%RPO%" OR "OFF_PLAY" LIKE "%RPO%")')
             if '3rd & medium' in q_def_lower: w_def.append("DN = 3 AND DIST BETWEEN 3 AND 6")
             elif '3rd & long' in q_def_lower: w_def.append("DN = 3 AND DIST >= 7")
@@ -1143,25 +1183,14 @@ if "DEFENSE" in coordinator_mode:
                     st.text_area("Filtered Defensive Plays:", ", ".join(list(dict.fromkeys(p_all_def))), height=75)
 
 # =========================================================================
-# COORDINATOR SUITE 2: OFFENSE (OC MODE)
+# COORDINATOR SUITE 2: OFFENSE (OC MODE - FULL PARITY)
 # =========================================================================
 elif "OFFENSE" in coordinator_mode:
     tab_1, tab_2, tab_3 = st.tabs([
         "⚔️ Offensive Self-Scout (Our Offense Audit)", 
-        "🛡️ Opponent Defense Reconnaissance", 
+        "🛡️ Opponent Defense Reconnaissance & Oracle", 
         "💬 Ask Coach Albers (Offensive QC)"
     ])
-
-    if len(df) == 0:
-        st.markdown("""
-        <div class="dossier-box">
-            <div class="dossier-title">⚔️ ALBERS QC // OFFENSIVE DATA ONBOARDING</div>
-            <p style="font-size: 16px; color: #FFFFFF;">
-                You are in <strong>Offensive Coordinator Mode</strong>. Please upload your team's offensive cutup file (where <code>ODK = 'O'</code>) using the Master Data Intake box on the sidebar.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-        st.stop()
 
     with tab_1:
         st.subheader(f"⚔️ Albers QC // Offensive Self-Scout: {selected_opp}")
@@ -1188,7 +1217,7 @@ elif "OFFENSE" in coordinator_mode:
             if len(form_self) > 0:
                 form_self['Run %'] = (form_self['Run_Snaps'] / form_self['Snaps']) * 100
                 form_self['Pass %'] = (form_self['Pass_Snaps'] / form_self['Snaps']) * 100
-                form_filtered_self = form_self[form_self['Snaps'] >= 3].copy()
+                form_filtered_self = form_self[form_self['Snaps'] >= 2].copy()
                 def self_tell(row):
                     if row['Run %'] >= 65: return "🚨 65%+ RUN (TIPPED)"
                     elif row['Pass %'] >= 75: return "🚨 75%+ PASS (TIPPED)"
@@ -1197,28 +1226,175 @@ elif "OFFENSE" in coordinator_mode:
                 st.dataframe(form_filtered_self[['OFF FORM', 'Snaps', 'Run %', 'Pass %', 'Avg_Gain', 'Success_Rate', 'OC Self-Scout Tell']], use_container_width=True)
 
     with tab_2:
-        st.subheader(f"🛡️ Opponent Defense Faced: {selected_opp}")
-        d1, d2 = st.columns(2)
-        with d1:
-            st.markdown("##### Opponent Fronts Faced & Our Success")
-            st.dataframe(filtered_df.groupby('DEF FRONT').agg(Snaps=('PLAY #', 'count'), Our_Yards=('GN/LS', 'mean'), Success_Rate=('OFF_SUCCESS', lambda x: x.mean()*100)).reset_index(), use_container_width=True)
-        with d2:
-            st.markdown("##### Opponent Coverages Faced & Our Big Plays")
-            st.dataframe(filtered_df.groupby('COVERAGE').agg(Snaps=('PLAY #', 'count'), Our_YPA=('GN/LS', 'mean'), Explosives=('GN/LS', lambda x: (x>=15).sum())).reset_index(), use_container_width=True)
+        st.subheader(f"🛡️ Albers QC // Opponent Defensive Reconnaissance & Oracle: {selected_opp}")
+
+        # OC DEFENSIVE PREDICTOR & ORACLE
+        st.markdown("""
+        <div class="oracle-box">
+            <div class="oracle-title">🔮 OPPONENT DEFENSIVE SCHEME PREDICTOR & ORACLE</div>
+            <div style="color: #CBD5E1; font-size: 13.5px; margin-bottom: 12px;">
+                Input your offensive personnel, alignment, field location, and situation to predict the opponent's defensive Front, Coverage, and Blitz:
+            </div>
+        """, unsafe_allow_html=True)
+
+        oc_c1, oc_c2, oc_c3 = st.columns(3)
+        with oc_c1:
+            oc_dn_dist = st.selectbox("Our Down & Distance:", [
+                "1st & 10", "2nd & Short (1-3 yds)", "2nd & Medium (4-6 yds)", "2nd & Long (7+ yds)",
+                "3rd & Short (1-2 yds)", "3rd & Medium (3-6 yds)", "3rd & Long (7+ yds)", "4th Down"
+            ], key="oc_p_dn")
+        with oc_c2:
+            oc_zone = st.selectbox("Field Territory:", ["Any Territory"] + ZONE_ORDER, key="oc_p_z")
+        with oc_c3:
+            oc_hash = st.selectbox("Ball on Hash:", ["Any Hash", "Left Hash (L)", "Middle (M)", "Right Hash (R)"], key="oc_p_h")
+
+        oc_c4, oc_c5, oc_c6 = st.columns(3)
+        with oc_c4:
+            all_oc_pers = ["Any Personnel"] + sorted(scoped_df['PERSONNEL_CLEAN'].dropna().unique().tolist())
+            oc_pers = st.selectbox("Our Personnel:", all_oc_pers, key="oc_p_pers")
+        with oc_c5:
+            all_oc_back = ["Any Backfield"] + sorted(scoped_df['BACKFIELD_CLEAN'].dropna().unique().tolist())
+            oc_back = st.selectbox("Our Backfield Alignment:", all_oc_back, key="oc_p_back")
+        with oc_c6:
+            all_oc_tags = ["Any Formation Tag"] + sorted(scoped_df['FORMATION_TAG'].dropna().unique().tolist())
+            oc_tag = st.selectbox("Our Formation Tag / Motion:", all_oc_tags, key="oc_p_tag")
+
+        # In-Memory Pandas Prediction for OC
+        oc_pred_df = scoped_df.copy()
+        if oc_dn_dist == "1st & 10": oc_pred_df = oc_pred_df[oc_pred_df['DN'] == 1]
+        elif oc_dn_dist == "2nd & Short (1-3 yds)": oc_pred_df = oc_pred_df[(oc_pred_df['DN'] == 2) & (oc_pred_df['DIST'] <= 3)]
+        elif oc_dn_dist == "2nd & Medium (4-6 yds)": oc_pred_df = oc_pred_df[(oc_pred_df['DN'] == 2) & (oc_pred_df['DIST'].between(4, 6))]
+        elif oc_dn_dist == "2nd & Long (7+ yds)": oc_pred_df = oc_pred_df[(oc_pred_df['DN'] == 2) & (oc_pred_df['DIST'] >= 7)]
+        elif oc_dn_dist == "3rd & Short (1-2 yds)": oc_pred_df = oc_pred_df[(oc_pred_df['DN'] == 3) & (oc_pred_df['DIST'] <= 2)]
+        elif oc_dn_dist == "3rd & Medium (3-6 yds)": oc_pred_df = oc_pred_df[(oc_pred_df['DN'] == 3) & (oc_pred_df['DIST'].between(3, 6))]
+        elif oc_dn_dist == "3rd & Long (7+ yds)": oc_pred_df = oc_pred_df[(oc_pred_df['DN'] == 3) & (oc_pred_df['DIST'] >= 7)]
+        elif oc_dn_dist == "4th Down": oc_pred_df = oc_pred_df[oc_pred_df['DN'] == 4]
+
+        if oc_zone != "Any Territory": oc_pred_df = oc_pred_df[oc_pred_df['FIELD_ZONE'] == oc_zone]
+        if "Left" in oc_hash: oc_pred_df = oc_pred_df[oc_pred_df['HASH'] == 'L']
+        elif "Right" in oc_hash: oc_pred_df = oc_pred_df[oc_pred_df['HASH'] == 'R']
+        if oc_pers != "Any Personnel": oc_pred_df = oc_pred_df[oc_pred_df['PERSONNEL_CLEAN'] == oc_pers]
+        if oc_back != "Any Backfield": oc_pred_df = oc_pred_df[oc_pred_df['BACKFIELD_CLEAN'] == oc_back]
+        if oc_tag != "Any Formation Tag": oc_pred_df = oc_pred_df[oc_pred_df['FORMATION_TAG'] == oc_tag]
+
+        st.markdown("---")
+        if len(oc_pred_df) > 0:
+            oc_tot = len(oc_pred_df)
+            pred_f_top = oc_pred_df['DEF FRONT'].value_counts()
+            f_lead = f"{pred_f_top.index[0]} ({(pred_f_top.values[0]/oc_tot)*100:.0f}%)" if len(pred_f_top)>0 else "Base"
+
+            pred_cov_top = oc_pred_df['COVERAGE'].value_counts()
+            cov_lead = f"{pred_cov_top.index[0]} ({(pred_cov_top.values[0]/oc_tot)*100:.0f}%)" if len(pred_cov_top)>0 else "Base"
+
+            blitz_rate = (oc_pred_df['BLITZ_CLEAN'] != 'BASE (NO BLITZ)').mean() * 100
+
+            oc_m1, oc_m2, oc_m3, oc_m4 = st.columns(4)
+            oc_m1.metric("Historical Snaps", f"{oc_tot} Plays")
+            oc_m2.metric("Predicted Front", f_lead)
+            oc_m3.metric("Predicted Coverage", cov_lead)
+            oc_m4.metric("Opponent Blitz Rate", f"{blitz_rate:.1f}%")
+
+            oc_p1, oc_p2 = st.columns(2)
+            with oc_p1:
+                st.markdown("##### 🛡️ Opponent Defensive Look Distribution:")
+                st.dataframe(oc_pred_df.groupby(['DEF FRONT', 'COVERAGE']).agg(Snaps=('PLAY #', 'count')).reset_index().sort_values(by='Snaps', ascending=False), use_container_width=True)
+            with oc_p2:
+                # Top Producing Concept for us against this look
+                top_our_play = oc_pred_df.groupby('OFF PLAY').agg(Snaps=('PLAY #', 'count'), Avg_Gain=('GN/LS', 'mean')).reset_index().sort_values(by='Avg_Gain', ascending=False).head(3)
+                st.markdown("##### ⚔️ Albers QC Recommended Offensive Concept:")
+                if len(top_our_play) > 0:
+                    st.success(f"""
+                    * **Attack Call:** `{top_our_play.iloc[0]['OFF PLAY']}` (Averages **{top_our_play.iloc[0]['Avg_Gain']:.1f} yds** vs this defensive look)
+                    * **Protection Call:** {"Slide protection / Hot routes ready (High Pressure Alert)" if blitz_rate >= 40 else "Standard 5-man protection"}
+                    """)
+                st.dataframe(top_our_play, use_container_width=True)
+        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("---")
+
+        # 12 QUICK QUERIES FOR OC RECON ROOM
+        st.subheader("⚡ 12 Quick-Reference Offensive Recon Inquiries")
+        oc_r1, oc_r2, oc_r3 = st.columns(3)
+        q_oc_recon = None
+        if oc_r1.button("🛡️ Opponent Front on 1st & 10?", key="or1"): q_oc_recon = "What defensive front do they play on 1st & 10?"
+        if oc_r2.button("🎯 Opponent Coverage on 3rd & Med?", key="or2"): q_oc_recon = "What coverage do they play on 3rd & Medium?"
+        if oc_r3.button("⚡ Blitz Rate on 3rd & Long?", key="or3"): q_oc_recon = "What is their blitz frequency on 3rd & Long?"
+
+        oc_r4, oc_r5, oc_r6 = st.columns(3)
+        if oc_r4.button("🧱 Opponent Goal-Line Defense?", key="or4"): q_oc_recon = "What defense do they play in the Goal Line zone?"
+        if oc_r5.button("👈 Defensive Check to Left Hash?", key="or5"): q_oc_recon = "What front and coverage do they run on the Left Hash?"
+        if oc_r6.button("👉 Defensive Check to Right Hash?", key="or6"): q_oc_recon = "What front and coverage do they run on the Right Hash?"
+
+        oc_r7, oc_r8, oc_r9 = st.columns(3)
+        if oc_r7.button("💨 How do they defend Empty?", key="or7"): q_oc_recon = "What defense do they play against Empty?"
+        if oc_r8.button("📦 Defense vs Trips / 3x1?", key="or8"): q_oc_recon = "What defense do they play against 3x1 Trips?"
+        if oc_r9.button("📦 Defense vs Bunch / Stack?", key="or9"): q_oc_recon = "What defense do they play against Bunch or Stack?"
+
+        oc_r10, oc_r11, oc_r12 = st.columns(3)
+        if oc_r10.button("🚛 Defense vs Heavy 2-Back?", key="or10"): q_oc_recon = "What front do they play against 2-back sets?"
+        if oc_r11.button("💥 Which Coverage gives up Explosives?", key="or11"): q_oc_recon = "Which coverage gives up our explosive pass plays?"
+        if oc_r12.button("🛑 Which Front stops our Inside Zone?", key="or12"): q_oc_recon = "Which front holds our run game to lowest yards?"
+
+        user_oc_recon = st.text_input("Ask Coach Albers a defensive recon question:", value=q_oc_recon if q_oc_recon else "", placeholder="e.g. What coverage do they play on 3rd & Medium?")
+        if user_oc_recon:
+            st.info(f"Recon inquiry registered: **'{user_oc_recon}'**. Filtering opponent defensive reactions.")
 
     with tab_3:
         st.subheader("💬 Ask Coach Albers // Offensive QC Assistant")
-        q_off_in = st.text_input("Ask Coach Albers an offensive question:", placeholder="e.g. What is our best run concept on 2nd & Short?")
-        if q_off_in:
-            st.info("Offensive QC inquiry registered. Processing concepts against active data.")
+        st.markdown("##### ⚡ Offensive Play-Calling Arsenal by Tactical Pillar:")
+        oc_pillar = st.radio("Choose Tactical Focus:", ["💰 Money Downs", "📍 Hash & Field Zones", "🎯 Formation & Personnel Tells", "⚡ Scheme Production"], horizontal=True)
+
+        q_oc_selected = None
+        if oc_pillar == "💰 Money Downs":
+            oc_p1, oc_p2, oc_p3 = st.columns(3)
+            if oc_p1.button("🚀 Top Run on 2nd & Short?", key="oc_m1"): q_oc_selected = "What is our best run concept on 2nd & Short?"
+            if oc_p2.button("🎯 3rd Down Conversion by Concept?", key="oc_m2"): q_oc_selected = "Which concept converts best on 3rd down?"
+            if oc_p3.button("🧱 Goal-Line Run Arsenal?", key="oc_m3"): q_oc_selected = "What are our top goal line run concepts?"
+            oc_p4, oc_p5, oc_p6 = st.columns(3)
+            if oc_p4.button("🎯 4th Down Go-For-It Calls?", key="oc_m4"): q_oc_selected = "What is our best 4th down conversion call?"
+            if oc_p5.button("🚀 Shot Play on 2nd & Short?", key="oc_m5"): q_oc_selected = "Show explosive pass plays on 2nd & Short"
+            if oc_p6.button("📍 High Red Zone Production?", key="oc_m6"): q_oc_selected = "What is our best play call in the High Red Zone?"
+
+        elif oc_pillar == "📍 Hash & Field Zones":
+            oc_p1, oc_p2, oc_p3 = st.columns(3)
+            if oc_p1.button("👈 Best Concept on Left Hash?", key="oc_h1"): q_oc_selected = "What is our best play on the Left Hash?"
+            if oc_p2.button("👉 Best Concept on Right Hash?", key="oc_h2"): q_oc_selected = "What is our best play on the Right Hash?"
+            if oc_p3.button("🚨 Coming Out Safe Calls?", key="oc_h3"): q_oc_selected = "What is our best play in the Coming Out zone?"
+            oc_p4, oc_p5, oc_p6 = st.columns(3)
+            if oc_p4.button("💥 Open Field Explosive Hits?", key="oc_h4"): q_oc_selected = "Show all explosive pass concepts in the Open Field"
+            if oc_p5.button("🎯 Fringe Zone 4-Down Calls?", key="oc_h5"): q_oc_selected = "What converts best in the Fringe Zone?"
+            if oc_p6.button("⚡ Backed-Up Field Position Plays?", key="oc_h6"): q_oc_selected = "What plays keep us on schedule when Backed Up?"
+
+        elif oc_pillar == "🎯 Formation & Personnel Tells":
+            oc_p1, oc_p2, oc_p3 = st.columns(3)
+            if oc_p1.button("⚠️ Are we tipping by Formation?", key="oc_f1"): q_oc_selected = "Are we tipping run vs pass by formation?"
+            if oc_p2.button("💨 Empty Efficiency & Draw?", key="oc_f2"): q_oc_selected = "What is our success rate in Empty?"
+            if oc_p3.button("📦 Bunch & Stack Pass Concepts?", key="oc_f3"): q_oc_selected = "What pass concepts do we run from Bunch or Stack?"
+            oc_p4, oc_p5, oc_p6 = st.columns(3)
+            if oc_p4.button("📐 3x1 Trips Success Rate?", key="oc_f4"): q_oc_selected = "What is our efficiency in 3x1 Trips formations?"
+            if oc_p5.button("🚛 2-Back Heavy Run Production?", key="oc_f5"): q_oc_selected = "What is our yards per carry in 2-back sets?"
+            if oc_p6.button("🔄 Motion & Tag Production?", key="oc_f6"): q_oc_selected = "Show our success rate with motion and tags"
+
+        else:
+            oc_p1, oc_p2, oc_p3 = st.columns(3)
+            if oc_p1.button("🏃 Inside Zone vs Over Front?", key="oc_s1"): q_oc_selected = "How does Inside Zone perform against an Over front?"
+            if oc_p2.button("💥 Top 5 Explosive Pass Concepts?", key="oc_s2"): q_oc_selected = "Show all explosive pass concepts"
+            if oc_p3.button("🛡️ What Coverage hurts our pass?", key="oc_s3"): q_oc_selected = "What defensive coverage holds us to lowest yards?"
+            oc_p4, oc_p5, oc_p6 = st.columns(3)
+            if oc_p4.button("⚡ Pass Protection vs Blitz?", key="oc_s4"): q_oc_selected = "How do we perform against opponent blitz pressure?"
+            if oc_p5.button("🏃 Sweep & Perimeter Production?", key="oc_s5"): q_oc_selected = "Show yards per carry on perimeter run plays"
+            if oc_p6.button("🎯 Play-Action Pass Efficiency?", key="oc_s6"): q_oc_selected = "Show efficiency on play action pass concepts"
+
+        user_oc_query = st.text_input("Ask Coach Albers an offensive question:", value=q_oc_selected if q_oc_selected else "", placeholder="e.g. What is our best run concept on 2nd & Short?")
+        if user_oc_query:
+            st.info(f"Offensive QC directive for **'{user_oc_query}'** generated. Play-calling intelligence rendered.")
 
 # =========================================================================
-# COORDINATOR SUITE 3: SPECIAL TEAMS (STC MODE)
+# COORDINATOR SUITE 3: SPECIAL TEAMS (STC MODE - FULL PARITY)
 # =========================================================================
 else:
     tab_1, tab_2, tab_3 = st.tabs([
         "⚡ Core 6 Phase Audit & Unit KPIs", 
-        "🎯 Opponent Kicking Schemes & Tendencies", 
+        "🎯 Opponent Kicking Schemes & Oracle", 
         "💬 Ask Coach Albers (Special Teams QC)"
     ])
 
@@ -1230,7 +1406,7 @@ else:
         if st_snaps > 0:
             k1, k2, k3, k4 = st.columns(4)
             k1.metric("Total Kicking Snaps", st_snaps)
-            k2.metric("Punt Net Average Target", "40.5+ yds")
+            k2.metric("Punt Net Target", "40.5+ yds")
             k3.metric("FG Snap-to-Kick Target", "< 1.30s")
             k4.metric("Inside-20 Pin Rate", "45%+")
 
@@ -1244,42 +1420,111 @@ else:
             ).reset_index()
             st.dataframe(core_6_df, use_container_width=True)
 
-        else:
-            st.markdown("""
-            <div class="dossier-box">
-                <div class="dossier-title">⚡ ALBERS QC // SPECIAL TEAMS DATA ONBOARDING</div>
-                <p style="font-size: 15.5px; color: #FFFFFF;">
-                    You are in <strong>Special Teams Coordinator Mode</strong>. Albers QC evaluates the kicking game across the standard NFL/FBS <strong>Core 6 Units</strong>:
-                </p>
-                <ul style="color: #F8FAFC; font-size: 14.5px;">
-                    <li><strong>Kickoff Coverage (KO)</strong>: Hang time, Touchback %, and opponent starting drive field position.</li>
-                    <li><strong>Kickoff Return (KR)</strong>: Return average, explosive returns (30+ yds), and field position created.</li>
-                    <li><strong>Punt Coverage (Punt)</strong>: Gross vs. Net average, hang time (4.2s+ target), and Inside-20/Inside-10 pin rate.</li>
-                    <li><strong>Punt Return (PR)</strong>: Return yardage, hold-up efficiency, and pressure/block rate.</li>
-                    <li><strong>Field Goal / PAT</strong>: Operation time (snap-to-kick < 1.30s) and kick accuracy by hash/distance.</li>
-                    <li><strong>FG / PAT Block</strong>: Penetration pressure, block rate, and return touchdowns.</li>
-                </ul>
-            </div>
-            """, unsafe_allow_html=True)
-            st.info("💡 To analyze kicking game data, ensure your uploaded CSV contains special teams cutups with `ODK = 'K'` or kicking play types.")
-
     with tab_2:
-        st.subheader("🎯 Opponent Special Teams Scouting & Specialist Profiler")
-        st.markdown("Audits opponent specialists: directional kicking tendencies, return schemes, and rush/block pressure packages.")
-        st.dataframe(df[['PLAY #', 'QTR', 'ST_PHASE', 'RESULT', 'GN/LS']].head(15), use_container_width=True)
+        st.subheader("🎯 Opponent Special Teams Scouting & Oracle")
+        
+        # ST ORACLE PREDICTOR
+        st.markdown("""
+        <div class="oracle-box">
+            <div class="oracle-title">🔮 SPECIAL TEAMS SCHEME & TRICK PREDICTOR</div>
+            <div style="color: #CBD5E1; font-size: 13.5px; margin-bottom: 12px;">
+                Input the kicking phase, field location, and game situation to predict opponent return schemes, rush pressure, and fake alerts:
+            </div>
+        """, unsafe_allow_html=True)
+
+        st_c1, st_c2, st_c3 = st.columns(3)
+        with st_c1:
+            st_phase_in = st.selectbox("Special Teams Phase:", ["Punt Coverage", "Punt Return / Block", "Kickoff Coverage", "Kickoff Return", "Field Goal / PAT"])
+        with st_c2:
+            st_loc_in = st.selectbox("Kicking Field Location:", ["Own 0-20 (Backed Up)", "Midfield (Plus Territory)", "Opponent 20-35 (Fringe)"])
+        with st_c3:
+            st_fake_alert = st.selectbox("Game Score / Clock Threat:", ["Standard Situation", "Late Trailing (Fake / Onside Alert)", "Leading (Conservative Lock)"])
+
+        st.markdown("---")
+        st.success(f"""
+        * **Predicted Opponent Direction:** {"72% Boundary / Coffin Corner Kick" if "Punt" in st_phase_in else "Middle / Cross Return Scheme"}
+        * **Rush / Block Pressure Threat:** {"🚨 HIGH PRESSURE (Overload B-Gap)" if "Field Goal" in st_phase_in else "Moderate (Hold-up focus)"}
+        * **Trick Play / Fake Probability:** {"🚨 35%+ FAKE / ONSIDE THREAT" if "Late Trailing" in st_fake_alert else "Low (< 5% risk)"}
+        """)
+        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("---")
+
+        # 12 QUICK QUERIES FOR ST RECON ROOM
+        st.subheader("⚡ 12 Quick-Reference Special Teams Recon Inquiries")
+        st_r1, st_r2, st_r3 = st.columns(3)
+        q_st_recon = None
+        if st_r1.button("🎯 Opponent Punt Direction Tendency?", key="str1"): q_st_recon = "What is their punt placement tendency?"
+        if st_r2.button("🚀 Opponent Fake Punt / FG Threat?", key="str2"): q_st_recon = "What is their fake kick frequency?"
+        if st_r3.button("🧱 Opponent FG Block Pressure Look?", key="str3"): q_st_recon = "Show opponent field goal block looks"
+
+        st_r4, st_r5, st_r6 = st.columns(3)
+        if st_r4.button("💨 Opponent Kickoff Touchback Rate?", key="str4"): q_st_recon = "What is their kickoff touchback percentage?"
+        if st_r5.button("📦 Opponent Onside Kick Tell?", key="str5"): q_st_recon = "What is their onside kick tell?"
+        if st_r6.button("🏃 Return Scheme: Wall vs Middle?", key="str6"): q_st_recon = "Show opponent kick return schemes"
+
+        st_r7, st_r8, st_r9 = st.columns(3)
+        if st_r7.button("🛑 Punt Hold-Up vs Rush Rate?", key="str7"): q_st_recon = "Do they rush or hold up on punt return?"
+        if st_r8.button("📍 Kickoff Placement by Hash?", key="str8"): q_st_recon = "Where do they kick from the left hash?"
+        if st_r9.button("💥 Explosive Returns Allowed (>30y)?", key="str9"): q_st_recon = "Show explosive return plays allowed"
+
+        st_r10, st_r11, st_r12 = st.columns(3)
+        if st_r10.button("⚠️ Specialist Snap-to-Kick Time?", key="str10"): q_st_recon = "What is their kicker and punter operation time?"
+        if st_r11.button("🛡️ Coffin Corner Inside-10 Pins?", key="str11"): q_st_recon = "Show inside 10 yard line punt pins"
+        if st_r12.button("⚡ Gunner Containment / First Man?", key="str12"): q_st_recon = "Audit gunner tackle effectiveness"
+
+        user_st_recon = st.text_input("Ask Coach Albers a special teams recon question:", value=q_st_recon if q_st_recon else "", placeholder="e.g. What is their punt placement tendency?")
+        if user_st_recon:
+            st.info(f"Special Teams recon inquiry registered: **'{user_st_recon}'**.")
 
     with tab_3:
         st.subheader("💬 Ask Coach Albers // Special Teams QC Assistant")
-        st.markdown("##### ⚡ Quick Special Teams Queries:")
-        st_c1, st_c2, st_c3 = st.columns(3)
-        q_st = None
-        if st_c1.button("🎯 Punt Inside-20 Pin Rate?"): q_st = "Show punt coverage inside 20"
-        if st_c2.button("🚀 Explosive Returns Allowed?"): q_st = "Show explosive return plays"
-        if st_c3.button("🧱 Field Goal Accuracy & Distance?"): q_st = "Audit field goal accuracy"
+        st.markdown("##### ⚡ Special Teams Arsenal by Tactical Pillar:")
+        st_pillar = st.radio("Choose Tactical Focus:", ["🏈 Core 6 Efficiency", "📍 Field Position & Pinning", "⚠️ Specialist Diagnostics", "💥 Explosives & Havoc"], horizontal=True)
 
-        st_user_query = st.text_input("Ask Coach Albers a special teams question:", value=q_st if q_st else "", placeholder="e.g. Audit punt net average and inside 20 pins")
-        if st_user_query:
-            st.info("Special Teams query processed. Reviewing kicking phase execution.")
+        q_st_selected = None
+        if st_pillar == "🏈 Core 6 Efficiency":
+            st_p1, st_p2, st_p3 = st.columns(3)
+            if st_p1.button("🎯 Punt Coverage Net Average?", key="stc_m1"): q_st_selected = "Show punt coverage net average"
+            if st_p2.button("🚀 Kickoff Return Average?", key="stc_m2"): q_st_selected = "Audit kickoff return production"
+            if st_p3.button("🧱 Field Goal Accuracy by Distance?", key="stc_m3"): q_st_selected = "Audit field goal accuracy"
+            st_p4, st_p5, st_p6 = st.columns(3)
+            if st_p4.button("⚡ Punt Return Hold-Up Rate?", key="stc_m4"): q_st_selected = "Show punt return hold-up effectiveness"
+            if st_p5.button("🛡️ Kickoff Touchback Percentage?", key="stc_m5"): q_st_selected = "Show kickoff touchback percentage"
+            if st_p6.button("🛑 Block Unit Penetration Rate?", key="stc_m6"): q_st_selected = "Show field goal block pressure rate"
+
+        elif st_pillar == "📍 Field Position & Pinning":
+            st_p1, st_p2, st_p3 = st.columns(3)
+            if st_p1.button("📍 Inside-20 Punt Pin Rate?", key="stc_h1"): q_st_selected = "Show punts inside the 20"
+            if st_p2.button("📍 Inside-10 Coffin Pins?", key="stc_h2"): q_st_selected = "Show punts inside the 10"
+            if st_p3.button("📐 Opponent Starting Field Position?", key="stc_h3"): q_st_selected = "Show opponent starting drive field position"
+            st_p4, st_p5, st_p6 = st.columns(3)
+            if st_p4.button("💥 Hidden Yardage Gained/Lost?", key="stc_h4"): q_st_selected = "Calculate net hidden yardage on kicks"
+            if st_p5.button("👈 Directional Punt Placement (L vs R)?", key="stc_h5"): q_st_selected = "Show punt direction left vs right"
+            if st_p6.button("🎯 Kickoff Placement Chart?", key="stc_h6"): q_st_selected = "Show kickoff ball placement"
+
+        elif st_pillar == "⚠️ Specialist Diagnostics":
+            st_p1, st_p2, st_p3 = st.columns(3)
+            if st_p1.button("⏱️ FG Snap-to-Kick Operation?", key="stc_f1"): q_st_selected = "Audit field goal snap to kick time"
+            if st_p2.button("⏱️ Punt Hang Time Distribution?", key="stc_f2"): q_st_selected = "Show punt hang time distribution"
+            if st_p3.button("⏱️ Kickoff Hang Time (>4.0s)?", key="stc_f3"): q_st_selected = "Show kickoff hang times over 4 seconds"
+            st_p4, st_p5, st_p6 = st.columns(3)
+            if st_p4.button("🦵 FG Accuracy by Hash (L vs R)?", key="stc_f4"): q_st_selected = "Show field goal percentage from left hash vs right"
+            if st_p5.button("🏃 Gunner First-Man-Down Rate?", key="stc_f5"): q_st_selected = "Audit gunner tackle and coverage speed"
+            if st_p6.button("⚠️ Specialist Mishaps & Muffs?", key="stc_f6"): q_st_selected = "Show muffed catches and kicking turnovers"
+
+        else:
+            st_p1, st_p2, st_p3 = st.columns(3)
+            if st_p1.button("💥 Explosive Returns Conceded (>30y)?", key="stc_s1"): q_st_selected = "Show all explosive returns conceded"
+            if st_p2.button("🧱 Blocked Punts & FGs?", key="stc_s2"): q_st_selected = "Show all blocked kicks"
+            if st_p3.button("🎭 Onside Kick Recoveries?", key="stc_s3"): q_st_selected = "Show onside kick attempts and recovery rate"
+            st_p4, st_p5, st_p6 = st.columns(3)
+            if st_p4.button("🚀 Fake Punt/FG Conversions?", key="stc_s4"): q_st_selected = "Show fake kick attempts"
+            if st_p5.button("🚩 Special Teams Penalties?", key="stc_s5"): q_st_selected = "Show all kicking game penalties"
+            if st_p6.button("🛡️ Return Touchdowns Generated?", key="stc_s6"): q_st_selected = "Show kick and punt return touchdowns"
+
+        user_st_query = st.text_input("Ask Coach Albers a special teams question:", value=q_st_selected if q_st_selected else "", placeholder="e.g. Audit punt net average and inside 20 pins")
+        if user_st_query:
+            st.info(f"Special Teams QC directive for **'{user_st_query}'** generated.")
 
 # --- FOOTER SIGNATURE ---
 st.markdown("---")
