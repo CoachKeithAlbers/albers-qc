@@ -88,7 +88,7 @@ def ensure_albers_logo():
 
 ensure_albers_logo()
 
-# --- HIGH-CONTRAST WAR ROOM CSS (AUDITED FOR READABILITY) ---
+# --- HIGH-CONTRAST WAR ROOM CSS (SINGLE-LINE TABS ENFORCED) ---
 st.markdown("""
 <style>
     .stApp { background-color: #0A0F1D !important; }
@@ -150,6 +150,27 @@ st.markdown("""
         border-radius: 10px;
         padding: 12px 16px;
         margin-bottom: 15px;
+    }
+
+    /* SINGLE LINE TAB ENFORCEMENT */
+    div[data-baseweb="tab-list"] {
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        gap: 12px !important;
+        border-bottom: 2px solid #1E293B !important;
+        padding-bottom: 4px !important;
+    }
+    button[data-baseweb="tab"] {
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        color: #CBD5E1 !important;
+        font-size: 15.5px !important;
+        font-weight: 700 !important;
+        padding: 8px 18px !important;
+    }
+    button[data-baseweb="tab"][aria-selected="true"] {
+        color: #38BDF8 !important;
+        border-bottom: 3px solid #38BDF8 !important;
     }
 
     div.stButton > button, button[kind="secondary"] {
@@ -244,7 +265,6 @@ st.markdown("""
         color: #FFFFFF !important;
     }
 
-    /* ALL TABLES & TABLE CELLS - STRICT HIGH CONTRAST */
     .stTable, table, tbody, tr, td, th {
         background-color: #111C30 !important;
         color: #FFFFFF !important;
@@ -324,16 +344,6 @@ st.markdown("""
         font-weight: 600;
     }
 
-    button[data-baseweb="tab"] {
-        color: #CBD5E1 !important;
-        font-size: 16px !important;
-        font-weight: 700 !important;
-    }
-    button[data-baseweb="tab"][aria-selected="true"] {
-        color: #38BDF8 !important;
-        border-bottom: 3px solid #38BDF8 !important;
-    }
-
     .stTextInput input {
         background-color: #111C30 !important;
         color: #FFFFFF !important;
@@ -386,20 +396,17 @@ def get_field_x(yl):
 def process_master_dataframe(raw_df, default_source_name="Game Data"):
     df_clean = raw_df.copy()
 
-    # Opponent Detection
     opp_col = next((c for c in df_clean.columns if any(k in c.lower() for k in ['opp', 'game', 'team'])), None)
     if opp_col:
         df_clean['OPPONENT_CLEAN'] = df_clean[opp_col].fillna(default_source_name).astype(str)
     else:
         df_clean['OPPONENT_CLEAN'] = default_source_name
 
-    # ODK Cleaning & Standardization
     if 'ODK' in df_clean.columns:
         df_clean['ODK_CLEAN'] = df_clean['ODK'].astype(str).str.strip().str.upper()
     else:
-        df_clean['ODK_CLEAN'] = 'D'
+        df_clean['ODK_CLEAN'] = 'UNKNOWN'
 
-    # Special Teams Phase Tagging
     def tag_st_phase(row):
         pt = str(row.get('PLAY TYPE', '')).lower()
         res = str(row.get('RESULT', '')).lower()
@@ -415,7 +422,6 @@ def process_master_dataframe(raw_df, default_source_name="Game Data"):
 
     df_clean['ST_PHASE'] = df_clean.apply(tag_st_phase, axis=1)
 
-    # Field Zones
     if 'YARD LN' in df_clean.columns:
         df_clean['FIELD_ZONE'] = df_clean['YARD LN'].apply(classify_field_zone)
         df_clean['FIELD_X'] = df_clean['YARD LN'].apply(get_field_x)
@@ -423,7 +429,6 @@ def process_master_dataframe(raw_df, default_source_name="Game Data"):
         df_clean['FIELD_ZONE'] = "3. Open Field (Own 21 - Opp 41)"
         df_clean['FIELD_X'] = 50
 
-    # Defensive Win
     def compute_def_success(row):
         res = str(row.get('RESULT', ''))
         if any(k in res.lower() for k in ['interception', 'fumble', 'def td', 'safety']): return 1
@@ -437,7 +442,6 @@ def process_master_dataframe(raw_df, default_source_name="Game Data"):
         elif dn in [3, 4]: return 1 if gn < dist else 0
         return 0
 
-    # Offensive Win
     def compute_off_success(row):
         res = str(row.get('RESULT', ''))
         if any(k in res.lower() for k in ['interception', 'fumble', 'def td', 'safety']): return 0
@@ -456,7 +460,6 @@ def process_master_dataframe(raw_df, default_source_name="Game Data"):
     df_clean['PLAY_TYPE_CLEAN'] = df_clean.get('PLAY TYPE', pd.Series('Other')).fillna('Other')
     df_clean['BLITZ_CLEAN'] = df_clean.get('BLITZ', pd.Series('BASE (NO BLITZ)')).fillna('BASE (NO BLITZ)')
 
-    # Sequence Detection for Predictor
     if 'RESULT' in df_clean.columns:
         df_clean['PREV_RESULT'] = df_clean['RESULT'].shift(1).fillna('')
         df_clean['AFTER_PENALTY'] = df_clean['PREV_RESULT'].str.contains('Penalty', case=False, na=False)
@@ -467,12 +470,10 @@ def process_master_dataframe(raw_df, default_source_name="Game Data"):
         df_clean['AFTER_1ST_DOWN'] = (df_clean['PREV_DN'] == 1)
     else: df_clean['AFTER_1ST_DOWN'] = False
 
-    # Safe Personnel, Backfield & Tag Normalization
     pers_col = next((c for c in df_clean.columns if any(k in c.lower() for k in ['personnel', 'pers'])), None)
     if pers_col:
         df_clean['PERSONNEL_CLEAN'] = df_clean[pers_col].fillna('Standard').astype(str)
     else:
-        # Detect from formation string if possible
         def extract_pers(row):
             f_str = str(row.get('OFF FORM', ''))
             if '12' in f_str or 'YO' in f_str: return '12 Personnel'
@@ -487,7 +488,6 @@ def process_master_dataframe(raw_df, default_source_name="Game Data"):
         df_clean['BACKFIELD_CLEAN'] = df_clean[back_col].fillna('Standard').astype(str)
     else:
         def extract_backfield(row):
-            op = str(row.get('OFF PLAY', ''))
             f = str(row.get('OFF FORM', ''))
             if 'GUN' in f.upper() or 'SHOTGUN' in f.upper(): return 'Shotgun'
             elif 'PISTOL' in f.upper(): return 'Pistol'
@@ -495,7 +495,6 @@ def process_master_dataframe(raw_df, default_source_name="Game Data"):
             return 'Shotgun / Offset'
         df_clean['BACKFIELD_CLEAN'] = df_clean.apply(extract_backfield, axis=1)
 
-    # Formation Tag / Motion Extraction
     def extract_form_tag(row):
         f = str(row.get('OFF FORM', ''))
         tags = []
@@ -509,7 +508,6 @@ def process_master_dataframe(raw_df, default_source_name="Game Data"):
         return " / ".join(tags) if tags else "Base Alignment"
     df_clean['FORMATION_TAG'] = df_clean.apply(extract_form_tag, axis=1)
 
-    # Normalization Aliases (prevents SQL missing column errors)
     if 'OFF FORM' in df_clean.columns: df_clean['OFF_FORM'] = df_clean['OFF FORM']
     if 'OFF PLAY' in df_clean.columns: df_clean['OFF_PLAY'] = df_clean['OFF PLAY']
     if 'DEF FRONT' in df_clean.columns: df_clean['DEF_FRONT'] = df_clean['DEF FRONT']
@@ -527,7 +525,6 @@ st.sidebar.markdown("### **ALBERS QC**")
 st.sidebar.markdown("<span style='color: #FDE047; font-weight:700;'>Your Personalized QC Coach</span>", unsafe_allow_html=True)
 st.sidebar.markdown("---")
 
-# PROMINENT COORDINATOR COMMAND DECK (DC / OC / STC)
 st.sidebar.markdown("""
 <div class="coordinator-switch-box">
     <div style="font-size: 11px; font-weight: 800; color: #FDE047; letter-spacing: 1px; margin-bottom: 4px;">ACTIVE COORDINATOR ROOM</div>
@@ -541,7 +538,7 @@ coordinator_mode = st.sidebar.radio(
 )
 st.sidebar.markdown("</div>", unsafe_allow_html=True)
 
-# --- UNIFIED MASTER DATA INTAKE (DECOUPLED FROM HARDCODED SAMPLE DATA) ---
+# --- UNIFIED MASTER DATA INTAKE (DECOUPLED FROM HARDCODED TEST DATA) ---
 st.sidebar.markdown("##### 📥 Master Data Intake (Drag & Drop)")
 uploaded_master_files = st.sidebar.file_uploader(
     "Drop Game Cutups / Master CSVs Here:",
@@ -564,7 +561,6 @@ if all_dfs:
     master_df = pd.concat(all_dfs, ignore_index=True)
     status_msg = f"● LIVE DATA: {len(uploaded_master_files)} FILE(S) | {len(master_df)} SNAPS INDEXED"
 else:
-    # Completely decoupled: No hardcoded fallback to sample data
     master_df = None
     status_msg = "● AWAITING COACH DATA INTAKE"
 
@@ -594,13 +590,13 @@ with col_banner:
     </div>
     """, unsafe_allow_html=True)
 
-# --- DECOUPLED ONBOARDING SCREEN IF NO FILE IS CURRENTLY UPLOADED ---
+# --- ONBOARDING SCREEN IF NO FILE UPLOADED ---
 if master_df is None:
     st.markdown("""
     <div class="dossier-box">
         <div class="dossier-title">🏈 WELCOME TO ALBERS QC: YOUR PERSONALIZED QUALITY CONTROL COACH</div>
         <p style="font-size: 16px; color: #FFFFFF; line-height: 1.6;">
-            Albers QC is ready for your team's game data. This system is fully decoupled from all test data so you and your coaching staff can evaluate your program with complete confidentiality and precision.
+            Albers QC is ready for your team's game data. This system is fully decoupled from all test data so your staff can evaluate your program with complete confidentiality and precision.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -633,19 +629,50 @@ if master_df is None:
 
     st.markdown("---")
     st.markdown("### 🚀 Ready to Begin?")
-    st.markdown("Simply **drag and drop your CSV file(s)** into the **`📥 Master Data Intake`** box on the left sidebar. The entire platform will immediately index your snaps and light up with all battle boards!")
+    st.markdown("Simply **drag and drop your CSV file(s)** into the **`📥 Master Data Intake`** box on the left sidebar. The entire platform will immediately index your snaps and light up!")
     st.stop()
 
-# --- FILTER DATA FOR ACTIVE COORDINATOR ROOM ---
+# --- STRICT UNIT-BASED DATA ISOLATION (ZERO DATA CONTAMINATION) ---
 if "DEFENSE" in coordinator_mode:
+    # Strictly filter for Defense (ODK == 'D') or untagged single defensive export
     df = master_df[master_df['ODK_CLEAN'] == 'D']
-    if len(df) == 0: df = master_df
+    if len(df) == 0 and ('ODK' not in master_df.columns or master_df['ODK_CLEAN'].nunique() == 1):
+        df = master_df
 elif "OFFENSE" in coordinator_mode:
+    # STRICT FILTER: Only plays where ODK == 'O' (Prevents opponent data leak)
     df = master_df[master_df['ODK_CLEAN'] == 'O']
-    if len(df) == 0: df = master_df
 else:
+    # STRICT FILTER: Special teams only
     df = master_df[(master_df['ODK_CLEAN'] == 'K') | (master_df['ST_PHASE'] != 'General ST')]
-    if len(df) == 0: df = master_df
+
+# --- GUARDRAIL: IF NO DATA FOR ACTIVE ROOM, SHOW INTAKE CARD INSTEAD OF FALLING BACK ---
+if len(df) == 0:
+    if "OFFENSE" in coordinator_mode:
+        st.markdown("""
+        <div class="dossier-box">
+            <div class="dossier-title">⚔️ ALBERS QC // OFFENSIVE DATA ONBOARDING</div>
+            <p style="font-size: 16px; color: #FFFFFF; line-height: 1.6;">
+                You are in <strong>Offensive Coordinator Mode</strong>, but the currently loaded data contains <strong>0 offensive snaps (where ODK = 'O')</strong>.<br>
+                To protect your gameplan from false self-scout conclusions, <strong>Albers QC will never substitute opponent defense data as your offense.</strong>
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        st.info("📥 **Action Required:** Please drop your team's offensive cutup CSV (with `ODK = 'O'`) into the **Master Data Intake** box on the sidebar.")
+        st.stop()
+    elif "SPECIAL TEAMS" in coordinator_mode:
+        st.markdown("""
+        <div class="dossier-box">
+            <div class="dossier-title">⚡ ALBERS QC // SPECIAL TEAMS DATA ONBOARDING</div>
+            <p style="font-size: 16px; color: #FFFFFF; line-height: 1.6;">
+                You are in <strong>Special Teams Coordinator Mode</strong>, but the currently loaded data contains <strong>0 kicking snaps (where ODK = 'K')</strong>.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        st.info("📥 **Action Required:** Please drop your special teams cutup CSV (with `ODK = 'K'`) into the **Master Data Intake** box on the sidebar.")
+        st.stop()
+    else:
+        st.info("📥 No defensive snaps (`ODK = 'D'`) found in the uploaded file.")
+        st.stop()
 
 # SQLite Connection
 conn = sqlite3.connect(':memory:', check_same_thread=False)
@@ -723,24 +750,24 @@ def render_8_zone_field(ax, title_str, highlight_zone=None):
     ax.set_yticks([])
     ax.set_title(title_str, color='#FFFFFF', fontsize=13, fontweight='heavy', pad=12)
 
-# --- NAVIGATION TABS ---
+# --- SINGLE-LINE CLEAN NAVIGATION TABS ---
 if "DEFENSE" in coordinator_mode:
     tab_1, tab_2, tab_3 = st.tabs([
-        "🛡️ Self-Scout (Our Defense Audit)", 
-        "🎯 Opponent Advance Reconnaissance & Oracle", 
-        "💬 Ask Coach Albers (Defensive QC)"
+        "🛡️ Defensive Self-Scout", 
+        "🎯 Opponent Recon & Oracle", 
+        "💬 Ask Coach Albers"
     ])
 elif "OFFENSE" in coordinator_mode:
     tab_1, tab_2, tab_3 = st.tabs([
-        "⚔️ Offensive Self-Scout (Our Offense Audit)", 
-        "🛡️ Opponent Defense Reconnaissance & Oracle", 
-        "💬 Ask Coach Albers (Offensive QC)"
+        "⚔️ Offensive Self-Scout", 
+        "🛡️ Opponent Recon & Oracle", 
+        "💬 Ask Coach Albers"
     ])
 else:
     tab_1, tab_2, tab_3 = st.tabs([
-        "⚡ Core 6 Phase Audit & Unit KPIs", 
-        "🎯 Opponent Kicking Schemes & Oracle", 
-        "💬 Ask Coach Albers (Special Teams QC)"
+        "⚡ Core 6 Phase Audit", 
+        "🎯 Opponent Kicking Recon", 
+        "💬 Ask Coach Albers"
     ])
 
 # =========================================================================
@@ -822,6 +849,7 @@ if "DEFENSE" in coordinator_mode:
                     st.session_state['self_pass_zone'] = None
                     st.rerun()
 
+            # PASSING ZONE DOSSIER
             if st.session_state['self_pass_zone']:
                 pz = st.session_state['self_pass_zone']
                 pz_df = filtered_df[filtered_df['PASS ZONE'] == pz]
@@ -896,11 +924,11 @@ if "DEFENSE" in coordinator_mode:
                     st.text_area(f"{fz} Video Cutup Playlist ({len(fz_playlist)} plays):", ", ".join(fz_playlist), height=70)
                 st.markdown("</div>", unsafe_allow_html=True)
 
-    # --- TAB 2: OPPONENT RECON WITH PREDICTOR, ADVANCED FILTERS & 12 QUICK QUERIES ---
+    # --- TAB 2: OPPONENT RECON & ORACLE ---
     with tab_2:
         st.subheader(f"🎯 Albers QC // Opponent Advance Reconnaissance: {selected_opp}")
 
-        # ORACLE PREDICTOR WITH PERSONNEL, BACKFIELD & TAG FILTERS
+        # REAL-TIME PLAY-CALL PREDICTOR
         st.markdown("""
         <div class="oracle-box">
             <div class="oracle-title">🔮 REAL-TIME PLAY-CALL PREDICTOR & TENDENCY ORACLE</div>
@@ -1096,9 +1124,11 @@ if "DEFENSE" in coordinator_mode:
                 })
         if zone_card_data: st.dataframe(pd.DataFrame(zone_card_data), use_container_width=True)
 
-    # --- TAB 3: FULL 24-QUERY DEFENSIVE ARSENAL ---
+    # --- TAB 3: FULL DEFENSIVE ARSENAL ---
     with tab_3:
         st.subheader("💬 Ask Coach Albers // Defensive QC Assistant")
+        st.markdown("Direct tactical inquiries across your defense, opponents, 8 field zones, hash marks, formations, and down/distance situations.")
+
         tactical_pillar = st.radio("Choose Tactical Focus:", ["💰 Money Downs", "📍 Hash & Field Zones", "🎯 Formation Tells", "🛡️ Self-Scout Leaks"], horizontal=True)
         q_def_selected = None
 
@@ -1183,13 +1213,13 @@ if "DEFENSE" in coordinator_mode:
                     st.text_area("Filtered Defensive Plays:", ", ".join(list(dict.fromkeys(p_all_def))), height=75)
 
 # =========================================================================
-# COORDINATOR SUITE 2: OFFENSE (OC MODE - FULL PARITY)
+# COORDINATOR SUITE 2: OFFENSE (OC MODE - STRICT ISOLATION & PARITY)
 # =========================================================================
 elif "OFFENSE" in coordinator_mode:
     tab_1, tab_2, tab_3 = st.tabs([
-        "⚔️ Offensive Self-Scout (Our Offense Audit)", 
-        "🛡️ Opponent Defense Reconnaissance & Oracle", 
-        "💬 Ask Coach Albers (Offensive QC)"
+        "⚔️ Offensive Self-Scout", 
+        "🛡️ Opponent Recon & Oracle", 
+        "💬 Ask Coach Albers"
     ])
 
     with tab_1:
@@ -1228,7 +1258,7 @@ elif "OFFENSE" in coordinator_mode:
     with tab_2:
         st.subheader(f"🛡️ Albers QC // Opponent Defensive Reconnaissance & Oracle: {selected_opp}")
 
-        # OC DEFENSIVE PREDICTOR & ORACLE
+        # OC DEFENSIVE PREDICTOR & ORACLE WITH FILTERS
         st.markdown("""
         <div class="oracle-box">
             <div class="oracle-title">🔮 OPPONENT DEFENSIVE SCHEME PREDICTOR & ORACLE</div>
@@ -1299,7 +1329,6 @@ elif "OFFENSE" in coordinator_mode:
                 st.markdown("##### 🛡️ Opponent Defensive Look Distribution:")
                 st.dataframe(oc_pred_df.groupby(['DEF FRONT', 'COVERAGE']).agg(Snaps=('PLAY #', 'count')).reset_index().sort_values(by='Snaps', ascending=False), use_container_width=True)
             with oc_p2:
-                # Top Producing Concept for us against this look
                 top_our_play = oc_pred_df.groupby('OFF PLAY').agg(Snaps=('PLAY #', 'count'), Avg_Gain=('GN/LS', 'mean')).reset_index().sort_values(by='Avg_Gain', ascending=False).head(3)
                 st.markdown("##### ⚔️ Albers QC Recommended Offensive Concept:")
                 if len(top_our_play) > 0:
@@ -1393,9 +1422,9 @@ elif "OFFENSE" in coordinator_mode:
 # =========================================================================
 else:
     tab_1, tab_2, tab_3 = st.tabs([
-        "⚡ Core 6 Phase Audit & Unit KPIs", 
-        "🎯 Opponent Kicking Schemes & Oracle", 
-        "💬 Ask Coach Albers (Special Teams QC)"
+        "⚡ Core 6 Phase Audit", 
+        "🎯 Opponent Kicking Recon", 
+        "💬 Ask Coach Albers"
     ])
 
     with tab_1:
